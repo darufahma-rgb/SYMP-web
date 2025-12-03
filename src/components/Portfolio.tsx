@@ -22,35 +22,34 @@ export default function Portfolio() {
       {/* --- MAIN CONTENT (CENTER) --- */}
       <main className="flex-grow flex flex-col justify-center items-center px-4 relative z-10 -mt-20">
         
-        {/* LOGO SYMP (Ukuran diperkecil - Lowkey Accent) */}
+        {/* LOGO SYMP (Small Accent) */}
         <div className="mb-4 animate-fade-in-up">
            <img 
              src={logoRed} 
              alt="SYMP Studio Logo" 
-             // UBAH DISINI: w-14 (mobile) md:w-16 (desktop) -> Kecil manis
              className="w-14 md:w-16 h-auto object-contain drop-shadow-sm hover:scale-105 transition-transform duration-300" 
            />
         </div>
 
         {/* HEADLINE & DESCRIPTION */}
         <div className="text-center mb-10">
-          {/* UBAH DISINI: Font properties SYMP (Merah Gelap #8A0202 + Solid) */}
-          <h1 className="text-[15vw] md:text-[9rem] leading-[0.8] font-black tracking-tighter text-[#8A0202] mb-6">
+          {/* UBAH DISINI: Font Poppins + Warna Hitam Pekat */}
+          {/* class font-['Poppins'] butuh config tailwind atau import font manual */}
+          <h1 className="text-[15vw] md:text-[9rem] leading-[0.8] font-black tracking-tighter text-black mb-6 font-['Poppins']">
             PORTFOLIO
           </h1>
           
-          <p className="text-gray-500 font-medium text-lg md:text-xl max-w-md mx-auto leading-relaxed">
+          <p className="text-gray-500 font-medium text-lg md:text-xl max-w-md mx-auto leading-relaxed font-sans">
             Kumpulan karya terbaik SYMP Studio.<br/>
-            <span className="text-[#8A0202] font-bold">Klik tombol di bawah</span> untuk akses galeri lengkap.
+            <span className="text-black font-bold">Klik tombol di bawah</span> untuk akses galeri lengkap.
           </p>
         </div>
 
-        {/* THE RED BUTTON */}
+        {/* THE RED BUTTON (Tetep Merah biar kontras sama teks hitam) */}
         <div className="relative group cursor-pointer mt-2">
           
           {/* Editor Lines (Red Theme) */}
           <div className="absolute -inset-4 border-[1px] border-[#8A0202]/30 pointer-events-none opacity-60 group-hover:opacity-100 transition-opacity">
-            {/* Corner Squares */}
             <div className="absolute -top-[3px] -left-[3px] w-1.5 h-1.5 bg-[#8A0202]"></div>
             <div className="absolute -top-[3px] -right-[3px] w-1.5 h-1.5 bg-[#8A0202]"></div>
             <div className="absolute -bottom-[3px] -left-[3px] w-1.5 h-1.5 bg-[#8A0202]"></div>
@@ -60,12 +59,11 @@ export default function Portfolio() {
           {/* Horizontal Guidelines */}
           <div className="absolute top-1/2 left-[-100vw] right-[-100vw] h-[1px] bg-[#8A0202]/10 pointer-events-none"></div>
 
-          {/* The Pill Button (RED GRADIENT) */}
+          {/* The Pill Button */}
           <div className="relative bg-gradient-to-b from-[#D92323] to-[#8A0202] px-12 py-4 md:px-24 md:py-6 rounded-full shadow-[0_10px_30px_-5px_rgba(138,2,2,0.4)] hover:shadow-[0_20px_50px_-5px_rgba(138,2,2,0.5)] hover:scale-105 transition-all duration-300 flex items-center justify-center gap-3">
-            {/* Inner Glare */}
             <div className="absolute top-0 inset-x-0 h-1/2 bg-gradient-to-b from-white/20 to-transparent rounded-t-full pointer-events-none"></div>
             
-            <span className="text-3xl md:text-5xl font-black text-white tracking-tight drop-shadow-sm">
+            <span className="text-3xl md:text-5xl font-black text-white tracking-tight drop-shadow-sm font-['Poppins']">
               Open Gallery
             </span>
             <ArrowRight className="text-white w-8 h-8 md:w-10 md:h-10 group-hover:translate-x-2 transition-transform" />
@@ -76,8 +74,6 @@ export default function Portfolio() {
 
       {/* --- FOOTER --- */}
       <footer className="w-full px-6 py-8 flex flex-col md:flex-row justify-between items-end md:items-center gap-6 z-20">
-        
-        {/* Left: User Info */}
         <div className="flex flex-col gap-2">
           <div className="flex items-center gap-3">
              <div className="w-8 h-8 rounded-full bg-white border border-gray-200 p-1 overflow-hidden">
@@ -85,11 +81,9 @@ export default function Portfolio() {
              </div>
              <div>
                <p className="text-xs font-bold text-gray-500 uppercase tracking-wider">Created by</p>
-               <p className="font-bold text-lg leading-none text-[#8A0202]">SYMP Studio</p>
+               <p className="font-bold text-lg leading-none text-black font-['Poppins']">SYMP Studio</p>
              </div>
           </div>
-          
-          {/* Services Tags */}
           <div className="flex flex-wrap gap-2 mt-2">
             {items.map((item, i) => (
               <span key={i} className="text-[10px] md:text-xs font-bold text-gray-400 bg-white/60 px-2 py-1 rounded border border-gray-200">
@@ -99,8 +93,7 @@ export default function Portfolio() {
           </div>
         </div>
 
-        {/* Right: Save Button */}
-        <button className="bg-white border border-gray-300 px-5 py-2 rounded-full shadow-sm flex items-center gap-2 hover:bg-gray-50 hover:text-[#8A0202] transition-colors font-bold text-sm">
+        <button className="bg-white border border-gray-300 px-5 py-2 rounded-full shadow-sm flex items-center gap-2 hover:bg-gray-50 hover:text-black transition-colors font-bold text-sm">
           Save Contact <Bookmark size={16} />
         </button>
       </footer>
