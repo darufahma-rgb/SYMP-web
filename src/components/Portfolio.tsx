@@ -1,7 +1,6 @@
 import React from 'react';
-import { ArrowRight, Bookmark, ArrowUpRight } from 'lucide-react';
+import { Bookmark, ArrowRight } from 'lucide-react';
 import logoRed from '../assets/SYMP LOGO MERAH.png'; 
-// Pastiin path logo bener, atau pake placeholder kalo error
 
 export default function Portfolio() {
   const items = [
@@ -13,63 +12,62 @@ export default function Portfolio() {
   ];
 
   return (
-    <div className="min-h-screen bg-[#F3F0EA] text-black font-sans selection:bg-orange-500 selection:text-white flex flex-col relative overflow-hidden">
+    <div className="min-h-screen bg-[#F3F0EA] text-black font-sans selection:bg-red-600 selection:text-white flex flex-col relative overflow-hidden">
       
-      {/* GRID LINES (Optional subtle texture) */}
-      <div className="absolute inset-0 pointer-events-none opacity-[0.03]"
-        style={{ backgroundImage: 'linear-gradient(#000 1px, transparent 1px), linear-gradient(90deg, #000 1px, transparent 1px)', backgroundSize: '40px 40px' }}
-      ></div>
+      {/* GRID DIHAPUS - Background Solid Cream */}
 
-      {/* --- HEADER --- */}
-      <nav className="w-full px-6 py-6 flex justify-between items-center text-sm font-bold tracking-widest uppercase z-20">
-        <div>©2025</div>
-        <div className="flex items-center gap-1 cursor-pointer hover:text-orange-600 transition-colors">
-          01 <ArrowRight size={16} />
-        </div>
+      {/* --- HEADER (CLEAN - No Text) --- */}
+      <nav className="w-full px-6 py-8 z-20">
+         {/* Kosong, cuma buat spacing kalau butuh, atau bisa dihapus */}
       </nav>
 
       {/* --- MAIN CONTENT (CENTER) --- */}
-      <main className="flex-grow flex flex-col justify-center items-center px-4 relative z-10 -mt-10">
+      <main className="flex-grow flex flex-col justify-center items-center px-4 relative z-10 -mt-20">
         
-        {/* Profile/Logo Bubble */}
-        <div className="w-20 h-20 rounded-full overflow-hidden mb-8 border-2 border-white shadow-lg bg-gray-200">
-           {/* Ganti src dengan foto profil lo atau logo */}
-           <img src={logoRed} alt="Profile" className="w-full h-full object-cover scale-110" />
+        {/* LOGO SYMP (Pengganti Lingkaran Profil) */}
+        <div className="mb-6 animate-fade-in-up">
+           <img 
+             src={logoRed} 
+             alt="SYMP Studio Logo" 
+             className="w-24 md:w-32 h-auto object-contain drop-shadow-md hover:scale-105 transition-transform duration-300" 
+           />
         </div>
 
-        {/* HEADLINE */}
-        <div className="text-center mb-6">
-          <h1 className="text-[12vw] md:text-[7rem] leading-[0.9] font-black tracking-tighter text-[#111]">
-            Premium Design
+        {/* HEADLINE & DESCRIPTION */}
+        <div className="text-center mb-8">
+          <h1 className="text-[15vw] md:text-[9rem] leading-[0.8] font-black tracking-tighter text-[#111] mb-4">
+            PORTFOLIO
           </h1>
-          <h1 className="text-[12vw] md:text-[7rem] leading-[0.9] font-black tracking-tighter text-[#111]">
-            Solutions for
-          </h1>
+          <p className="text-gray-500 font-medium text-lg md:text-xl max-w-md mx-auto leading-relaxed">
+            Kumpulan karya terbaik SYMP Studio.<br/>
+            <span className="text-red-700 font-bold">Klik tombol di bawah</span> untuk akses galeri lengkap.
+          </p>
         </div>
 
-        {/* THE "BUTTON" WITH EDITOR UI LINES */}
-        <div className="relative group cursor-pointer mt-4">
+        {/* THE RED BUTTON */}
+        <div className="relative group cursor-pointer mt-2">
           
-          {/* Editor Lines (The Red Box Effect) */}
-          <div className="absolute -inset-4 border-[1px] border-red-500/60 pointer-events-none opacity-60 group-hover:opacity-100 transition-opacity">
+          {/* Editor Lines (Red Theme) */}
+          <div className="absolute -inset-4 border-[1px] border-red-500/40 pointer-events-none opacity-60 group-hover:opacity-100 transition-opacity">
             {/* Corner Squares */}
-            <div className="absolute -top-[3px] -left-[3px] w-1.5 h-1.5 bg-red-500"></div>
-            <div className="absolute -top-[3px] -right-[3px] w-1.5 h-1.5 bg-red-500"></div>
-            <div className="absolute -bottom-[3px] -left-[3px] w-1.5 h-1.5 bg-red-500"></div>
-            <div className="absolute -bottom-[3px] -right-[3px] w-1.5 h-1.5 bg-red-500"></div>
+            <div className="absolute -top-[3px] -left-[3px] w-1.5 h-1.5 bg-red-600"></div>
+            <div className="absolute -top-[3px] -right-[3px] w-1.5 h-1.5 bg-red-600"></div>
+            <div className="absolute -bottom-[3px] -left-[3px] w-1.5 h-1.5 bg-red-600"></div>
+            <div className="absolute -bottom-[3px] -right-[3px] w-1.5 h-1.5 bg-red-600"></div>
           </div>
           
-          {/* Horizontal Guidelines (Visual decoration) */}
-          <div className="absolute top-1/2 left-[-100vw] right-[-100vw] h-[1px] bg-red-500/20 pointer-events-none"></div>
+          {/* Horizontal Guidelines */}
+          <div className="absolute top-1/2 left-[-100vw] right-[-100vw] h-[1px] bg-red-500/10 pointer-events-none"></div>
 
-          {/* The Pill Button */}
-          <div className="relative bg-gradient-to-b from-[#FF8B3D] to-[#E55605] px-12 py-4 md:px-20 md:py-6 rounded-full shadow-[0_10px_40px_-10px_rgba(255,100,0,0.5)] hover:shadow-[0_20px_60px_-10px_rgba(255,100,0,0.6)] hover:scale-105 transition-all duration-300 flex items-center justify-center">
-            {/* Inner Glare/Highlight */}
+          {/* The Pill Button (RED GRADIENT) */}
+          <div className="relative bg-gradient-to-b from-[#D92323] to-[#8A0202] px-12 py-4 md:px-24 md:py-6 rounded-full shadow-[0_10px_30px_-5px_rgba(138,2,2,0.4)] hover:shadow-[0_20px_50px_-5px_rgba(138,2,2,0.5)] hover:scale-105 transition-all duration-300 flex items-center justify-center gap-3">
+            {/* Inner Glare */}
             <div className="absolute top-0 inset-x-0 h-1/2 bg-gradient-to-b from-white/20 to-transparent rounded-t-full pointer-events-none"></div>
             
-            <span className="text-4xl md:text-6xl font-black text-white tracking-tight drop-shadow-sm">
-              SYMP Studio
+            <span className="text-3xl md:text-5xl font-black text-white tracking-tight drop-shadow-sm">
+              Open Gallery
             </span>
+            <ArrowRight className="text-white w-8 h-8 md:w-10 md:h-10 group-hover:translate-x-2 transition-transform" />
           </div>
 
         </div>
@@ -78,31 +76,31 @@ export default function Portfolio() {
       {/* --- FOOTER --- */}
       <footer className="w-full px-6 py-8 flex flex-col md:flex-row justify-between items-end md:items-center gap-6 z-20">
         
-        {/* Left: User Info & Services */}
+        {/* Left: User Info */}
         <div className="flex flex-col gap-2">
           <div className="flex items-center gap-3">
-             <div className="w-10 h-10 rounded-full bg-black overflow-hidden">
-                <img src={logoRed} alt="Mini Profile" className="w-full h-full object-cover" />
+             <div className="w-8 h-8 rounded-full bg-white border border-gray-200 p-1 overflow-hidden">
+                <img src={logoRed} alt="Mini Profile" className="w-full h-full object-contain" />
              </div>
              <div>
-               <p className="text-xs font-bold text-gray-500 uppercase tracking-wider">Made by</p>
-               <p className="font-bold text-lg leading-none">Daru.Design</p>
+               <p className="text-xs font-bold text-gray-500 uppercase tracking-wider">Created by</p>
+               <p className="font-bold text-lg leading-none text-[#8A0202]">SYMP Studio</p>
              </div>
           </div>
           
-          {/* Adapted Content: The List is now small services tags */}
+          {/* Services Tags */}
           <div className="flex flex-wrap gap-2 mt-2">
             {items.map((item, i) => (
-              <span key={i} className="text-xs font-bold text-gray-400 bg-white/50 px-2 py-1 rounded border border-gray-200">
+              <span key={i} className="text-[10px] md:text-xs font-bold text-gray-400 bg-white/60 px-2 py-1 rounded border border-gray-200">
                 {item}
               </span>
             ))}
           </div>
         </div>
 
-        {/* Right: CTA Button */}
-        <button className="bg-white border border-gray-300 px-6 py-3 rounded-full shadow-sm flex items-center gap-2 hover:bg-gray-50 transition-colors font-bold text-sm">
-          Save for Later <Bookmark size={18} fill="black" />
+        {/* Right: Save Button */}
+        <button className="bg-white border border-gray-300 px-5 py-2 rounded-full shadow-sm flex items-center gap-2 hover:bg-gray-50 hover:text-[#8A0202] transition-colors font-bold text-sm">
+          Save Contact <Bookmark size={16} />
         </button>
       </footer>
     </div>
