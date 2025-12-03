@@ -1,5 +1,5 @@
 import React from 'react';
-import DreamTeamImg from './assets/DREAM TEAM SYMP.png'; 
+import DreamTeamImg from '../assets/DREAM TEAM SYMP.png'; 
 
 export default function CallToAction() {
   return (
