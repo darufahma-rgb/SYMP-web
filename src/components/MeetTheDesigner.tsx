@@ -1,17 +1,14 @@
 import React from 'react';
-// MARK: Import gambarnya di sini. 
-// Pastikan path-nya sesuai struktur folder lo (misal: '../assets/' atau './assets/')
-// import designerImage from '../assets/Designer.png'; 
-// UNTUK CONTOH INI KITA PAKE PLACEHOLDER DULU BIAR JALAN KODENYA
-const designerImage = "/api/placeholder/500/600";
-
+// MARK: Import gambar dari folder assets
+// Pastikan path ini sesuai sama struktur folder lo
+import designerImage from '../assets/Designer.png'; 
 
 export default function MeetTheDesigner() {
   return (
-    // Background diubah jadi Merah Brand [#8A0202]
+    // Background Merah Brand [#8A0202]
     <section className="py-12 md:py-24 bg-[#8A0202] text-white overflow-hidden relative font-sans min-h-[90vh] flex items-center">
       
-      {/* Background Subtle Glow - Diubah jadi Putih biar keliatan di atas merah */}
+      {/* Background Subtle Glow - Putih Transparan */}
       <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
           <div className="absolute top-[10%] right-[20%] w-[500px] h-[500px] bg-white/5 rounded-full blur-[120px] -z-10"></div>
       </div>
@@ -21,13 +18,12 @@ export default function MeetTheDesigner() {
 
           {/* --- KOLOM KIRI: Main Title & Intro --- */}
           <div className="md:col-span-5 order-2 md:order-1 text-center md:text-left space-y-8">
-            {/* Accent Line - Diubah jadi Putih */}
+            {/* Accent Line - Putih */}
             <div className="w-24 h-1 bg-white mb-8 hidden md:block"></div>
 
             <div>
               <h2 className="text-5xl md:text-7xl font-extrabold leading-tight tracking-tight mb-4 text-white">
                 Meet the <br />
-                {/* Span Highlight - Diubah jadi Putih */}
                 <span className="text-white">Designer</span>
               </h2>
                <h3 className="text-2xl md:text-3xl font-semibold text-white/90">
@@ -35,12 +31,12 @@ export default function MeetTheDesigner() {
               </h3>
             </div>
 
-            {/* Intro Paragraph - Text color disesuaikan biar enak di mata */}
+            {/* Intro Paragraph */}
             <p className="text-white/80 text-lg leading-relaxed max-w-lg mx-auto md:mx-0">
               Founder & Creative Director SYMP Studio sejak 2017. Telah mengerjakan 200+ proyek visual meliputi logo, identitas visual, dan creative direction dengan pendekatan yang rapi dan fungsional.
             </p>
 
-            {/* Red Circle Button Arrow - Diubah jadi Putih dengan Icon Merah */}
+            {/* Red Circle Button Arrow (Putih dengan Icon Merah) */}
             <div className="flex justify-center md:justify-start mt-8">
                 <button className="w-20 h-20 rounded-full bg-white flex items-center justify-center hover:bg-gray-100 transition shadow-lg shadow-black/20 group text-[#8A0202]">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-8 h-8 group-hover:translate-y-1 transition-transform">
@@ -53,15 +49,14 @@ export default function MeetTheDesigner() {
 
           {/* --- KOLOM TENGAH: Foto Designer --- */}
           <div className="md:col-span-4 order-1 md:order-2 flex justify-center relative mb-8 md:mb-0">
-            {/* Image Glow Effect - Diubah jadi Putih */}
+            {/* Image Glow Effect - Putih */}
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[350px] h-[350px] bg-white/20 blur-[80px] rounded-full -z-10"></div>
 
-            {/* MARK: Pake variable import di sini */}
+            {/* MARK: Menggunakan variable import designerImage */}
             <img
               src={designerImage}
               alt="Daru Fahmaa Muliawan"
               className="w-full max-w-[400px] md:max-w-full h-auto object-cover z-10 drop-shadow-2xl relative grayscale-[20%] hover:grayscale-0 transition duration-500"
-              // Masking disesuaikan sedikit agar fade-out nya lebih halus di background merah
               style={{ maskImage: 'linear-gradient(to bottom, black 70%, transparent 100%)' }} 
             />
           </div>
@@ -72,14 +67,12 @@ export default function MeetTheDesigner() {
 
             {/* Block 1: Roles & Venture */}
             <div className="space-y-4">
-                {/* Heading style: Border & text jadi putih/terang */}
                 <h4 className="text-xs font-bold tracking-[0.2em] uppercase text-white/70 border-b border-white/30 pb-2 inline-block">
                     Roles & Venture
                 </h4>
                 <p className="text-sm text-white/90 leading-relaxed font-light">
                    CEO Temantiket (platform perjalanan) dan pengembang utama AINA — asisten digital AI berbasis React & Tailwind. Berpengalaman dalam pengembangan sistem digital.
                 </p>
-                {/* Link jadi putih */}
                  <a href="#" className="inline-flex items-center text-white text-sm font-bold hover:tracking-wider transition-all">
                     LIHAT PORTFOLIO <span className="ml-2 text-xl">→</span>
                 </a>
@@ -100,7 +93,6 @@ export default function MeetTheDesigner() {
                 <h4 className="text-xs font-bold tracking-[0.2em] uppercase text-white/70">
                     Follow Me
                 </h4>
-                {/* Icon hover jadi putih terang */}
                 <div className="flex justify-center md:justify-start space-x-6 text-white/60">
                     <a href="#" className="hover:text-white transition"><svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg></a>
                     <a href="#" className="hover:text-white transition"><svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.072 3.252.148 4.771 1.691 4.919 4.919.06 1.265.072 1.645.072 4.85s-.012 3.584-.072 4.85c-.148 3.252-1.667 4.771-4.919 4.919-1.266.06-1.646.072-4.85.072s-3.584-.012-4.85-.072c-3.252-.148-4.771-1.691-4.919-4.919-.06-1.265-.072-1.645-.072-4.85s.012-3.584.072-4.85c.148-3.252 1.667-4.771 4.919-4.919 1.266-.06 1.646-.072 4.85-.072zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg></a>
