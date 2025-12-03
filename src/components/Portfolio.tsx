@@ -27,7 +27,7 @@ export default function Portfolio() {
            <img 
              src={logoRed} 
              alt="SYMP Studio Logo" 
-             className="w-14 md:w-16 h-auto object-contain drop-shadow-sm hover:scale-105 transition-transform duration-300" 
+             className="w-12 md:w-14 h-auto object-contain drop-shadow-sm hover:scale-105 transition-transform duration-300" 
            />
         </div>
 
