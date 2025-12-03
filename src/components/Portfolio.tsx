@@ -12,35 +12,36 @@ export default function Portfolio() {
   ];
 
   return (
-    <div className="min-h-screen bg-[#F3F0EA] text-black font-sans selection:bg-red-600 selection:text-white flex flex-col relative overflow-hidden">
+    <div className="min-h-screen bg-[#F3F0EA] text-black font-sans selection:bg-[#8A0202] selection:text-white flex flex-col relative overflow-hidden">
       
-      {/* GRID DIHAPUS - Background Solid Cream */}
-
-      {/* --- HEADER (CLEAN - No Text) --- */}
+      {/* --- HEADER --- */}
       <nav className="w-full px-6 py-8 z-20">
-         {/* Kosong, cuma buat spacing kalau butuh, atau bisa dihapus */}
+         {/* Spacer */}
       </nav>
 
       {/* --- MAIN CONTENT (CENTER) --- */}
       <main className="flex-grow flex flex-col justify-center items-center px-4 relative z-10 -mt-20">
         
-        {/* LOGO SYMP (Pengganti Lingkaran Profil) */}
-        <div className="mb-6 animate-fade-in-up">
+        {/* LOGO SYMP (Ukuran diperkecil - Lowkey Accent) */}
+        <div className="mb-4 animate-fade-in-up">
            <img 
              src={logoRed} 
              alt="SYMP Studio Logo" 
-             className="w-24 md:w-32 h-auto object-contain drop-shadow-md hover:scale-105 transition-transform duration-300" 
+             // UBAH DISINI: w-14 (mobile) md:w-16 (desktop) -> Kecil manis
+             className="w-14 md:w-16 h-auto object-contain drop-shadow-sm hover:scale-105 transition-transform duration-300" 
            />
         </div>
 
         {/* HEADLINE & DESCRIPTION */}
-        <div className="text-center mb-8">
-          <h1 className="text-[15vw] md:text-[9rem] leading-[0.8] font-black tracking-tighter text-[#111] mb-4">
+        <div className="text-center mb-10">
+          {/* UBAH DISINI: Font properties SYMP (Merah Gelap #8A0202 + Solid) */}
+          <h1 className="text-[15vw] md:text-[9rem] leading-[0.8] font-black tracking-tighter text-[#8A0202] mb-6">
             PORTFOLIO
           </h1>
+          
           <p className="text-gray-500 font-medium text-lg md:text-xl max-w-md mx-auto leading-relaxed">
             Kumpulan karya terbaik SYMP Studio.<br/>
-            <span className="text-red-700 font-bold">Klik tombol di bawah</span> untuk akses galeri lengkap.
+            <span className="text-[#8A0202] font-bold">Klik tombol di bawah</span> untuk akses galeri lengkap.
           </p>
         </div>
 
@@ -48,16 +49,16 @@ export default function Portfolio() {
         <div className="relative group cursor-pointer mt-2">
           
           {/* Editor Lines (Red Theme) */}
-          <div className="absolute -inset-4 border-[1px] border-red-500/40 pointer-events-none opacity-60 group-hover:opacity-100 transition-opacity">
+          <div className="absolute -inset-4 border-[1px] border-[#8A0202]/30 pointer-events-none opacity-60 group-hover:opacity-100 transition-opacity">
             {/* Corner Squares */}
-            <div className="absolute -top-[3px] -left-[3px] w-1.5 h-1.5 bg-red-600"></div>
-            <div className="absolute -top-[3px] -right-[3px] w-1.5 h-1.5 bg-red-600"></div>
-            <div className="absolute -bottom-[3px] -left-[3px] w-1.5 h-1.5 bg-red-600"></div>
-            <div className="absolute -bottom-[3px] -right-[3px] w-1.5 h-1.5 bg-red-600"></div>
+            <div className="absolute -top-[3px] -left-[3px] w-1.5 h-1.5 bg-[#8A0202]"></div>
+            <div className="absolute -top-[3px] -right-[3px] w-1.5 h-1.5 bg-[#8A0202]"></div>
+            <div className="absolute -bottom-[3px] -left-[3px] w-1.5 h-1.5 bg-[#8A0202]"></div>
+            <div className="absolute -bottom-[3px] -right-[3px] w-1.5 h-1.5 bg-[#8A0202]"></div>
           </div>
           
           {/* Horizontal Guidelines */}
-          <div className="absolute top-1/2 left-[-100vw] right-[-100vw] h-[1px] bg-red-500/10 pointer-events-none"></div>
+          <div className="absolute top-1/2 left-[-100vw] right-[-100vw] h-[1px] bg-[#8A0202]/10 pointer-events-none"></div>
 
           {/* The Pill Button (RED GRADIENT) */}
           <div className="relative bg-gradient-to-b from-[#D92323] to-[#8A0202] px-12 py-4 md:px-24 md:py-6 rounded-full shadow-[0_10px_30px_-5px_rgba(138,2,2,0.4)] hover:shadow-[0_20px_50px_-5px_rgba(138,2,2,0.5)] hover:scale-105 transition-all duration-300 flex items-center justify-center gap-3">
