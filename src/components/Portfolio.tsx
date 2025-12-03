@@ -1,106 +1,153 @@
 import React from 'react';
-import { CheckCircle2, Sparkles } from 'lucide-react';
-// Pastikan import path ini benar sesuai struktur project lo
-import logoRed from '../assets/SYMP LOGO MERAH.png'; 
+import { ArrowUpRight, ArrowDown, Wallet } from 'lucide-react';
+import logoRed from '../assets/SYMP LOGO MERAH.png';
 
 export default function Portfolio() {
   const items = [
-    'Logo SYMP Studio',
-    'Poster premium',
-    'Carousel premium',
-    'Mockup brand',
-    'Contoh landing page'
+    { title: 'Logo SYMP Studio', tag: 'Branding' },
+    { title: 'Poster premium', tag: 'Social Media' },
+    { title: 'Carousel premium', tag: 'Content' },
+    { title: 'Mockup brand', tag: 'Product' },
+    { title: 'Contoh landing page', tag: 'UI/UX' }
   ];
 
   return (
-    <>
-       {/* Inject Animation Styles */}
-       <style>{`
-        @keyframes fadeInUp {
-          from { opacity: 0; transform: translateY(40px); }
-          to { opacity: 1; transform: translateY(0); }
-        }
-        .animate-entrance {
-          animation: fadeInUp 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
-          opacity: 0;
-        }
-        .stagger-1 { animation-delay: 0.2s; }
-        .stagger-2 { animation-delay: 0.4s; }
-      `}</style>
+    <div className="min-h-screen bg-[#0035C5] font-sans selection:bg-[#CCFF00] selection:text-black overflow-x-hidden">
+      
+      {/* BACKGROUND GRID (Visual Noise) */}
+      <div 
+        className="fixed inset-0 pointer-events-none opacity-20"
+        style={{
+          backgroundImage: 'linear-gradient(#ffffff 1px, transparent 1px), linear-gradient(90deg, #ffffff 1px, transparent 1px)',
+          backgroundSize: '40px 40px'
+        }}
+      />
 
-    <section 
-      className="min-h-screen bg-white py-24 flex items-center relative overflow-hidden"
-      style={{ fontFamily: "'Poppins', sans-serif" }}
-    >
-      {/* Subtle Red Glow Decor (Biar putihnya gak flat banget) */}
-      <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-[#8A0202]/5 rounded-full blur-[120px] pointer-events-none" />
-      <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-[#8A0202]/5 rounded-full blur-[100px] pointer-events-none" />
-
-      <div className="max-w-7xl mx-auto px-6 relative z-10 w-full animate-entrance">
+      {/* MAIN CONTAINER */}
+      <div className="relative max-w-[1400px] mx-auto pt-6 px-4 md:px-8 flex flex-col min-h-screen">
         
-        {/* Header Section */}
-        <div className="text-center mb-16">
-          <h2 className="text-5xl md:text-7xl font-bold text-[#111111] mb-4 tracking-tight">
-            Selected <span className="text-[#8A0202]">Portfolio</span>
-          </h2>
-          <p className="text-gray-500 text-lg max-w-2xl mx-auto">
-            Kumpulan karya terbaik yang merepresentasikan kualitas dan dedikasi kami dalam desain visual.
-          </p>
-        </div>
-
-        <div className="grid md:grid-cols-2 gap-12 items-center">
-          
-          {/* KOLOM KIRI: IMAGE CONTAINER (PREMIUM RED BLOCK) */}
-          <div className="bg-[#8A0202] p-16 rounded-[3rem] flex items-center justify-center shadow-[0_20px_50px_-10px_rgba(138,2,2,0.3)] relative overflow-hidden group animate-entrance stagger-1">
-            {/* Inner Glow Decoration */}
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] bg-white/10 blur-[80px] rounded-full pointer-events-none group-hover:scale-110 transition-transform duration-700" />
-            
-            <img
-              src={logoRed}
-              alt="SYMP Studio Logo"
-              // MARK: 'brightness-0 invert' bikin gambar jadi putih solid. Hapus class ini kalo gambar aslinya udah putih/terang.
-              className="w-full max-w-md h-auto relative z-10 drop-shadow-2xl transform group-hover:scale-105 transition-transform duration-500 brightness-0 invert"
-            />
+        {/* NAV BAR (Floating Pill Style) */}
+        <nav className="flex justify-between items-center mb-12 relative z-20">
+          <div className="bg-white px-6 py-2 rounded-full flex items-center gap-2 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:translate-x-1 hover:translate-y-1 hover:shadow-none transition-all cursor-pointer border-2 border-black">
+            <div className="w-3 h-3 bg-[#CCFF00] rounded-full border border-black animate-pulse"></div>
+            <span className="font-black text-xl tracking-tighter">SYMP STUDIO</span>
           </div>
 
-          {/* KOLOM KANAN: CONTENT LIST (CLEAN WHITE CARD) */}
-          <div className="bg-white border border-gray-200 p-10 md:p-12 rounded-[3rem] shadow-xl relative animate-entrance stagger-2">
-             {/* Floating Icon Decor */}
-             <Sparkles className="absolute top-8 right-8 w-8 h-8 text-[#8A0202]/20" />
+          <div className="hidden md:flex gap-4">
+            {['About', 'Services', 'Contact'].map((item) => (
+              <button key={item} className="px-5 py-2 rounded-full border border-white/30 text-white font-bold hover:bg-[#CCFF00] hover:text-black hover:border-black transition-colors">
+                {item}
+              </button>
+            ))}
+          </div>
 
-            <h3 className="text-3xl font-bold text-[#111111] mb-8 flex items-center gap-3">
-              Featured Works
-              <div className="h-1 w-12 bg-[#8A0202] rounded-full"></div>
-            </h3>
+          <button className="bg-transparent border-2 border-white text-white px-6 py-2 rounded-full font-bold flex items-center gap-2 hover:bg-white hover:text-[#0035C5] transition-all">
+            Book Now <ArrowUpRight size={20} />
+          </button>
+        </nav>
 
-            <ul className="space-y-5">
-              {items.map((item, index) => (
-                <li key={index} className="flex items-start text-xl text-[#111111] group">
-                  <div className="mt-1 mr-4 p-1 bg-[#8A0202]/10 rounded-full group-hover:bg-[#8A0202] transition-colors duration-300">
-                    <CheckCircle2 className="w-5 h-5 text-[#8A0202] group-hover:text-white transition-colors duration-300" strokeWidth={3} />
-                  </div>
-                  <span className="font-medium group-hover:text-[#8A0202] transition-colors duration-300">{item}</span>
-                </li>
-              ))}
-            </ul>
+        {/* HERO SECTION (Big Typography + Floating Logo) */}
+        <div className="relative flex-grow flex flex-col justify-center items-center py-20 z-10">
+          
+          {/* DECORATION: HAND DRAWN ARROW */}
+          <div className="absolute top-10 right-[10%] md:right-[20%] z-20 rotate-12 animate-bounce hidden md:block">
+            <svg width="100" height="100" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M10 10 C 50 10, 50 90, 90 90" stroke="#CCFF00" strokeWidth="4" strokeLinecap="round"/>
+              <path d="M70 90 L 90 90 L 90 70" stroke="#CCFF00" strokeWidth="4" strokeLinecap="round"/>
+            </svg>
+          </div>
 
-            {/* Style Note Footer */}
-            <div className="mt-12 p-6 bg-gray-50 rounded-2xl border border-gray-100 flex items-start gap-4">
-              <div className="p-2 bg-white rounded-full shadow-sm shrink-0">
-                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#8A0202" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-palette"><circle cx="13.5" cy="6.5" r=".5" fill="currentColor"/><circle cx="17.5" cy="10.5" r=".5" fill="currentColor"/><circle cx="8.5" cy="7.5" r=".5" fill="currentColor"/><circle cx="6.5" cy="12.5" r=".5" fill="currentColor"/><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.744 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.554C21.965 6.012 17.461 2 12 2z"/></svg>
+          {/* BACKGROUND TEXT LAYER */}
+          <div className="text-center select-none pointer-events-none">
+            <h1 className="text-[15vw] leading-[0.8] font-black text-white tracking-tighter mix-blend-overlay opacity-50">
+              #SYMP
+            </h1>
+            <h1 className="text-[15vw] leading-[0.8] font-black text-white tracking-tighter">
+              PORTFOLIO
+            </h1>
+          </div>
+
+          {/* FLOATING GLASS CARD (The Logo) */}
+          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-30">
+                         <div className="backdrop-blur-xl bg-white/20 border border-white/40 p-8 rounded-[30px] shadow-[0_20px_50px_rgba(0,0,0,0.3)] rotate-[-6deg] hover:rotate-0 transition-transform duration-500 w-64 h-64 md:w-80 md:h-80 flex items-center justify-center group">
+              {/* Sticker Badge */}
+              <div className="absolute -top-6 -right-6 w-24 h-24 bg-[#CCFF00] rounded-full flex items-center justify-center text-black font-black text-xs text-center border-2 border-black rotate-12 shadow-lg z-20">
+                SCROLL<br/>TO VIEW<br/>WORK
               </div>
-              <div>
-                <h4 className="font-bold text-[#111111] mb-1">Signature Style</h4>
-                <p className="text-gray-600 italic text-sm leading-relaxed">
-                  "Minimalis, clean, pemanfaatan white space yang lega, dengan aksen merah gelap SYMP yang kuat dan berkarakter."
-                </p>
-              </div>
+              
+              <img 
+                src={logoRed} 
+                alt="SYMP Studio" 
+                className="w-full h-auto drop-shadow-2xl group-hover:scale-110 transition-transform duration-300" 
+              />
+            </div>
+          </div>
+
+          {/* DECORATION: LEFT ARROW */}
+           <div className="absolute bottom-20 left-[15%] z-20 -rotate-12 hidden md:block">
+            <svg width="80" height="80" viewBox="0 0 100 100" fill="none">
+               <path d="M90 10 C 50 10, 50 90, 10 90" stroke="#CCFF00" strokeWidth="4" strokeLinecap="round"/>
+               <path d="M30 90 L 10 90 L 10 70" stroke="#CCFF00" strokeWidth="4" strokeLinecap="round"/>
+            </svg>
+          </div>
+        </div>
+
+      </div>
+
+      {/* BOTTOM SECTION (Curved White Card - The List) */}
+      <div className="relative mt-20">
+        <div className="bg-white rounded-t-[40px] md:rounded-t-[80px] p-8 md:p-16 min-h-[500px]">
+          
+          <div className="max-w-7xl mx-auto">
+            <div className="flex flex-col md:flex-row justify-between items-end mb-12">
+               <div>
+                  <h3 className="text-[#0035C5] font-black text-4xl md:text-6xl uppercase tracking-tight mb-2">
+                    Our Works
+                  </h3>
+                  <p className="text-gray-500 text-lg font-medium">Gaya visual: minimalis · white space · merah gelap.</p>
+               </div>
+               <div className="hidden md:block">
+                 <ArrowDown size={48} className="text-[#CCFF00] bg-black rounded-full p-2" />
+               </div>
             </div>
 
+            {/* CARDS GRID */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {items.map((item, index) => (
+                <div 
+                  key={index} 
+                  className="group bg-[#F5F5F5] rounded-3xl p-8 relative overflow-hidden border-2 border-transparent hover:border-black hover:bg-[#CCFF00] transition-all duration-300 cursor-pointer"
+                >
+                  <div className="flex justify-between items-start mb-12">
+                    <span className="w-10 h-10 rounded-full bg-white flex items-center justify-center font-bold text-sm border border-black/10">
+                      0{index + 1}
+                    </span>
+                    <ArrowUpRight className="opacity-0 group-hover:opacity-100 transition-opacity" />
+                  </div>
+                  
+                  <div>
+                     <span className="text-xs font-bold uppercase tracking-wider opacity-60 mb-2 block">
+                       {item.tag}
+                     </span>
+                     <h4 className="text-2xl md:text-3xl font-black text-[#111111] leading-tight">
+                       {item.title}
+                     </h4>
+                  </div>
+                </div>
+              ))}
+              
+               {/* Call To Action Card */}
+               <div className="bg-[#111111] rounded-3xl p-8 flex flex-col justify-center items-center text-center text-white border-2 border-black group cursor-pointer">
+                  <h4 className="text-3xl font-black text-[#CCFF00] mb-2 group-hover:scale-110 transition-transform">
+                    Start Project?
+                  </h4>
+                  <p className="text-gray-400">Let's build something crazy.</p>
+               </div>
+            </div>
           </div>
+
         </div>
       </div>
-    </section>
-    </>
+    </div>
   );
 }
