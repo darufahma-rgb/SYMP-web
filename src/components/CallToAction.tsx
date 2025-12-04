@@ -1,60 +1,64 @@
 import React from 'react';
 import { Phone, Mail } from 'lucide-react';
 import DreamTeamImg from '../assets/Dreamteam SYMP.png';
-
+ 
 
 export default function CallToAction() {
   return (
-    // Base background diubah sedikit lebih terang agar tidak terlalu hitam
-    <section id="contact" className="relative w-full min-h-screen flex flex-col items-center overflow-hidden bg-[#450a0a]">
+    // UPDATED: Background disamakan dengan MeetTheDesigner (#8A0202 Solid + Dark Overlays)
+    <section id="contact" className="relative w-full min-h-screen flex flex-col items-center overflow-hidden bg-[#8A0202]">
 
-      {/* --- BACKGROUND ELEMENTS --- */}
-      {/* Gradasi disesuaikan: dikurangi unsur hitamnya, lebih fokus ke merah maroon dalam */}
-      <div className="absolute inset-0 bg-gradient-to-b from-[#450a0a] via-[#601010] to-[#450a0a] opacity-100 z-0"></div>
-      
-      {/* Ambient glow */}
-      <div className="absolute top-[-20%] left-1/2 -translate-x-1/2 w-[1000px] h-[600px] bg-[#ff0000] rounded-full blur-[180px] opacity-25 mix-blend-screen pointer-events-none"></div>
-      <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-10 z-0 mix-blend-overlay"></div>
+      {/* --- BACKGROUND ELEMENTS (Sesuai Referensi) --- */}
+      {/* Decor 1: Dark Gradient Overlay */}
+      <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-b from-black/20 via-[#8A0202] to-black/50 pointer-events-none" />
+      {/* Decor 2: White Glow (Top Left-ish) */}
+      <div className="absolute top-[-10%] left-[20%] w-[600px] h-[600px] bg-white/5 rounded-full blur-[120px] pointer-events-none" />
+      {/* Decor 3: Black Glow (Bottom Right-ish) */}
+      <div className="absolute bottom-[-10%] right-[10%] w-[500px] h-[500px] bg-black/30 rounded-full blur-[100px] pointer-events-none" />
 
-      {/* --- CONTENT SECTION (Headline) --- */}
-      <div className="relative z-30 w-full max-w-6xl mx-auto px-4 pt-10 md:pt-16 text-center flex flex-col items-center shrink-0">
+
+      {/* --- CONTENT GROUP (Text + Mobile Cards) --- */}
+      {/* UPDATED: Mobile cards dipindah ke dalam container ini agar nempel sama teks (Compact) */}
+      <div className="relative z-30 w-full max-w-6xl mx-auto px-4 pt-12 md:pt-20 flex flex-col items-center text-center">
         
         {/* Headline */}
-        <h2 className="text-4xl md:text-6xl lg:text-7xl font-bold text-white tracking-tight leading-[1.0] mb-3 drop-shadow-2xl">
+        <h2 className="text-4xl md:text-6xl lg:text-7xl font-bold text-white tracking-tight leading-[1.0] mb-4 drop-shadow-xl">
           Let's make something <br className="hidden md:block" /> 
-          <span className="text-transparent bg-clip-text bg-gradient-to-r from-white via-red-100 to-white/80 drop-shadow-[0_0_25px_rgba(255,255,255,0.3)]">professional</span> together.
+          <span className="text-transparent bg-clip-text bg-gradient-to-r from-white via-red-100 to-white/80">professional</span> together.
         </h2>
 
         {/* Subtext */}
-        <p className="text-sm md:text-lg text-white/80 max-w-2xl mx-auto font-light leading-relaxed tracking-wide mb-2">
+        <p className="text-sm md:text-lg text-white/80 max-w-2xl mx-auto font-light leading-relaxed tracking-wide mb-8">
           Hubungi <span className="font-bold text-white">SYMP Studio</span>. Bangun identitas visual masa depan <br className="hidden md:block" />
           Anda bersama tim elit kami.
         </p>
-      </div>
 
-      {/* --- MAIN SECTION: IMAGE & CARDS --- */}
-      {/* UPDATED: justify-end dan mt-auto penting biar 'mentok bawah' */}
-      <div className="relative z-20 flex flex-col md:flex-row justify-end items-center w-full max-w-[90rem] mx-auto px-4 mt-auto">
-
-        {/* --- MOBILE CONTACTS (Moved to TOP for Mobile) --- */}
-        {/* UPDATED: Posisi dipindah ke sini (sebelum gambar) agar di mobile muncul di atas gambar */}
-        <div className="flex md:hidden flex-col gap-3 w-full max-w-sm mb-6 z-30 bg-transparent">
-          <a href="https://wa.me/6281311506025" target="_blank" rel="noopener noreferrer" className="bg-white/5 backdrop-blur-md border border-white/10 rounded-xl p-3 flex items-center justify-between shadow-lg active:scale-95 transition-transform">
-            <span className="text-[10px] tracking-widest uppercase text-white/60 font-bold flex items-center gap-2">
+        {/* --- MOBILE CONTACTS (Moved Here for Compactness) --- */}
+        {/* Posisi sekarang langsung di bawah teks, tidak ada gap jauh */}
+        <div className="flex md:hidden flex-col gap-3 w-full max-w-sm z-30">
+          <a href="https://wa.me/6281311506025" target="_blank" rel="noopener noreferrer" className="bg-white/10 backdrop-blur-md border border-white/10 rounded-xl p-3 flex items-center justify-between shadow-lg active:scale-95 transition-transform hover:bg-white/20">
+            <span className="text-[10px] tracking-widest uppercase text-white/70 font-bold flex items-center gap-2">
               <Phone size={14} /> WhatsApp
             </span>
             <span className="text-xs font-bold text-white">+62 813-1150-6025</span>
           </a>
-          <a href="mailto:sympp.uss@gmail.com" className="bg-white/5 backdrop-blur-md border border-white/10 rounded-xl p-3 flex items-center justify-between shadow-lg active:scale-95 transition-transform">
-            <span className="text-[10px] tracking-widest uppercase text-white/60 font-bold flex items-center gap-2">
+          <a href="mailto:sympp.uss@gmail.com" className="bg-white/10 backdrop-blur-md border border-white/10 rounded-xl p-3 flex items-center justify-between shadow-lg active:scale-95 transition-transform hover:bg-white/20">
+            <span className="text-[10px] tracking-widest uppercase text-white/70 font-bold flex items-center gap-2">
               <Mail size={14} /> Email
             </span>
             <span className="text-xs font-bold text-white">sympp.uss@gmail.com</span>
           </a>
         </div>
 
-        {/* --- LEFT SIDE CARD (WhatsApp - Desktop Only) --- */}
-        <div className="hidden md:block absolute left-4 lg:left-12 top-[50%] -translate-y-1/2 z-30">
+      </div>
+
+
+      {/* --- IMAGE & DESKTOP CARDS SECTION --- */}
+      {/* mt-auto memastikan section ini selalu di dasar layar (Mentok Bawah) */}
+      <div className="relative z-20 w-full max-w-[90rem] mx-auto px-4 mt-auto flex flex-col md:flex-row justify-center items-end">
+
+        {/* Left Card (WhatsApp - Desktop Only) */}
+        <div className="hidden md:block absolute left-4 lg:left-12 top-1/2 -translate-y-1/2 z-30">
           <a 
             href="https://wa.me/6281311506025" 
             target="_blank"
@@ -75,21 +79,18 @@ export default function CallToAction() {
           </a>
         </div>
 
-        {/* --- CENTER DREAM TEAM IMAGE --- */}
-        <div className="relative z-10 w-full max-w-7xl flex justify-center items-end pb-0">
+        {/* Center Image (Dream Team) */}
+        <div className="relative z-10 w-full max-w-7xl flex justify-center items-end">
           <img 
             src={DreamTeamImg} 
             alt="Dream Team SYMP Studio" 
-            // Ukuran max-h dikurangi dari 70vh ke 60vh agar lebih proporsional
-            // UPDATED: Styling image biar responsif dan nempel bawah
-            className="w-full h-auto max-h-[50vh] md:max-h-[65vh] object-contain object-bottom drop-shadow-[0_20px_50px_rgba(0,0,0,0.6)]"
+            // Styling image responsive & mentok bawah
+            className="w-full h-auto max-h-[45vh] md:max-h-[60vh] object-contain object-bottom drop-shadow-2xl"
           />
         </div>
 
-        {/* --- RIGHT SIDE CARD (Email Only - Desktop Only) --- */}
-        <div className="hidden md:flex flex-col space-y-4 absolute right-4 lg:right-12 top-[50%] -translate-y-1/2 z-30">
-          
-          {/* Email Card */}
+        {/* Right Card (Email - Desktop Only) */}
+        <div className="hidden md:block absolute right-4 lg:right-12 top-1/2 -translate-y-1/2 z-30">
           <a 
             href="mailto:sympp.uss@gmail.com" 
             className="group relative bg-white/5 backdrop-blur-md border border-white/10 rounded-2xl p-5 w-64 block overflow-hidden transition-all duration-500 hover:bg-white/10 hover:border-white/20 hover:shadow-[0_0_40px_rgba(220,38,38,0.3)] hover:-translate-y-1"
