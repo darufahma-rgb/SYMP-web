@@ -1,6 +1,5 @@
 import React from 'react';
 import { Phone, Mail, MapPin } from 'lucide-react';
-import { motion } from 'framer-motion'; // Import Framer Motion
 import DreamTeamImg from '../assets/DREAM TEAM SYMP.png';
 
 
@@ -14,15 +13,6 @@ const floatingAnimation = {
   },
 };
 
-const floatingAnimationDelayed = {
-  y: [0, 15, 0], // Gerakan vertikal melayang berlawanan
-  transition: {
-    duration: 4,
-    repeat: Infinity,
-    ease: "easeInOut",
-    delay: 1.5, // Delay agar tidak sinkron
-  },
-};
 
 
 export default function CallToAction() {
@@ -53,11 +43,6 @@ export default function CallToAction() {
       {/* --- MAIN SECTION: IMAGE & FLOATING CARDS --- */}
       <div className="relative z-20 flex flex-col md:flex-row justify-center items-center w-full max-w-7xl mx-auto px-4 mt-auto">
 
-        {/* --- LEFT SIDE FLOATING CARD --- */}
-        <motion.div
-          className="hidden md:block absolute left-0 transform -translate-x-1/2 z-30"
-          animate={floatingAnimationDelayed}
-          style={{ top: '30%' }}
         >
           {/* WhatsApp Card */}
           <a 
