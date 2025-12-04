@@ -1,11 +1,12 @@
 import React from 'react';
 import designerImage from '../assets/Designer.png'; 
-
+ 
 
 export default function MeetTheDesigner() {
   return (
     // --- BASE LAYER: Gradient Background ---
-    <section className="py-12 md:py-24 bg-gradient-to-b from-[#450a0a] via-[#601010] to-[#450a0a] text-white overflow-hidden relative font-sans min-h-[90vh] flex items-center">
+    // UPDATED: Menggunakan gradient dari Merah Brand (#8a0202) ke Merah yang lebih terang (Red-700/vibrant)
+    <section className="py-12 md:py-24 bg-gradient-to-b from-[#8a0202] via-[#b91c1c] to-[#8a0202] text-white overflow-hidden relative font-sans min-h-[90vh] flex items-center">
       
       {/* --- LAYER 2: Texture Overlay (Noise) --- */}
       {/* Memberikan tekstur film grain supaya tidak terlalu flat 'digital' */}
