@@ -84,8 +84,8 @@ export default function CallToAction() {
           <img 
             src={DreamTeamImg} 
             alt="Dream Team SYMP Studio" 
-            // Styling image responsive & mentok bawah
-            className="w-full h-auto max-h-[45vh] md:max-h-[60vh] object-contain object-bottom drop-shadow-2xl"
+            // UPDATED: max-h increased (55vh mobile, 75vh desktop) agar gambar lebih besar
+            className="w-full h-auto max-h-[55vh] md:max-h-[75vh] object-contain object-bottom drop-shadow-2xl"
           />
         </div>
 
