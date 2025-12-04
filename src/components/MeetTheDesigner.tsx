@@ -1,6 +1,9 @@
 import React from 'react';
-import designerImage from '../assets/Designer.png'; 
 
+// MARK: Image Placeholder
+// Note: Di local development, uncomment import di bawah dan hapus const designerImage
+// import designerImage from '../assets/Designer.png'; 
+const designerImage = "https://placehold.co/400x500/8A0202/FFFFFF?text=Daru+Fahmaa";
 
 export default function MeetTheDesigner() {
   return (
