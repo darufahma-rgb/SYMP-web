@@ -1,7 +1,18 @@
-import React from 'react';
-import { Check, Cloud, Server, Shield } from 'lucide-react';
+import React, { useState } from 'react';
+import { Check, Cloud, Server, Shield, X, Send } from 'lucide-react';
 
 export default function HostingPlan() {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedPackage, setSelectedPackage] = useState('');
+
+  // State untuk form brief
+  const [formData, setFormData] = useState({
+    name: '',
+    domainName: '',
+    category: '',
+    description: '',
+  });
+
   const plans = [
     {
       name: 'Starter Host',
@@ -42,6 +53,25 @@ export default function HostingPlan() {
     }
   ];
 
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleOpenModal = (packageName) => {
+    setSelectedPackage(packageName);
+    setIsModalOpen(true);
+  };
+
+  const handleSendToWA = (e) => {
+    e.preventDefault();
+    // GANTI NOMOR WA LO DISINI
+    const phoneNumber = "628123456789"; 
+    
+    const message = `Halo SYMP Studio, saya mau berlangganan Hosting & Maintenance paket *${selectedPackage}*.%0A%0AData Brief:%0A- Nama: ${formData.name}%0A- Target Domain: ${formData.domainName}%0A- Tipe Website: ${formData.category}%0A- Catatan: ${formData.description}`;
+    
+    window.open(`https://wa.me/${phoneNumber}?text=${message}`, '_blank');
+  };
+
   return (
     <>
       {/* Animation Styles */}
@@ -50,9 +80,16 @@ export default function HostingPlan() {
           from { opacity: 0; transform: translateY(40px); }
           to { opacity: 1; transform: translateY(0); }
         }
+        @keyframes modalPop {
+          0% { opacity: 0; transform: scale(0.9); }
+          100% { opacity: 1; transform: scale(1); }
+        }
         .animate-entrance {
           animation: fadeInUp 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
           opacity: 0;
+        }
+        .animate-modal {
+          animation: modalPop 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
         }
         .stagger-1 { animation-delay: 0.1s; }
         .stagger-2 { animation-delay: 0.2s; }
@@ -138,8 +175,9 @@ export default function HostingPlan() {
                   ))}
                 </ul>
 
-                {/* CTA Button */}
+                {/* CTA Button - TRIGGER MODAL */}
                 <button 
+                  onClick={() => handleOpenModal(plan.name)}
                   className={`
                     w-full py-3.5 px-6 rounded-full font-bold transition-transform active:scale-95
                     ${plan.isPopular 
@@ -165,6 +203,98 @@ export default function HostingPlan() {
 
         </div>
       </section>
+
+      {/* ================= MODAL POPUP BRIEF ================= */}
+      {isModalOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+          {/* Backdrop Blur */}
+          <div 
+            className="absolute inset-0 bg-black/60 backdrop-blur-sm transition-opacity"
+            onClick={() => setIsModalOpen(false)}
+          />
+          
+          {/* Modal Content */}
+          <div className="relative w-full max-w-md bg-white rounded-3xl shadow-2xl p-6 md:p-8 animate-modal text-gray-800 border-4 border-white ring-4 ring-black/10">
+            
+            {/* Close Button */}
+            <button 
+              onClick={() => setIsModalOpen(false)}
+              className="absolute top-4 right-4 p-2 rounded-full hover:bg-gray-100 transition-colors"
+            >
+              <X className="w-5 h-5 text-gray-500" />
+            </button>
+
+            <div className="mb-6">
+              <h3 className="text-2xl font-bold text-[#8A0202]">Setup Hosting</h3>
+              <p className="text-sm text-gray-500">
+                Anda memilih: <span className="font-bold text-gray-800">{selectedPackage}</span>
+              </p>
+            </div>
+
+            <form onSubmit={handleSendToWA} className="space-y-4">
+              <div>
+                <label className="block text-xs font-bold uppercase tracking-wider text-gray-400 mb-1">Nama Pemesan</label>
+                <input 
+                  type="text" 
+                  name="name"
+                  required
+                  onChange={handleChange}
+                  className="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-[#8A0202] focus:ring-1 focus:ring-[#8A0202] transition-all"
+                  placeholder="Contoh: Daru"
+                />
+              </div>
+
+              <div>
+                <label className="block text-xs font-bold uppercase tracking-wider text-gray-400 mb-1">Target Nama Domain</label>
+                <input 
+                  type="text" 
+                  name="domainName"
+                  required
+                  onChange={handleChange}
+                  className="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-[#8A0202] focus:ring-1 focus:ring-[#8A0202] transition-all"
+                  placeholder="Contoh: temantiket.com"
+                />
+              </div>
+
+              <div>
+                <label className="block text-xs font-bold uppercase tracking-wider text-gray-400 mb-1">Tipe Website</label>
+                <select 
+                  name="category"
+                  onChange={handleChange}
+                  className="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-[#8A0202] focus:ring-1 focus:ring-[#8A0202] transition-all"
+                >
+                  <option value="">Pilih Tipe...</option>
+                  <option value="Personal / Portfolio">Personal / Portfolio</option>
+                  <option value="Company Profile">Company Profile</option>
+                  <option value="Toko Online (Basic)">Toko Online (Basic)</option>
+                  <option value="Portal Berita / Blog">Portal Berita / Blog</option>
+                  <option value="Lainnya">Lainnya</option>
+                </select>
+              </div>
+
+              <div>
+                <label className="block text-xs font-bold uppercase tracking-wider text-gray-400 mb-1">Catatan Tambahan</label>
+                <textarea 
+                  rows="3"
+                  name="description"
+                  onChange={handleChange}
+                  className="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-[#8A0202] focus:ring-1 focus:ring-[#8A0202] transition-all resize-none"
+                  placeholder="Misal: Perlu migrasi dari hosting lama, atau butuh email bisnis..."
+                ></textarea>
+              </div>
+
+              <button 
+                type="submit"
+                className="w-full mt-2 bg-[#8A0202] text-white font-bold py-4 rounded-xl hover:bg-[#6e0202] transition-transform active:scale-95 shadow-lg flex items-center justify-center gap-2"
+              >
+                <Send className="w-4 h-4" />
+                Kirim ke WhatsApp
+              </button>
+            </form>
+
+          </div>
+        </div>
+      )}
     </>
   );
 }
