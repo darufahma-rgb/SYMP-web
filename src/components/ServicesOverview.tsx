@@ -1,37 +1,227 @@
 import React, { useState } from 'react';
+import { 
+  Package, FileText, MessageCircle, CreditCard, ArrowRight, 
+  X, ChevronLeft, PenTool, Globe, Instagram, Briefcase, Check, Star, Phone 
+} from 'lucide-react';
 
-// --- IMPORT GAMBAR ---
-import TemantiketLogo from '../assets/Logo Temantiket.png'; // Pastikan nama file benar
+// --- IMPORT ASSETS (Pastikan file ada di folder src/assets) ---
 import AigyptLogo from '../assets/aigypt-logo.png';
 import ArsanaLogo from '../assets/arsana-logo.png';
 import DreammeccaLogo from '../assets/dreammecca-logo.png';
 import IghTourLogo from '../assets/igh-tour-logo.png';
 import SaferLogo from '../assets/safer-logo.png';
+import TemantiketLogo from '../assets/Logo Temantiket.png'; // New Import
 
-export default function ServicesOverview() {
-  const [isBriefOpen, setIsBriefOpen] = useState(false); // State untuk Pop-up
+// --- DATA HARGA (Bahasa Profesional) ---
+const PRICING_DATA = {
+  logo: [
+    { name: 'Premium Logo All-in', price: '500K', desc: 'Harga Tetap. 2 Opsi Desain Eksklusif, File Master Lengkap, Panduan Brand, Bonus Poster.' }
+  ],
+  identity: [
+    { name: 'Basic Brand Kit', price: '300K', desc: 'Palet Warna, Sistem Tipografi, Logo Alternatif.' },
+    { name: 'Standard Kit', price: '500K', desc: 'Panduan Brand Mini (Guideline), Sistem Ikon Grafis.' },
+    { name: 'Premium Identity', price: '800K', desc: 'Fondasi Visual Utuh, Mockup Realistis, Template Media Sosial.' }
+  ],
+  carousel: [
+    { name: 'Basic Carousel', price: '70K/post', desc: '3-5 Slide, Caption Standar.' },
+    { name: 'Standard Story', price: '100K/post', desc: '6-8 Slide, Copywriting Fokus Audiens.' },
+    { name: 'Premium Educate', price: '125K/post', desc: '9-10 Slide, Microblog Mendalam, File Sumber (Source File).' }
+  ],
+  poster: [
+    { name: 'Basic Poster', price: '100K', desc: 'Informasi acara mendesak, 1 Konsep Visual.' },
+    { name: 'Standard', price: '200K', desc: 'Tampilan Profesional, Siap Cetak (HD Print Ready).' },
+    { name: 'Premium Art', price: '300K', desc: 'Manipulasi/Ilustrasi Kompleks, Termasuk File Master.' }
+  ],
+  website: [
+    { name: 'Basic Page', price: '800K', desc: '1 Halaman, React/HTML, Responsif Mobile.' },
+    { name: 'Pro Business', price: '1.3 Juta', desc: 'SEO Dasar, Animasi Interaktif, Formulir WA, Gratis Deploy.' },
+    { name: 'Premium Web', price: '2 Juta', desc: 'Interaksi Mikro, Copywriting Penjualan (Sales Copy), Prioritas Pengerjaan.' }
+  ],
+  hosting: [
+    { id: 'starter', name: 'Starter Host', price: '300K/thn', desc: 'Cloud Hosting Kecepatan Tinggi, SSL Dasar.' },
+    { id: 'business', name: 'Business Kit', price: '500K/thn', desc: 'Hosting Premium + Domain .COM.' },
+    { id: 'pro', name: 'Pro Managed', price: '1 Juta/thn', desc: 'Sumber Daya Tinggi, Pemeliharaan Penuh (Full Maintenance).' }
+  ]
+};
+
+// --- KOMPONEN MODAL ORDER (Form Brief) ---
+const ProjectModal = ({ isOpen, onClose }) => {
+  const [step, setStep] = useState(1);
+  const [selectedCategory, setSelectedCategory] = useState('');
+  const [formData, setFormData] = useState({ name: '', brandName: '', industry: '', detail: '' });
+  const [selectedPackage, setSelectedPackage] = useState(null);
+  const [selectedHosting, setSelectedHosting] = useState(null);
+
+  if (!isOpen) return null;
+
+  const services = [
+    { id: 'logo', label: 'Desain Logo', icon: <PenTool size={20} /> },
+    { id: 'identity', label: 'Identitas Brand', icon: <Briefcase size={20} /> },
+    { id: 'poster', label: 'Poster & Flyer', icon: <Star size={20} /> },
+    { id: 'carousel', label: 'Konten Instagram', icon: <Instagram size={20} /> },
+    { id: 'website', label: 'Pembuatan Website', icon: <Globe size={20} /> },
+  ];
+
+  const handleChange = (e) => setFormData({ ...formData, [e.target.name]: e.target.value });
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    let message = `Halo Tim SYMP Studio. 👋%0A%0ASaya tertarik untuk memulai proyek pada layanan *${selectedCategory.toUpperCase()}*. Berikut detail kebutuhan saya:%0A`;
+    message += `__________________________%0A%0A`;
+    message += `👤 *PROFIL KLIEN*%0A• Nama: ${formData.name}%0A• Brand/Instansi: ${formData.brandName} (${formData.industry})%0A%0A`;
+    message += `📦 *PAKET PILIHAN*%0A`;
+    if (selectedPackage) {
+      message += `• Paket: ${selectedPackage.name}%0A• Estimasi Harga: ${selectedPackage.price}%0A`;
+    }
+    if (selectedCategory === 'website') {
+       message += selectedHosting ? `• Layanan Hosting: ${selectedHosting.name} (${selectedHosting.price})%0A` : `• Layanan Hosting: Menggunakan Hosting Sendiri (Mandiri)%0A`;
+    }
+    if (formData.detail) {
+      message += `%0A📝 *CATATAN TAMBAHAN*%0A${formData.detail}%0A`;
+    }
+    message += `__________________________%0A%0AMohon informasi mengenai ketersediaan slot dan langkah selanjutnya. Terima kasih.`;
+    window.open(`https://wa.me/6281311506025?text=${message}`, '_blank');
+    onClose();
+  };
+
+  return (
+    <div className="fixed inset-0 z-[200] flex items-center justify-center p-4 text-left font-sans">
+      <div className="absolute inset-0 bg-black/60 backdrop-blur-sm transition-opacity" onClick={onClose}></div>
+      <div className="relative bg-white w-full max-w-2xl rounded-[2rem] shadow-2xl overflow-hidden flex flex-col max-h-[90vh] animate-in zoom-in-95 duration-300">
+        <div className="bg-[#111] text-white px-8 py-6 flex justify-between items-center shrink-0 relative overflow-hidden">
+          <div className="absolute top-0 right-0 w-32 h-32 bg-[#8A0202] rounded-full blur-[60px] opacity-40 translate-x-10 -translate-y-10"></div>
+          <div className="relative z-10">
+            <h3 className="text-2xl font-bold tracking-tight">Mulai Proyek</h3>
+            <p className="text-white/70 text-sm mt-1">Lengkapi formulir singkat untuk konsultasi awal.</p>
+          </div>
+          <button onClick={onClose} className="relative z-10 p-2 bg-white/10 hover:bg-white/20 rounded-full transition-colors"><X size={20}/></button>
+        </div>
+        <div className="p-8 overflow-y-auto custom-scrollbar bg-gray-50/50 h-full text-gray-800">
+          {step === 1 && (
+            <div className="animate-in slide-in-from-right-4 duration-500 fade-in">
+              <h4 className="text-gray-900 font-bold mb-6 text-lg">Pilih Kategori Layanan</h4>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                {services.map((srv) => (
+                  <button
+                    key={srv.id}
+                    onClick={() => { setSelectedCategory(srv.id); setStep(2); setSelectedPackage(null); setSelectedHosting(null); }}
+                    className="flex items-center gap-4 p-5 bg-white border border-gray-200 rounded-2xl hover:border-[#8A0202] hover:shadow-lg hover:shadow-[#8A0202]/5 transition-all group text-left relative overflow-hidden"
+                  >
+                    <div className="w-12 h-12 rounded-xl bg-gray-50 text-gray-600 flex items-center justify-center group-hover:bg-[#8A0202] group-hover:text-white transition-colors duration-300">
+                      {srv.icon}
+                    </div>
+                    <span className="font-bold text-gray-700 text-lg group-hover:text-[#8A0202] transition-colors">{srv.label}</span>
+                    <div className="absolute right-4 opacity-0 group-hover:opacity-100 transition-opacity transform group-hover:translate-x-0 translate-x-4 text-[#8A0202]">
+                      <ArrowRight size={20} />
+                    </div>
+                  </button>
+                ))}
+              </div>
+            </div>
+          )}
+          {step === 2 && (
+            <form onSubmit={handleSubmit} className="animate-in slide-in-from-right-8 duration-500 fade-in space-y-8">
+               <button type="button" onClick={() => setStep(1)} className="flex items-center text-xs font-bold text-gray-400 hover:text-[#8A0202] transition-colors uppercase tracking-wider group">
+                <ChevronLeft size={14} className="mr-1 group-hover:-translate-x-1 transition-transform" /> Kembali ke Kategori
+              </button>
+              <div className="space-y-4">
+                <h5 className="text-sm font-bold text-gray-900 flex items-center gap-2"><div className="w-2 h-2 rounded-full bg-[#8A0202]"></div> Profil Klien</h5>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <input required name="name" onChange={handleChange} className="w-full p-4 bg-white border border-gray-200 rounded-xl text-sm focus:border-[#8A0202] focus:ring-4 focus:ring-[#8A0202]/10 outline-none transition-all" placeholder="Nama Lengkap Anda" />
+                  <input required name="industry" onChange={handleChange} className="w-full p-4 bg-white border border-gray-200 rounded-xl text-sm focus:border-[#8A0202] focus:ring-4 focus:ring-[#8A0202]/10 outline-none transition-all" placeholder="Bidang Usaha (cth: F&B)" />
+                </div>
+                <input required name="brandName" onChange={handleChange} className="w-full p-4 bg-white border border-gray-200 rounded-xl text-sm focus:border-[#8A0202] focus:ring-4 focus:ring-[#8A0202]/10 outline-none transition-all" placeholder="Nama Brand / Instansi" />
+              </div>
+              <div className="space-y-4">
+                <h5 className="text-sm font-bold text-gray-900 flex items-center gap-2"><div className="w-2 h-2 rounded-full bg-[#8A0202]"></div> Pilih Paket {selectedCategory.toUpperCase()}</h5>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  {PRICING_DATA[selectedCategory]?.map((pkg, idx) => {
+                    const isSelected = selectedPackage?.name === pkg.name;
+                    return (
+                      <div 
+                        key={idx}
+                        onClick={() => setSelectedPackage(pkg)}
+                        className={`cursor-pointer relative p-5 rounded-2xl border-2 transition-all duration-300 flex flex-col justify-between h-full ${isSelected ? 'border-[#8A0202] bg-[#fff5f5] shadow-md' : 'border-gray-100 bg-white hover:border-gray-300 hover:shadow-sm'}`}
+                      >
+                        <div>
+                          <div className="flex justify-between items-start mb-2">
+                            <span className={`font-bold text-lg ${isSelected ? 'text-[#8A0202]' : 'text-gray-800'}`}>{pkg.name}</span>
+                            {isSelected && <Check size={20} className="text-[#8A0202]" />}
+                          </div>
+                          <p className="text-xs text-gray-500 leading-relaxed mb-4">{pkg.desc}</p>
+                        </div>
+                        <div className="pt-3 border-t border-gray-100/50 mt-auto">
+                          <span className="font-black text-xl text-gray-900">{pkg.price}</span>
+                        </div>
+                      </div>
+                    )
+                  })}
+                </div>
+              </div>
+              {selectedCategory === 'website' && (
+                <div className="space-y-4 pt-4 border-t border-dashed border-gray-200">
+                  <h5 className="text-sm font-bold text-gray-900 flex items-center gap-2"><Globe size={14} /> Opsi Hosting & Domain (Opsional)</h5>
+                  <div className="grid grid-cols-1 gap-3">
+                    {PRICING_DATA.hosting.map((host) => {
+                      const isActive = selectedHosting?.id === host.id;
+                      return (
+                        <div key={host.id} onClick={() => setSelectedHosting(isActive ? null : host)} 
+                          className={`cursor-pointer flex items-center justify-between p-4 rounded-xl border transition-all ${isActive ? 'border-[#8A0202] bg-[#fff5f5]' : 'border-gray-200 bg-white'}`}>
+                          <div>
+                            <div className="font-bold text-sm text-gray-800">{host.name} <span className="text-gray-400 font-normal mx-1">|</span> {host.price}</div>
+                            <div className="text-xs text-gray-400 mt-1">{host.desc}</div>
+                          </div>
+                          <div className={`w-6 h-6 rounded-full border flex items-center justify-center transition-colors ${isActive ? 'bg-[#8A0202] border-[#8A0202]' : 'border-gray-300'}`}>
+                            {isActive && <Check size={14} className="text-white" />}
+                          </div>
+                        </div>
+                      )
+                    })}
+                  </div>
+                </div>
+              )}
+              <div className="space-y-2">
+                 <h5 className="text-sm font-bold text-gray-900">Catatan Tambahan</h5>
+                 <textarea name="detail" onChange={handleChange} rows="3" className="w-full p-4 bg-white border border-gray-200 rounded-xl text-sm focus:border-[#8A0202] focus:ring-4 focus:ring-[#8A0202]/10 outline-none resize-none" placeholder="Tuliskan referensi desain atau kebutuhan khusus lainnya..."></textarea>
+              </div>
+              <button type="submit" disabled={!selectedPackage}
+                className={`w-full py-5 rounded-xl font-bold text-lg tracking-wide shadow-xl transition-all duration-300 flex items-center justify-center gap-3 transform active:scale-[0.98] ${selectedPackage ? 'bg-[#8A0202] text-white hover:bg-[#600000] hover:shadow-[#8A0202]/30' : 'bg-gray-200 text-gray-400 cursor-not-allowed'}`}
+              >
+                <span>Konfirmasi & Chat WhatsApp</span>
+                <MessageCircle size={20} />
+              </button>
+            </form>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+};
+
+
+// --- MAIN COMPONENT ---
+export default function HeroLandingPage() {
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const darkRed = '#A61B1B';
 
   const clients = [
     { name: 'Temantiket', src: TemantiketLogo },
     { name: 'AIGYPT', src: AigyptLogo },
-    { name: 'Safer', src: SaferLogo },
     { name: 'Arsana', src: ArsanaLogo },
     { name: 'Dreammecca', src: DreammeccaLogo },
     { name: 'IGH Tour', src: IghTourLogo },
+    { name: 'Safer', src: SaferLogo },
   ];
 
-  // Function untuk handle submit form (contoh sederhana)
-  const handleBriefSubmit = (e) => {
-    e.preventDefault();
-    alert("Brief terkirim! (Simulasi)");
-    setIsBriefOpen(false);
+  const handleBookCall = () => {
+    // Nomor Daru: 6281311506025
+    window.open('https://wa.me/6281311506025?text=Halo%20Daru,%20saya%20mau%20book%20call%20untuk%20diskusi%20project.', '_blank');
   };
 
   return (
     <section className="relative min-h-screen bg-white text-gray-900 font-sans selection:bg-[#A61B1B] selection:text-white flex flex-col justify-center items-center py-12 px-4 md:py-20">
       
-      {/* HEADER LABEL */}
+      {/* HEADER PILL */}
       <div className="flex flex-wrap justify-center items-center gap-2 md:gap-3 bg-white border border-gray-200 px-3 py-1.5 rounded-full shadow-sm mb-6 md:mb-8 hover:shadow-md transition-shadow cursor-default max-w-[90%] md:max-w-none mx-auto animate-fade-in-down">
         <span className="bg-black text-white text-[9px] md:text-[10px] font-bold px-2 py-1 rounded-full uppercase tracking-wide">
           SYMP STUDIO
@@ -41,7 +231,7 @@ export default function ServicesOverview() {
         </p>
       </div>
 
-      {/* HEADLINE AREA */}
+      {/* HEADLINE */}
       <div className="text-center max-w-4xl mx-auto z-10 w-full mb-16">
         <h1 className="text-4xl sm:text-5xl md:text-7xl font-bold text-gray-900 tracking-tight leading-[1.1] mb-6">
           SYMP STUDIO <br className="hidden md:block" />
@@ -62,13 +252,11 @@ export default function ServicesOverview() {
           Mulai dari <strong style={{ color: darkRed }}>Logo</strong>, <strong style={{ color: darkRed }}>Identitas Visual</strong>, materi konten, hingga landing page website modern.
         </p>
 
-        {/* BUTTONS ACTION */}
+        {/* BUTTONS */}
         <div className="flex flex-col sm:flex-row items-center justify-center gap-3 md:gap-4 w-full px-4 md:px-0">
-          
-          {/* 1. Tombol Start Project (Memicu Pop-up) */}
           <button 
-            onClick={() => setIsBriefOpen(true)}
-            className="w-full sm:w-auto px-8 py-3.5 rounded-xl font-bold text-white shadow-lg hover:shadow-xl hover:-translate-y-1 active:scale-95 transition-all flex items-center justify-center gap-2 cursor-pointer"
+            onClick={() => setIsModalOpen(true)}
+            className="w-full sm:w-auto px-8 py-3.5 rounded-xl font-bold text-white shadow-lg hover:shadow-xl hover:-translate-y-1 active:scale-95 transition-all flex items-center justify-center gap-2"
             style={{ backgroundColor: darkRed }}
           >
              <svg className="w-5 h-5 animate-pulse" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -77,39 +265,34 @@ export default function ServicesOverview() {
             Start a Project
           </button>
           
-          {/* 2. Tombol Book a Call (Link ke WhatsApp) */}
-          <a 
-            href="https://wa.me/6281311506025?text=Halo%20SYMP%20Studio%2C%20saya%20tertarik%20untuk%20diskusi%20project%20branding%2Fweb."
-            target="_blank"
-            rel="noopener noreferrer"
-            className="w-full sm:w-auto px-8 py-3.5 rounded-xl font-bold bg-white text-gray-700 border border-gray-200 shadow-sm hover:bg-gray-50 active:bg-gray-100 transition-all flex items-center justify-center gap-2 cursor-pointer no-underline"
+          <button 
+            onClick={handleBookCall}
+            className="w-full sm:w-auto px-8 py-3.5 rounded-xl font-bold bg-white text-gray-700 border border-gray-200 shadow-sm hover:bg-gray-50 active:bg-gray-100 transition-all flex items-center justify-center gap-2"
           >
-            <div className="w-6 h-6 rounded-full bg-green-100 overflow-hidden flex-shrink-0 flex items-center justify-center">
-               <svg className="w-4 h-4 text-green-600" fill="currentColor" viewBox="0 0 24 24">
-                 <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/>
-               </svg>
+            <div className="w-6 h-6 rounded-full bg-gray-100 overflow-hidden flex-shrink-0 flex items-center justify-center">
+               <Phone size={14} className="text-gray-500" />
             </div>
             Book a Call
-          </a>
+          </button>
         </div>
       </div>
 
-      {/* --- CLIENT LOGOS --- */}
+      {/* --- CLIENT LOGOS (COMPACT & UNIFORM) --- */}
       <div className="w-full max-w-5xl mx-auto px-4 mt-8 md:mt-12 animate-fade-in-up">
-         <p className="text-center text-[10px] md:text-xs font-bold text-gray-400 uppercase tracking-[0.2em] mb-6 md:mb-8">
+         <p className="text-center text-[10px] md:text-xs font-bold text-gray-400 uppercase tracking-[0.2em] mb-8 md:mb-10">
            Dipercaya Oleh
          </p>
          
-         <div className="flex flex-wrap justify-center items-center gap-x-8 gap-y-6 md:gap-x-12">
+         <div className="flex flex-wrap justify-center items-center gap-6 md:gap-10">
             {clients.map((client, index) => (
               <div 
                 key={index} 
-                className="group relative h-8 md:h-12 flex items-center justify-center opacity-60 hover:opacity-100 transition-opacity duration-300 grayscale hover:grayscale-0"
+                className="group relative w-24 h-12 md:w-32 md:h-16 flex items-center justify-center p-2 grayscale hover:grayscale-0 transition-all duration-500"
               >
                 <img
                   src={client.src}
                   alt={`${client.name} Logo`}
-                  className="h-full w-auto object-contain"
+                  className="w-full h-full object-contain hover:scale-110 transition-transform duration-300 cursor-pointer"
                 />
               </div>
             ))}
@@ -118,68 +301,11 @@ export default function ServicesOverview() {
 
       {/* FOOTER */}
       <div className="mt-20 md:mt-24 text-gray-300 text-xs md:text-sm font-mono text-center w-full">
-          ©2023 — SYMP Studio.
+         ©2025 — SYMP Studio.
       </div>
 
-      {/* --- BRIEF POPUP MODAL --- */}
-      {isBriefOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-          {/* Backdrop Blur */}
-          <div 
-            className="absolute inset-0 bg-black/50 backdrop-blur-sm"
-            onClick={() => setIsBriefOpen(false)} // Klik luar untuk tutup
-          ></div>
-
-          {/* Modal Content */}
-          <div className="relative bg-white w-full max-w-lg rounded-2xl shadow-2xl overflow-hidden animate-fade-in-up">
-            {/* Modal Header */}
-            <div className="bg-[#A61B1B] px-6 py-4 flex justify-between items-center">
-              <h3 className="text-white font-bold text-lg">Mulai Project Baru</h3>
-              <button 
-                onClick={() => setIsBriefOpen(false)}
-                className="text-white/80 hover:text-white transition-colors"
-              >
-                <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                </svg>
-              </button>
-            </div>
-
-            {/* Modal Body (Simple Form) */}
-            <div className="p-6 md:p-8">
-              <form onSubmit={handleBriefSubmit} className="space-y-4">
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Nama / Brand</label>
-                  <input type="text" placeholder="Nama Brand Lo" className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-[#A61B1B] focus:border-transparent outline-none transition-all" />
-                </div>
-                
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Jenis Layanan</label>
-                  <select className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-[#A61B1B] focus:border-transparent outline-none transition-all">
-                    <option>Brand Identity (Logo)</option>
-                    <option>Social Media Content</option>
-                    <option>Website / Landing Page</option>
-                    <option>Full Package</option>
-                  </select>
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Ceritain Dikit Projectnya</label>
-                  <textarea rows="3" placeholder="Gue butuh logo yang vibenya..." className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-[#A61B1B] focus:border-transparent outline-none transition-all"></textarea>
-                </div>
-
-                <button 
-                  type="submit"
-                  className="w-full py-3 rounded-xl font-bold text-white shadow-md hover:shadow-lg hover:-translate-y-0.5 transition-all mt-2"
-                  style={{ backgroundColor: darkRed }}
-                >
-                  Kirim Brief
-                </button>
-              </form>
-            </div>
-          </div>
-        </div>
-      )}
+      {/* --- RENDER MODAL --- */}
+      <ProjectModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
 
     </section>
   );
