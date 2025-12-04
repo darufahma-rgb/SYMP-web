@@ -117,21 +117,18 @@ export default function HeroLandingPage() {
         }
         @keyframes fade-in { from { opacity: 0; } to { opacity: 1; } }
         
-        /* --- ANIMASI BARU BUAT SYME (Terbang Random) --- */
-        @keyframes float-wander {
-          0% { transform: translate(0, 0) rotate(0deg); }
-          25% { transform: translate(30px, -40px) rotate(5deg); }
-          50% { transform: translate(-20px, -20px) rotate(-3deg); }
-          75% { transform: translate(-40px, 30px) rotate(3deg); }
-          100% { transform: translate(0, 0) rotate(0deg); }
+        /* --- ANIMASI BARU BUAT SYME (Peeking Effect) --- */
+        @keyframes peek-float {
+          0%, 100% { transform: translate(0, 10px) rotate(5deg); } /* Posisi "sembunyi" dikit */
+          50% { transform: translate(-10px, -15px) rotate(-5deg); } /* Posisi "muncul" */
         }
 
         .animate-fade-in { animation: fade-in 0.3s ease-out forwards; }
         .animate-spotlight { animation: subtle-spotlight 8s ease-in-out infinite; }
         .animate-fade-in-up { animation: fade-in-up 0.8s ease-out forwards; opacity: 0; }
         
-        /* Class khusus SYME: Durasi lama (20s) biar pelan banget */
-        .animate-syme-float { animation: float-wander 20s ease-in-out infinite alternate; }
+        /* Class khusus SYME: Durasi medium (6s) biar kayak napas/gerak santai */
+        .animate-syme-peek { animation: peek-float 6s ease-in-out infinite; }
         
         .delay-100 { animation-delay: 0.1s; }
         .delay-200 { animation-delay: 0.2s; }
@@ -143,15 +140,17 @@ export default function HeroLandingPage() {
         <div className="absolute top-0 right-0 w-[400px] h-[400px] bg-white/5 blur-[120px] rounded-full"></div>
       </div>
       
-      {/* --- MASCOT SYME TERBANG --- */}
-      {/* Posisinya absolute, z-index rendah biar gak nutupin Navbar/Button, tapi di atas background */}
+      {/* --- MASCOT SYME NGINTIP DI POJOK KANAN BAWAH --- */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden z-[5]">
-        <div className="absolute top-[20%] left-[10%] md:top-[25%] md:left-[15%] opacity-90 animate-syme-float">
+        {/* Gue atur bottom-0 dan right-0 biar nempel di pojok.
+            Ditambah translate positif di keyframes biar dia ga sepenuhnya kaku.
+            Ukuran disesuaikan lagi biar pas buat ngintip.
+        */}
+        <div className="absolute bottom-[-20px] right-[-10px] md:bottom-[-30px] md:right-[-20px] opacity-90 animate-syme-peek">
              <img 
                src={symeMascot} 
                alt="SYME Mascot" 
-               // Ukuran responsif: kecil di HP, sedang di Desktop
-               className="w-20 md:w-32 lg:w-40 h-auto drop-shadow-[0_0_15px_rgba(255,255,255,0.2)]"
+               className="w-24 md:w-40 lg:w-48 h-auto drop-shadow-[0_0_20px_rgba(255,255,255,0.15)] transform scale-x-[-1]" // Flip horizontal kalau perlu biar madep kiri, hapus scale-x-[-1] kalau gambar aslinya udah madep kiri
              />
         </div>
       </div>
