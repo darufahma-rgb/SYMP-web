@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import logoWhite from '../assets/SYMP LOGO PUTIH.png';
 import logoLong from '../assets/Logo SYMP Panjang.png';
+import symeMascot from '../assets/SYME.png'; // <--- Import SYME
 
 
 // --- KOMPONEN NAVBAR DYNAMIC ISLAND (MOBILE CENTERED LOGO + EXTERNAL HAMBURGER) ---
@@ -25,19 +26,11 @@ function Navbar() {
           className={`pointer-events-auto bg-[#4a0000]/70 backdrop-blur-xl border border-white/10 shadow-[0_8px_32px_rgba(0,0,0,0.3)] overflow-hidden flex flex-col transition-all duration-700
           ${
             isMenuOpen
-              // Saat terbuka (Mobile), melebar di tengah
               ? 'w-[92vw] max-w-[400px] rounded-[3rem] p-4'
-              // Saat tertutup
               : 'w-auto rounded-full py-3 px-8 md:px-12'
           }`}
         >
           {/* Header Pulau */}
-          {/*
-              PERUBAHAN DI SINI:
-              justify-between diubah menjadi 'justify-center md:justify-between'.
-              - Mobile: justify-center (Logo di tengah)
-              - Desktop: justify-between (Logo kiri, Link kanan)
-          */}
           <div className="flex items-center justify-center md:justify-between w-full relative z-20 min-h-[32px]">
             {/* Logo */}
             <img
@@ -46,7 +39,7 @@ function Navbar() {
               className="h-8 w-auto shrink-0 drop-shadow-sm object-contain"
             />
 
-            {/* Desktop Links (Hanya di Desktop) */}
+            {/* Desktop Links */}
             {!isMenuOpen && (
               <div className="hidden md:flex items-center gap-8 ml-10 text-white/90 font-medium text-[13px] uppercase tracking-widest animate-fade-in">
                 <a href="#work" className="hover:text-white transition-colors hover:drop-shadow-[0_0_8px_rgba(255,255,255,0.6)]">Portofolio</a>
@@ -56,7 +49,7 @@ function Navbar() {
             )}
           </div>
 
-          {/* Mobile Menu Items (Isi Pulau saat terbuka) */}
+          {/* Mobile Menu Items */}
           <div
             style={{ transitionTimingFunction: iosSpring }}
             className={`grid transition-all duration-700 ${
@@ -78,7 +71,7 @@ function Navbar() {
         </nav>
       </div>
 
-      {/* --- 2. TOMBOL HAMBURGER TERPISAH (HANYA MOBILE, FIXED DI POJOK KANAN) --- */}
+      {/* --- 2. TOMBOL HAMBURGER TERPISAH --- */}
       <button
         onClick={toggleMenu}
         className="md:hidden fixed z-[101] top-6 right-6 p-1 text-white/90 hover:text-white focus:outline-none bg-[#4a0000]/70 backdrop-blur-xl border border-white/10 shadow-[0_8px_32px_rgba(0,0,0,0.3)] rounded-full h-10 w-10 flex items-center justify-center transition-all active:scale-90 pointer-events-auto"
@@ -108,33 +101,62 @@ export default function HeroLandingPage() {
 
       <Navbar />
 
-      {/* --- AREA ANIMASI BACKGROUND (Tidak Berubah) --- */}
+      {/* --- CSS ANIMASI --- */}
       <style>{`
+        /* Animasi Background Spot */
         @keyframes subtle-spotlight {
           0% { transform: translate(-50%, -50%) scale(1); opacity: 0.4; }
           50% { transform: translate(-45%, -40%) scale(1.1); opacity: 0.7; }
           100% { transform: translate(-50%, -50%) scale(1); opacity: 0.4; }
         }
+
+        /* Animasi Elemen UI */
         @keyframes fade-in-up {
           from { opacity: 0; transform: translateY(20px); }
           to { opacity: 1; transform: translateY(0); }
         }
         @keyframes fade-in { from { opacity: 0; } to { opacity: 1; } }
-        .animate-fade-in { animation: fade-in 0.3s ease-out forwards; }
+        
+        /* --- ANIMASI BARU BUAT SYME (Terbang Random) --- */
+        @keyframes float-wander {
+          0% { transform: translate(0, 0) rotate(0deg); }
+          25% { transform: translate(30px, -40px) rotate(5deg); }
+          50% { transform: translate(-20px, -20px) rotate(-3deg); }
+          75% { transform: translate(-40px, 30px) rotate(3deg); }
+          100% { transform: translate(0, 0) rotate(0deg); }
+        }
 
+        .animate-fade-in { animation: fade-in 0.3s ease-out forwards; }
         .animate-spotlight { animation: subtle-spotlight 8s ease-in-out infinite; }
         .animate-fade-in-up { animation: fade-in-up 0.8s ease-out forwards; opacity: 0; }
+        
+        /* Class khusus SYME: Durasi lama (20s) biar pelan banget */
+        .animate-syme-float { animation: float-wander 20s ease-in-out infinite alternate; }
+        
         .delay-100 { animation-delay: 0.1s; }
         .delay-200 { animation-delay: 0.2s; }
       `}</style>
+
+      {/* --- AREA ANIMASI BACKGROUND --- */}
       <div className="absolute inset-0 pointer-events-none select-none overflow-hidden">
         <div className="absolute top-1/2 left-1/2 w-[600px] md:w-[800px] h-[600px] md:h-[800px] bg-[#ff4d4d]/30 blur-[150px] rounded-full animate-spotlight origin-center"></div>
         <div className="absolute top-0 right-0 w-[400px] h-[400px] bg-white/5 blur-[120px] rounded-full"></div>
       </div>
-      {/* --- AKHIR AREA ANIMASI --- */}
+      
+      {/* --- MASCOT SYME TERBANG --- */}
+      {/* Posisinya absolute, z-index rendah biar gak nutupin Navbar/Button, tapi di atas background */}
+      <div className="absolute inset-0 pointer-events-none overflow-hidden z-[5]">
+        <div className="absolute top-[20%] left-[10%] md:top-[25%] md:left-[15%] opacity-90 animate-syme-float">
+             <img 
+               src={symeMascot} 
+               alt="SYME Mascot" 
+               // Ukuran responsif: kecil di HP, sedang di Desktop
+               className="w-20 md:w-32 lg:w-40 h-auto drop-shadow-[0_0_15px_rgba(255,255,255,0.2)]"
+             />
+        </div>
+      </div>
 
-
-      {/* Section Hero (Tidak Berubah) */}
+      {/* Section Hero Content */}
       <section className="flex-grow flex items-center justify-center pt-40 pb-16 md:pt-32 md:pb-12 px-6 relative z-10">
         <div className="max-w-4xl mx-auto text-center">
 
