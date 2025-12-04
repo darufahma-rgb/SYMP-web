@@ -114,7 +114,7 @@ export default function BrandKitPricing() {
             </h2>
             <p className="text-gray-500 max-w-2xl mx-auto text-lg font-light leading-relaxed">
               Jaga konsistensi visual di semua media. <br className="hidden md:block"/>
-              Bikin brand lo gampang diingat dan terlihat profesional.
+              Bikin brand kamu gampang diingat dan terlihat profesional.
             </p>
           </div>
 
