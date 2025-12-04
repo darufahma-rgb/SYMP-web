@@ -1,48 +1,79 @@
 import React, { useState } from 'react';
-import { Package, FileText, MessageCircle, CreditCard, ArrowRight, X, ChevronLeft } from 'lucide-react';
+import { 
+  Package, FileText, MessageCircle, CreditCard, ArrowRight, 
+  X, ChevronLeft, PenTool, Globe, Instagram, Briefcase 
+} from 'lucide-react';
 
-// --- SUB-COMPONENT: BRIEF MODAL ---
-const BriefModal = ({ isOpen, onClose }) => {
-  const [step, setStep] = useState(1); // 1: Pilih Kategori, 2: Isi Form
+// --- SUB-COMPONENT: SMART MODAL ---
+const ProjectModal = ({ isOpen, onClose }) => {
+  const [step, setStep] = useState(1);
   const [selectedCategory, setSelectedCategory] = useState('');
+  
+  // State tunggal untuk menampung semua jenis input
   const [formData, setFormData] = useState({
     name: '',
     brandName: '',
-    description: '', // Untuk Branding
-    platform: '',    // Untuk Social Media
-    websiteType: ''  // Untuk Web
+    industry: '',       // Bidang usaha (F&B, Tech, Fashion)
+    style: 'Minimalis', // Untuk Logo/Identity
+    slideCount: '5-7 Slide', // Untuk Carousel
+    webType: 'Landing Page', // Untuk Web
+    hosting: 'no',      // Untuk Web (Yes/No)
+    detail: ''          // Catatan tambahan
   });
 
   if (!isOpen) return null;
 
-  // Data Kategori
-  const categories = [
-    { id: 'branding', label: 'Identity & Branding', icon: '🎨' },
-    { id: 'social', label: 'Social Media Mgmt', icon: '📱' },
-    { id: 'web', label: 'Web Development', icon: '💻' },
+  // Data Pilihan Layanan
+  const services = [
+    { id: 'logo', label: 'Desain Logo', icon: <PenTool size={20} />, desc: 'Logo only, logogram & logotype.' },
+    { id: 'identity', label: 'Brand Identity', icon: <Briefcase size={20} />, desc: 'Full kit: Logo, warna, font, pattern.' },
+    { id: 'carousel', label: 'Instagram Carousel', icon: <Instagram size={20} />, desc: 'Konten microblog/edukasi feeds.' },
+    { id: 'website', label: 'Website Development', icon: <Globe size={20} />, desc: 'Company profile atau Landing page.' },
   ];
 
-  // Handle Input Change
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  // Handle Submit ke WhatsApp
   const handleSubmit = (e) => {
     e.preventDefault();
     
-    let briefDetails = '';
+    // --- 1. Header Chat ---
+    let message = `Halo SYMP Studio! 👋%0A%0ASaya tertarik buat project baru nih.%0A`;
+    message += `__________________________%0A%0A`;
+    
+    // --- 2. Identitas Client ---
+    message += `👤 *DATA CLIENT*%0A`;
+    message += `• Nama: ${formData.name}%0A`;
+    message += `• Brand: ${formData.brandName} (${formData.industry})%0A%0A`;
 
-    // Logic Brief Berbeda tiap Paket
-    if (selectedCategory === 'branding') {
-      briefDetails = `• Nama Brand: ${formData.brandName}%0A• Deskripsi Singkat: ${formData.description}`;
-    } else if (selectedCategory === 'social') {
-      briefDetails = `• Platform: ${formData.platform}%0A• Target Audience: ${formData.description}`;
-    } else if (selectedCategory === 'web') {
-      briefDetails = `• Tipe Website: ${formData.websiteType}%0A• Referensi: ${formData.description}`;
+    // --- 3. Detail Request (Sesuai Kategori) ---
+    message += `📦 *DETAIL REQUEST: ${selectedCategory.toUpperCase()}*%0A`;
+
+    if (selectedCategory === 'logo') {
+      message += `• Preferensi Style: ${formData.style}%0A`;
+    } 
+    else if (selectedCategory === 'identity') {
+      message += `• Cakupan: Full Brand Identity%0A`;
+      message += `• Arah Visual: ${formData.style}%0A`;
+    }
+    else if (selectedCategory === 'carousel') {
+      message += `• Estimasi Slide: ${formData.slideCount}%0A`;
+    }
+    else if (selectedCategory === 'website') {
+      message += `• Tipe Web: ${formData.webType}%0A`;
+      // Terjemahkan value hosting ke bahasa manusia
+      const hostingText = formData.hosting === 'yes' ? 'Mau sekalian diurusin (All-in)' : 
+                          formData.hosting === 'consul' ? 'Mau konsultasi dulu' : 'Sudah punya sendiri';
+      message += `• Hosting & Domain: ${hostingText}%0A`;
     }
 
-    const message = `Halo SYMP Studio! 👋%0A%0ASaya mau mulai project baru nih.%0A%0A• Nama: ${formData.name}%0A• Kategori: ${selectedCategory.toUpperCase()}%0A${briefDetails}%0A%0AMohon info selanjutnya ya!`;
+    // --- 4. Catatan Tambahan ---
+    if (formData.detail) {
+      message += `• Notes: ${formData.detail}%0A`;
+    }
+
+    message += `__________________________%0A%0AMohon info pricelist dan langkah selanjutnya ya!`;
 
     window.open(`https://wa.me/6281311506025?text=${message}`, '_blank');
     onClose();
@@ -50,106 +81,148 @@ const BriefModal = ({ isOpen, onClose }) => {
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-      {/* Backdrop */}
-      <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={onClose}></div>
+      <div className="absolute inset-0 bg-black/70 backdrop-blur-sm transition-opacity" onClick={onClose}></div>
 
-      {/* Modal Content */}
-      <div className="relative bg-white w-full max-w-lg rounded-3xl shadow-2xl overflow-hidden animate-in fade-in zoom-in duration-300">
+      <div className="relative bg-white w-full max-w-lg rounded-3xl shadow-2xl overflow-hidden flex flex-col max-h-[90vh]">
         
-        {/* Header Modal */}
-        <div className="bg-[#111] text-white p-6 flex justify-between items-center">
-          <h3 className="text-xl font-bold">Start Project</h3>
+        {/* Header */}
+        <div className="bg-[#111] text-white p-5 flex justify-between items-center shrink-0">
+          <div>
+            <h3 className="text-lg font-bold">Start Your Project</h3>
+            <p className="text-xs text-gray-400">Isi brief singkat biar kita langsung nyambung.</p>
+          </div>
           <button onClick={onClose} className="p-2 hover:bg-white/20 rounded-full transition"><X size={20}/></button>
         </div>
 
-        <div className="p-8">
+        <div className="p-6 overflow-y-auto custom-scrollbar">
           
-          {/* STEP 1: PILIH KATEGORI */}
+          {/* STEP 1: PILIH SERVICE */}
           {step === 1 && (
-            <div>
-              <h4 className="text-2xl font-bold text-gray-900 mb-2">Apa kebutuhanmu?</h4>
-              <p className="text-gray-500 mb-6">Pilih layanan agar kami bisa siapkan brief yang pas.</p>
-              
+            <div className="animate-in slide-in-from-right duration-300">
+              <h4 className="text-xl font-bold text-gray-900 mb-4">Pilih layanan yang kamu butuhkan:</h4>
               <div className="space-y-3">
-                {categories.map((cat) => (
+                {services.map((srv) => (
                   <button
-                    key={cat.id}
-                    onClick={() => { setSelectedCategory(cat.id); setStep(2); }}
-                    className="w-full flex items-center justify-between p-4 border border-gray-200 rounded-xl hover:border-[#8A0202] hover:bg-red-50 transition-all group text-left"
+                    key={srv.id}
+                    onClick={() => { setSelectedCategory(srv.id); setStep(2); }}
+                    className="w-full flex items-center gap-4 p-4 border border-gray-200 rounded-xl hover:border-[#8A0202] hover:bg-red-50 transition-all group text-left"
                   >
-                    <span className="font-semibold text-gray-700 group-hover:text-[#8A0202]">{cat.icon} {cat.label}</span>
-                    <ArrowRight size={18} className="text-gray-300 group-hover:text-[#8A0202]" />
+                    <div className="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center text-gray-600 group-hover:bg-[#8A0202] group-hover:text-white transition-colors">
+                      {srv.icon}
+                    </div>
+                    <div>
+                      <span className="block font-bold text-gray-800 group-hover:text-[#8A0202]">{srv.label}</span>
+                      <span className="text-xs text-gray-500">{srv.desc}</span>
+                    </div>
+                    <ArrowRight size={18} className="ml-auto text-gray-300 group-hover:text-[#8A0202]" />
                   </button>
                 ))}
               </div>
             </div>
           )}
 
-          {/* STEP 2: ISI FORM DINAMIS */}
+          {/* STEP 2: FORM DETAIL */}
           {step === 2 && (
-            <form onSubmit={handleSubmit}>
-               <button 
-                type="button"
-                onClick={() => setStep(1)} 
-                className="flex items-center text-sm text-gray-400 mb-4 hover:text-[#8A0202]"
-              >
-                <ChevronLeft size={16} /> Kembali
+            <form onSubmit={handleSubmit} className="animate-in slide-in-from-right duration-300 space-y-4">
+               <button type="button" onClick={() => setStep(1)} className="flex items-center text-xs font-bold text-gray-400 mb-2 hover:text-[#8A0202] uppercase tracking-wider">
+                <ChevronLeft size={14} className="mr-1" /> Ganti Kategori
               </button>
 
-              <h4 className="text-2xl font-bold text-gray-900 mb-6 capitalize">
-                Brief: {categories.find(c => c.id === selectedCategory)?.label}
-              </h4>
-
-              <div className="space-y-4">
-                {/* Field Umum */}
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Nama Kamu</label>
-                  <input required name="name" onChange={handleChange} className="w-full p-3 bg-gray-50 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#8A0202]" placeholder="Nama Lengkap" />
+              {/* --- BAGIAN 1: DATA DIRI (SELALU MUNCUL) --- */}
+              <div className="bg-gray-50 p-4 rounded-xl space-y-3 border border-gray-100">
+                <p className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-1">Data Dasar</p>
+                <div className="grid grid-cols-2 gap-3">
+                  <div>
+                    <label className="text-xs font-semibold text-gray-700 ml-1">Nama Kamu</label>
+                    <input required name="name" onChange={handleChange} className="w-full mt-1 p-2.5 bg-white border border-gray-200 rounded-lg text-sm focus:border-[#8A0202] focus:ring-1 focus:ring-[#8A0202] outline-none" placeholder="Cth: Daru" />
+                  </div>
+                  <div>
+                    <label className="text-xs font-semibold text-gray-700 ml-1">Industri Bisnis</label>
+                    <input required name="industry" onChange={handleChange} className="w-full mt-1 p-2.5 bg-white border border-gray-200 rounded-lg text-sm focus:border-[#8A0202] focus:ring-1 focus:ring-[#8A0202] outline-none" placeholder="Cth: F&B / Fashion" />
+                  </div>
                 </div>
-
-                {/* --- LOGIC FIELD BERBEDA --- */}
-                {selectedCategory === 'branding' && (
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Nama Brand / Usaha</label>
-                    <input required name="brandName" onChange={handleChange} className="w-full p-3 bg-gray-50 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#8A0202]" placeholder="Contoh: Kopi Senja" />
-                  </div>
-                )}
-
-                {selectedCategory === 'social' && (
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Platform Utama</label>
-                    <select name="platform" onChange={handleChange} className="w-full p-3 bg-gray-50 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#8A0202]">
-                      <option value="Instagram">Instagram</option>
-                      <option value="TikTok">TikTok</option>
-                      <option value="LinkedIn">LinkedIn</option>
-                    </select>
-                  </div>
-                )}
-
-                {selectedCategory === 'web' && (
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Tipe Website</label>
-                    <select name="websiteType" onChange={handleChange} className="w-full p-3 bg-gray-50 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#8A0202]">
-                      <option value="Landing Page">Landing Page</option>
-                      <option value="Company Profile">Company Profile</option>
-                      <option value="E-Commerce">E-Commerce / Toko Online</option>
-                    </select>
-                  </div>
-                )}
-
-                {/* Field Deskripsi (Dipakai semua tapi label beda) */}
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
-                    {selectedCategory === 'branding' ? 'Jelaskan visi brand kamu singkat saja' : 
-                     selectedCategory === 'web' ? 'Ada referensi website yang disuka?' : 
-                     'Target audience atau niche konten?'}
-                  </label>
-                  <textarea required name="description" onChange={handleChange} rows="3" className="w-full p-3 bg-gray-50 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#8A0202]" placeholder="Tulis detailnya di sini..."></textarea>
+                  <label className="text-xs font-semibold text-gray-700 ml-1">Nama Brand</label>
+                  <input required name="brandName" onChange={handleChange} className="w-full mt-1 p-2.5 bg-white border border-gray-200 rounded-lg text-sm focus:border-[#8A0202] focus:ring-1 focus:ring-[#8A0202] outline-none" placeholder="Nama brand kamu" />
                 </div>
               </div>
 
-              <button type="submit" className="w-full mt-8 py-4 bg-[#8A0202] text-white rounded-xl font-bold hover:bg-[#600000] transition-colors shadow-lg">
-                Kirim Brief ke WhatsApp
+              {/* --- BAGIAN 2: CONDITIONAL FIELDS (MUNCUL SESUAI PILIHAN) --- */}
+              <div className="bg-red-50/50 p-4 rounded-xl space-y-3 border border-red-100">
+                <p className="text-xs font-bold text-[#8A0202] uppercase tracking-widest mb-1">
+                  Detail: {services.find(s => s.id === selectedCategory)?.label}
+                </p>
+
+                {/* Field untuk LOGO & IDENTITY */}
+                {(selectedCategory === 'logo' || selectedCategory === 'identity') && (
+                  <div>
+                    <label className="text-xs font-semibold text-gray-700 ml-1">Preferensi Style</label>
+                    <select name="style" onChange={handleChange} className="w-full mt-1 p-2.5 bg-white border border-gray-200 rounded-lg text-sm focus:border-[#8A0202] outline-none">
+                      <option value="Minimalis & Modern">Minimalis & Modern</option>
+                      <option value="Elegant & Luxury">Elegant & Luxury</option>
+                      <option value="Fun & Playful">Fun & Playful</option>
+                      <option value="Corporate & Professional">Corporate & Professional</option>
+                      <option value="Abstrak & Artistik">Abstrak & Artistik</option>
+                      <option value="Belum tau / Bebas">Belum tau / Serahkan ke Designer</option>
+                    </select>
+                  </div>
+                )}
+
+                {/* Field untuk CAROUSEL */}
+                {selectedCategory === 'carousel' && (
+                  <div>
+                    <label className="text-xs font-semibold text-gray-700 ml-1">Perkiraan Jumlah Slide</label>
+                    <select name="slideCount" onChange={handleChange} className="w-full mt-1 p-2.5 bg-white border border-gray-200 rounded-lg text-sm focus:border-[#8A0202] outline-none">
+                      <option value="1-4 Slide">Micro (1-4 Slide)</option>
+                      <option value="5-7 Slide">Medium (5-7 Slide)</option>
+                      <option value="8-10 Slide">Long form (8-10 Slide)</option>
+                    </select>
+                  </div>
+                )}
+
+                {/* Field untuk WEBSITE */}
+                {selectedCategory === 'website' && (
+                  <>
+                    <div>
+                      <label className="text-xs font-semibold text-gray-700 ml-1">Tipe Website</label>
+                      <select name="webType" onChange={handleChange} className="w-full mt-1 p-2.5 bg-white border border-gray-200 rounded-lg text-sm focus:border-[#8A0202] outline-none">
+                        <option value="Landing Page">Landing Page (Satu Halaman)</option>
+                        <option value="Company Profile">Company Profile (Multi Halaman)</option>
+                        <option value="Toko Online">Toko Online / Catalog</option>
+                        <option value="Blog / Portal">Blog / Portal Berita</option>
+                      </select>
+                    </div>
+                    <div>
+                      <label className="text-xs font-semibold text-gray-700 ml-1">Butuh Hosting & Domain?</label>
+                      <select name="hosting" onChange={handleChange} className="w-full mt-1 p-2.5 bg-white border border-gray-200 rounded-lg text-sm focus:border-[#8A0202] outline-none">
+                        <option value="no">Enggak, saya sudah punya</option>
+                        <option value="yes">Ya, sekalian urusin (All-in)</option>
+                        <option value="consul">Belum tau / Konsultasi dulu</option>
+                      </select>
+                    </div>
+                  </>
+                )}
+
+                {/* Field Deskripsi / Notes (Semua Kategori) */}
+                <div>
+                  <label className="text-xs font-semibold text-gray-700 ml-1">Catatan / Detail Tambahan</label>
+                  <textarea 
+                    name="detail" 
+                    onChange={handleChange} 
+                    rows="2" 
+                    className="w-full mt-1 p-2.5 bg-white border border-gray-200 rounded-lg text-sm focus:border-[#8A0202] outline-none" 
+                    placeholder={
+                      selectedCategory === 'carousel' ? 'Topik konten tentang apa?' : 
+                      selectedCategory === 'website' ? 'Ada referensi web yg disuka?' : 
+                      'Jelaskan visi brand secara singkat...'
+                    }
+                  ></textarea>
+                </div>
+              </div>
+
+              <button type="submit" className="w-full py-4 bg-[#8A0202] text-white rounded-xl font-bold hover:bg-[#600000] transition-colors shadow-lg flex items-center justify-center gap-2">
+                <span>Kirim Brief ke WhatsApp</span>
+                <MessageCircle size={18} />
               </button>
             </form>
           )}
@@ -162,7 +235,7 @@ const BriefModal = ({ isOpen, onClose }) => {
 
 
 // --- MAIN COMPONENT ---
-export default function HowToOrderWithForm() {
+export default function HowToOrderAdvanced() {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const steps = [
@@ -231,8 +304,8 @@ export default function HowToOrderWithForm() {
 
       </div>
 
-      {/* Render Modal */}
-      <BriefModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
+      {/* Render Smart Modal */}
+      <ProjectModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
       
     </section>
   );
