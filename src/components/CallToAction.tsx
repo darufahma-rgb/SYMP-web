@@ -1,6 +1,6 @@
 import React from 'react';
 import { Phone, Mail, MapPin } from 'lucide-react';
-import DreamTeamImg from '../assets/DREAM TEAM SYMP.png';
+import DreamTeamImg from '../assets/Dreamteam SYMP.png';
  
 
 export default function CallToAction() {
