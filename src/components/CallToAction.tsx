@@ -1,19 +1,7 @@
 import React from 'react';
 import { Phone, Mail, MapPin } from 'lucide-react';
 import DreamTeamImg from '../assets/DREAM TEAM SYMP.png';
-
-
-// Variasi animasi floating untuk kartu
-const floatingAnimation = {
-  y: [0, -15, 0], // Gerakan vertikal melayang
-  transition: {
-    duration: 4,
-    repeat: Infinity,
-    ease: "easeInOut",
-  },
-};
-
-
+ 
 
 export default function CallToAction() {
   return (
@@ -40,10 +28,11 @@ export default function CallToAction() {
         </p>
       </div>
 
-      {/* --- MAIN SECTION: IMAGE & FLOATING CARDS --- */}
-      <div className="relative z-20 flex flex-col md:flex-row justify-center items-center w-full max-w-7xl mx-auto px-4 mt-auto">
+      {/* --- MAIN SECTION: IMAGE & CARDS --- */}
+      <div className="relative z-20 flex flex-col md:flex-row justify-center items-center w-full max-w-7xl mx-auto px-4 mt-auto min-h-[500px]">
 
-        >
+        {/* --- LEFT SIDE CARD --- */}
+        <div className="hidden md:block absolute left-4 lg:left-10 top-1/2 -translate-y-1/2 z-30">
           {/* WhatsApp Card */}
           <a 
             href="https://wa.me/6281311506025" 
@@ -56,27 +45,24 @@ export default function CallToAction() {
               <span className="text-lg font-bold text-white group-hover:text-red-100 transition-colors whitespace-nowrap">+62 813-1150-6025</span>
             </div>
           </a>
-        </motion.div>
-
+        </div>
 
         {/* --- CENTER DREAM TEAM IMAGE --- */}
-        <div className="relative z-10 w-full max-w-3xl flex justify-center items-end pb-4"> {/* Ukuran diperbesar (max-w-3xl) */}
+        <div className="relative z-10 w-full max-w-4xl flex justify-center items-end pb-0 h-full mt-auto">
           {/* Gradient Fade for Image Bottom */}
           <div className="absolute bottom-0 w-full h-32 bg-gradient-to-t from-[#0F0202] to-transparent z-20"></div>
           
           <img 
             src={DreamTeamImg} 
             alt="Dream Team SYMP Studio" 
-            className="w-full h-auto max-h-[55vh] object-contain object-bottom drop-shadow-[0_10px_30px_rgba(0,0,0,0.8)]"
+            className="w-full h-auto max-h-[60vh] object-contain object-bottom drop-shadow-[0_10px_30px_rgba(0,0,0,0.8)]"
           />
         </div>
 
-
-        {/* --- RIGHT SIDE FLOATING CARDS --- */}
-        <div className="hidden md:flex flex-col space-y-6 absolute right-0 transform translate-x-1/2 z-30" style={{ top: '15%' }}>
+        {/* --- RIGHT SIDE CARDS --- */}
+        <div className="hidden md:flex flex-col space-y-6 absolute right-4 lg:right-10 top-1/2 -translate-y-1/2 z-30">
           {/* Email Card */}
-          <motion.a 
-            animate={floatingAnimation}
+          <a 
             href="mailto:sympp.uss@gmail.com" 
             className="group relative bg-[#1F0505] border border-white/5 rounded-2xl p-6 w-72 block hover:bg-[#2F0808] hover:border-white/10 transition-all duration-300 shadow-xl"
           >
@@ -84,12 +70,11 @@ export default function CallToAction() {
               <span className="text-[10px] md:text-xs tracking-[0.25em] uppercase text-white/50 font-bold">Email Inquiries</span>
               <span className="text-lg font-bold text-white group-hover:text-red-100 transition-colors">sympp.uss@gmail.com</span>
             </div>
-          </motion.a>
+          </a>
 
           {/* Location Card */}
-          <motion.div 
-            animate={floatingAnimationDelayed}
-            className="group relative bg-[#1F0505] border border-white/5 rounded-2xl p-6 w-64 block shadow-xl"
+          <div 
+            className="group relative bg-[#1F0505] border border-white/5 rounded-2xl p-6 w-64 block shadow-xl ml-auto"
           >
             <div className="flex flex-col items-center justify-center space-y-2">
               <span className="text-[10px] md:text-xs tracking-[0.25em] uppercase text-white/50 font-bold">Headquarters</span>
@@ -97,11 +82,11 @@ export default function CallToAction() {
                 Districh 7, <br/> Cairo – Egypt
               </span>
             </div>
-          </motion.div>
+          </div>
         </div>
         
         {/* --- MOBILE CONTACTS (Stacked below image on mobile) --- */}
-        <div className="flex md:hidden flex-col gap-4 w-full max-w-md mt-8 z-30 px-4 pb-8">
+        <div className="flex md:hidden flex-col gap-4 w-full max-w-md mt-4 z-30 px-4 pb-12 bg-[#0F0202]">
           <a href="https://wa.me/6281311506025" target="_blank" rel="noopener noreferrer" className="bg-[#1F0505] border border-white/5 rounded-xl p-4 flex flex-col items-center shadow-lg">
             <span className="text-[10px] tracking-widest uppercase text-white/50 font-bold mb-1">WhatsApp</span>
             <span className="text-base font-bold text-white">+62 813-1150-6025</span>
