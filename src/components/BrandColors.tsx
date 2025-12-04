@@ -6,14 +6,14 @@ export default function HowToOrder() {
     { 
       id: '01',
       title: 'Pilih Paket', 
-      desc: 'Tentukan service yang lo butuh (Branding/Social/Web).', 
+      desc: 'Tentukan service yang kamu butuhkan! (Branding/Social/Web).', 
       icon: <Package size={48} />, // Icon diperbesar sebagai ilustrasi
       theme: 'light' // Style Putih
     },
     { 
       id: '02',
       title: 'Isi Data & Brief', 
-      desc: 'Isi form detail biar kita paham visi lo.', 
+      desc: 'Isi form detail biar kita paham visi kamu.', 
       icon: <FileText size={48} />,
       theme: 'dark' // Style Merah (seperti kartu tengah di referensi)
     },
@@ -34,7 +34,7 @@ export default function HowToOrder() {
   ];
 
   const handleOrderClick = () => {
-    window.open('https://wa.me/6281234567890?text=Halo%20SYMP,%20mau%20order%20dong!', '_blank');
+    window.open('https://wa.me/6281311506025?text=Halo%20SYMP,%20mau%20order%20dong!', '_blank');
   };
 
   return (
