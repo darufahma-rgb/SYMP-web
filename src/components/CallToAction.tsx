@@ -1,7 +1,7 @@
 import React from 'react';
-import { Phone, Mail, MapPin } from 'lucide-react';
+import { Phone, Mail } from 'lucide-react';
 import DreamTeamImg from '../assets/Dreamteam SYMP.png';
- 
+
 
 export default function CallToAction() {
   return (
@@ -17,7 +17,7 @@ export default function CallToAction() {
       <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-10 z-0 mix-blend-overlay"></div>
 
       {/* --- CONTENT SECTION (Headline) --- */}
-      <div className="relative z-30 w-full max-w-6xl mx-auto px-4 pt-10 md:pt-16 text-center flex flex-col items-center">
+      <div className="relative z-30 w-full max-w-6xl mx-auto px-4 pt-10 md:pt-16 text-center flex flex-col items-center shrink-0">
         
         {/* Headline */}
         <h2 className="text-4xl md:text-6xl lg:text-7xl font-bold text-white tracking-tight leading-[1.0] mb-3 drop-shadow-2xl">
@@ -33,9 +33,27 @@ export default function CallToAction() {
       </div>
 
       {/* --- MAIN SECTION: IMAGE & CARDS --- */}
-      <div className="relative z-20 flex flex-col md:flex-row justify-center items-center w-full max-w-[90rem] mx-auto px-4 mt-auto">
+      {/* UPDATED: justify-end dan mt-auto penting biar 'mentok bawah' */}
+      <div className="relative z-20 flex flex-col md:flex-row justify-end items-center w-full max-w-[90rem] mx-auto px-4 mt-auto">
 
-        {/* --- LEFT SIDE CARD (WhatsApp) --- */}
+        {/* --- MOBILE CONTACTS (Moved to TOP for Mobile) --- */}
+        {/* UPDATED: Posisi dipindah ke sini (sebelum gambar) agar di mobile muncul di atas gambar */}
+        <div className="flex md:hidden flex-col gap-3 w-full max-w-sm mb-6 z-30 bg-transparent">
+          <a href="https://wa.me/6281311506025" target="_blank" rel="noopener noreferrer" className="bg-white/5 backdrop-blur-md border border-white/10 rounded-xl p-3 flex items-center justify-between shadow-lg active:scale-95 transition-transform">
+            <span className="text-[10px] tracking-widest uppercase text-white/60 font-bold flex items-center gap-2">
+              <Phone size={14} /> WhatsApp
+            </span>
+            <span className="text-xs font-bold text-white">+62 813-1150-6025</span>
+          </a>
+          <a href="mailto:sympp.uss@gmail.com" className="bg-white/5 backdrop-blur-md border border-white/10 rounded-xl p-3 flex items-center justify-between shadow-lg active:scale-95 transition-transform">
+            <span className="text-[10px] tracking-widest uppercase text-white/60 font-bold flex items-center gap-2">
+              <Mail size={14} /> Email
+            </span>
+            <span className="text-xs font-bold text-white">sympp.uss@gmail.com</span>
+          </a>
+        </div>
+
+        {/* --- LEFT SIDE CARD (WhatsApp - Desktop Only) --- */}
         <div className="hidden md:block absolute left-4 lg:left-12 top-[50%] -translate-y-1/2 z-30">
           <a 
             href="https://wa.me/6281311506025" 
@@ -62,12 +80,13 @@ export default function CallToAction() {
           <img 
             src={DreamTeamImg} 
             alt="Dream Team SYMP Studio" 
-            // Ukuran max-h dikurangi dari 70vh ke 60vh agar lebih proporsional ("agak kecilin dikit")
-            className="w-full h-auto max-h-[60vh] object-contain object-bottom drop-shadow-[0_20px_50px_rgba(0,0,0,0.6)]"
+            // Ukuran max-h dikurangi dari 70vh ke 60vh agar lebih proporsional
+            // UPDATED: Styling image biar responsif dan nempel bawah
+            className="w-full h-auto max-h-[50vh] md:max-h-[65vh] object-contain object-bottom drop-shadow-[0_20px_50px_rgba(0,0,0,0.6)]"
           />
         </div>
 
-        {/* --- RIGHT SIDE CARD (Email Only - Location Removed) --- */}
+        {/* --- RIGHT SIDE CARD (Email Only - Desktop Only) --- */}
         <div className="hidden md:flex flex-col space-y-4 absolute right-4 lg:right-12 top-[50%] -translate-y-1/2 z-30">
           
           {/* Email Card */}
@@ -85,21 +104,6 @@ export default function CallToAction() {
                 <span className="block text-base font-bold text-white tracking-wider group-hover:text-red-100 transition-colors">sympp.uss@gmail.com</span>
               </div>
             </div>
-          </a>
-          
-          {/* Location Card Removed */}
-
-        </div>
-        
-        {/* --- MOBILE CONTACTS (Location Removed) --- */}
-        <div className="flex md:hidden flex-col gap-3 w-full max-w-sm mt-0 z-30 px-6 pb-8 bg-transparent">
-          <a href="https://wa.me/6281311506025" target="_blank" rel="noopener noreferrer" className="bg-white/5 backdrop-blur-md border border-white/10 rounded-xl p-3 flex items-center justify-between shadow-lg">
-            <span className="text-[10px] tracking-widest uppercase text-white/60 font-bold">WhatsApp</span>
-            <span className="text-xs font-bold text-white">+62 813-1150-6025</span>
-          </a>
-          <a href="mailto:sympp.uss@gmail.com" className="bg-white/5 backdrop-blur-md border border-white/10 rounded-xl p-3 flex items-center justify-between shadow-lg">
-            <span className="text-[10px] tracking-widest uppercase text-white/60 font-bold">Email</span>
-            <span className="text-xs font-bold text-white">sympp.uss@gmail.com</span>
           </a>
         </div>
 
