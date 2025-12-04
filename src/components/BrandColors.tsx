@@ -231,7 +231,7 @@ export default function HowToOrderPremium() {
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-20 gap-8">
           <div className="max-w-2xl">
             <h2 className="text-5xl md:text-6xl font-black tracking-tight mb-6 leading-[1.1]">
-              Cara Mudah untuk <br/> <span className="text-[#8A0202]">Mulai Bisnismu!.</span>
+              Cara Mudah untuk <br/> <span className="text-[#8A0202]">Mulai Bisnismu!</span>
             </h2>
             <p className="text-gray-500 text-lg font-light max-w-lg">
               Proses order yang dirancang efisien. Tanpa ribet, langsung ke inti solusi visual brand Anda.
