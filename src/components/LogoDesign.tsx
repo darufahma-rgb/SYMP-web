@@ -1,237 +1,66 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { 
-  ArrowRight, 
-  CheckCircle, 
-  X, 
-  Instagram, 
-  Globe, 
-  Send, 
-  Menu,
-  Palette,
-  Layout,
-  MousePointer2
-} from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { Check, Star, Zap, X, ArrowRight, PenTool, Briefcase, Globe, Instagram, MessageCircle } from 'lucide-react';
 
-/* --- SUB COMPONENTS --- */
-
-// 1. NAVBAR
-const Navbar = ({ onOrderClick }) => {
-  const [isScrolled, setIsScrolled] = useState(false);
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-
-  useEffect(() => {
-    const handleScroll = () => setIsScrolled(window.scrollY > 50);
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
-  return (
-    <nav className={`fixed top-0 left-0 right-0 z-40 transition-all duration-300 ${
-      isScrolled ? 'bg-black/80 backdrop-blur-md py-4 border-b border-white/5' : 'bg-transparent py-6'
-    }`}>
-      <div className="container mx-auto px-6 flex justify-between items-center">
-        {/* Logo */}
-        <div className="text-2xl font-bold tracking-tighter text-white">
-          SAFEER<span className="text-amber-400">.</span>
-        </div>
-
-        {/* Desktop Menu */}
-        <div className="hidden md:flex items-center gap-8">
-          <a href="#" className="text-sm text-gray-300 hover:text-white transition-colors">Portfolio</a>
-          <a href="#" className="text-sm text-gray-300 hover:text-white transition-colors">Services</a>
-          <a href="#" className="text-sm text-gray-300 hover:text-white transition-colors">About</a>
-          <button 
-            onClick={onOrderClick}
-            className="px-6 py-2 bg-white text-black text-sm font-bold rounded-full hover:bg-amber-400 transition-all"
-          >
-            Start Project
-          </button>
-        </div>
-
-        {/* Mobile Toggle */}
-        <button className="md:hidden text-white" onClick={() => setMobileMenuOpen(!mobileMenuOpen)}>
-          {mobileMenuOpen ? <X /> : <Menu />}
-        </button>
-      </div>
-
-      {/* Mobile Menu Dropdown */}
-      {mobileMenuOpen && (
-        <div className="absolute top-full left-0 w-full bg-black border-b border-white/10 p-6 md:hidden flex flex-col gap-4 animate-fade-in">
-          <a href="#" className="text-gray-300 py-2">Portfolio</a>
-          <a href="#" className="text-gray-300 py-2">Services</a>
-          <button 
-            onClick={() => {
-              onOrderClick();
-              setMobileMenuOpen(false);
-            }}
-            className="w-full py-3 bg-amber-400 text-black font-bold rounded-lg"
-          >
-            Start Project
-          </button>
-        </div>
-      )}
-    </nav>
-  );
+// --- DATA DUMMY UNTUK MODAL (Biar Jalan) ---
+const PRICING_DATA = {
+  logo: [{ name: 'Premium Logo All-in', price: '500K' }],
+  hosting: []
 };
 
-// 2. HERO SECTION (Compact Mobile)
-const Hero = ({ onOrderClick }) => (
-  <header className="relative pt-24 pb-12 md:pt-40 md:pb-24 overflow-hidden min-h-[90vh] flex items-center">
-    {/* Background Elements */}
-    <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[500px] h-[500px] bg-amber-500/20 blur-[120px] rounded-full pointer-events-none" />
-    
-    <div className="container mx-auto px-4 md:px-6 text-center relative z-10">
-      <div className="inline-block mb-4 px-3 py-1 rounded-full bg-amber-500/10 border border-amber-500/20 backdrop-blur-sm">
-        <span className="text-amber-400 text-[10px] md:text-sm font-medium tracking-widest uppercase">
-          Premium Brand Identity for Visionaries
-        </span>
-      </div>
-      
-      {/* Heading: Mobile text-4xl (Compact), Desktop text-7xl */}
-      <h1 className="text-4xl md:text-7xl font-sans font-bold text-white mb-4 md:mb-8 leading-tight">
-        Crafting <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-300 to-amber-600">Majestic</span> <br />
-        Digital Legacies
-      </h1>
-      
-      <p className="text-gray-400 text-sm md:text-xl max-w-2xl mx-auto mb-8 md:mb-12 leading-relaxed px-2">
-        We transform businesses into authoritative brands. 
-        Minimalist luxury designed to elevate your market position instantly.
-      </p>
-      
-      <div className="flex flex-col md:flex-row gap-3 justify-center items-center">
-        <button 
-          onClick={onOrderClick}
-          className="w-full md:w-auto px-8 py-3 md:py-4 bg-gradient-to-r from-amber-400 to-amber-600 text-black font-bold rounded-full hover:shadow-[0_0_20px_rgba(251,191,36,0.4)] transition-all transform hover:scale-105 active:scale-95 text-sm md:text-base flex items-center justify-center gap-2"
-        >
-          Order Brand Identity <ArrowRight className="w-4 h-4" />
-        </button>
-        
-        <button className="w-full md:w-auto px-8 py-3 md:py-4 bg-white/5 border border-white/10 text-white font-medium rounded-full hover:bg-white/10 transition-all text-sm md:text-base backdrop-blur-sm">
-          View Our Portfolio
-        </button>
-      </div>
-    </div>
-  </header>
-);
+// --- MODAL COMPONENT (Compact Version) ---
+const ProjectModal = ({ isOpen, onClose, initialData }) => {
+  const [step, setStep] = useState(1);
+  const [selectedCategory, setSelectedCategory] = useState('');
+  const [formData, setFormData] = useState({ name: '', brandName: '', industry: '', detail: '' });
 
-// 3. BRIEF POPUP (Smart Scroll Logic)
-const BriefPopup = ({ isOpen, onClose, focusSection }) => {
-  const logoSectionRef = useRef(null);
-
-  // Auto Scroll Logic
   useEffect(() => {
-    if (isOpen && focusSection === 'logo-selection' && logoSectionRef.current) {
-      // Delay dikit biar animasi modal kelar dulu
-      setTimeout(() => {
-        logoSectionRef.current.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        // Visual cue: flash effect dikit biar user ngeh (opsional)
-        logoSectionRef.current.classList.add('animate-pulse');
-        setTimeout(() => logoSectionRef.current.classList.remove('animate-pulse'), 1000);
-      }, 300);
+    if (isOpen) {
+      if (initialData?.category) {
+        setSelectedCategory(initialData.category);
+        setStep(2);
+      } else {
+        setStep(1);
+      }
     }
-  }, [isOpen, focusSection]);
+  }, [isOpen, initialData]);
 
   if (!isOpen) return null;
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const msg = `Halo, saya mau order paket ${selectedCategory.toUpperCase()} seharga ${initialData?.package?.price || 'Best Price'}.%0A%0ANama: ${formData.name}%0ABrand: ${formData.brandName}%0ADetail: ${formData.detail}`;
+    window.open(`https://wa.me/6281311506025?text=${msg}`, '_blank');
+    onClose();
+  };
+
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-0 md:p-6">
-      {/* Overlay */}
-      <div 
-        className="absolute inset-0 bg-black/90 backdrop-blur-md"
-        onClick={onClose}
-      ></div>
-      
-      {/* Modal Content */}
-      <div className="relative w-full md:max-w-4xl h-full md:h-auto md:max-h-[90vh] overflow-y-auto bg-[#0a0a0a] border border-white/10 md:rounded-2xl shadow-2xl animate-fade-in-up">
-        
-        {/* Close Button Mobile (Sticky) */}
-        <div className="sticky top-0 z-20 flex justify-end p-4 bg-[#0a0a0a]/90 backdrop-blur md:hidden border-b border-white/5">
-           <button onClick={onClose} className="p-2 bg-white/10 rounded-full">
-              <X className="w-5 h-5 text-white" />
-           </button>
+    <div className="fixed inset-0 z-[200] flex items-center justify-center p-4 text-left font-sans text-gray-900">
+      <div className="absolute inset-0 bg-black/60 backdrop-blur-sm transition-opacity" onClick={onClose}></div>
+      <div className="relative bg-white w-full max-w-lg rounded-2xl shadow-2xl overflow-hidden flex flex-col animate-entrance">
+        <div className="bg-[#111] text-white px-6 py-4 flex justify-between items-center">
+          <h3 className="text-lg font-bold">Project Brief</h3>
+          <button onClick={onClose}><X size={20}/></button>
         </div>
-
-        <div className="p-5 md:p-10 pt-2 md:pt-10">
-          <div className="flex justify-between items-start mb-6 md:mb-8">
-            <div>
-              <h3 className="text-2xl md:text-3xl font-bold text-white mb-2">Start Project</h3>
-              <p className="text-gray-400 text-xs md:text-sm">Isi form singkat ini untuk memulai transformasi brand Anda.</p>
-            </div>
-            {/* Close Button Desktop */}
-            <button onClick={onClose} className="hidden md:block p-2 hover:bg-white/10 rounded-full transition-colors">
-              <X className="w-6 h-6 text-gray-400" />
-            </button>
-          </div>
-
-          <form className="space-y-5 md:space-y-8">
-            {/* Basic Info */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
-              <div className="space-y-2">
-                <label className="text-xs text-gray-400 uppercase tracking-wider">Nama Lengkap</label>
-                <input type="text" className="w-full bg-white/5 border border-white/10 rounded-lg p-3 text-white focus:border-amber-400 focus:outline-none transition-colors" placeholder="John Doe" />
-              </div>
-              <div className="space-y-2">
-                <label className="text-xs text-gray-400 uppercase tracking-wider">Nama Brand/Bisnis</label>
-                <input type="text" className="w-full bg-white/5 border border-white/10 rounded-lg p-3 text-white focus:border-amber-400 focus:outline-none transition-colors" placeholder="Ex: Safeer Travel" />
-              </div>
-            </div>
-
-            <div className="space-y-2">
-              <label className="text-xs text-gray-400 uppercase tracking-wider">Industri / Bidang Usaha</label>
-              <select className="w-full bg-white/5 border border-white/10 rounded-lg p-3 text-gray-300 focus:border-amber-400 focus:outline-none">
-                <option>Travel & Tourism</option>
-                <option>Fashion & Lifestyle</option>
-                <option>Technology</option>
-                <option>Food & Beverage</option>
-                <option>Education</option>
-                <option>Other</option>
-              </select>
-            </div>
-
-            {/* --- LOGO SELECTION SECTION (TARGET SCROLL) --- */}
-            <div 
-              ref={logoSectionRef} 
-              className="space-y-4 pt-6 border-t border-white/10 scroll-mt-24 md:scroll-mt-10"
-            >
-              <div className="flex items-center gap-2 mb-2">
-                <Palette className="w-5 h-5 text-amber-400" />
-                <label className="text-sm font-bold text-white uppercase tracking-wider">
-                  Pilih Gaya Logo
-                </label>
-              </div>
-              
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
-                {[
-                  { id: 'monogram', name: 'Monogram', desc: 'Inisial mewah (cth: LV, HP).', icon: <Layout className="w-4 h-4"/> },
-                  { id: 'wordmark', name: 'Wordmark', desc: 'Fokus nama text (cth: Sony, Google).', icon: <Menu className="w-4 h-4"/> },
-                  { id: 'pictorial', name: 'Pictorial', desc: 'Simbol/Ikon (cth: Apple, Twitter).', icon: <MousePointer2 className="w-4 h-4"/> }
-                ].map((style) => (
-                  <label 
-                    key={style.id} 
-                    className="relative group cursor-pointer block"
-                  >
-                    <input type="radio" name="logoStyle" value={style.id} className="peer sr-only" />
-                    <div className="p-4 rounded-xl bg-white/5 border border-white/10 peer-checked:border-amber-400 peer-checked:bg-amber-400/10 transition-all hover:bg-white/10 h-full">
-                      <div className="flex justify-between items-start mb-2">
-                        <div className="text-amber-400">{style.icon}</div>
-                        <div className="w-4 h-4 rounded-full border border-white/20 peer-checked:bg-amber-400 peer-checked:border-amber-400"></div>
-                      </div>
-                      <div className="text-white font-bold text-sm mb-1">{style.name}</div>
-                      <div className="text-gray-400 text-xs leading-relaxed">{style.desc}</div>
-                    </div>
-                  </label>
-                ))}
-              </div>
-            </div>
-
-            {/* Submit Button */}
-            <button type="submit" className="w-full py-4 bg-gradient-to-r from-amber-400 to-amber-600 text-black font-bold rounded-xl hover:shadow-lg hover:shadow-amber-400/20 transition-all transform hover:scale-[1.01] active:scale-[0.99] mt-6">
-              Kirim Brief & Dapatkan Penawaran
-            </button>
-            
-            <p className="text-center text-xs text-gray-500">
-              Kami akan menghubungi Anda via WhatsApp dalam waktu maksimal 2 jam.
-            </p>
+        <div className="p-6 bg-gray-50">
+          <form onSubmit={handleSubmit} className="space-y-4">
+             <div className="bg-red-50 border border-red-100 p-3 rounded-lg text-sm text-[#8A0202] font-semibold">
+                Paket Terpilih: {initialData?.package?.name || selectedCategory}
+             </div>
+             <div>
+                <label className="text-xs font-bold text-gray-500 uppercase">Nama</label>
+                <input required onChange={(e) => setFormData({...formData, name: e.target.value})} className="w-full p-2 rounded border" placeholder="Nama Kamu" />
+             </div>
+             <div>
+                <label className="text-xs font-bold text-gray-500 uppercase">Brand</label>
+                <input required onChange={(e) => setFormData({...formData, brandName: e.target.value})} className="w-full p-2 rounded border" placeholder="Nama Brand" />
+             </div>
+             <div>
+                <label className="text-xs font-bold text-gray-500 uppercase">Detail</label>
+                <textarea onChange={(e) => setFormData({...formData, detail: e.target.value})} className="w-full p-2 rounded border" rows="2" placeholder="Keterangan singkat..."></textarea>
+             </div>
+             <button type="submit" className="w-full py-3 bg-[#8A0202] text-white rounded-lg font-bold hover:bg-[#600000] transition-colors">
+                Lanjut ke WhatsApp
+             </button>
           </form>
         </div>
       </div>
@@ -239,61 +68,148 @@ const BriefPopup = ({ isOpen, onClose, focusSection }) => {
   );
 };
 
-/* --- MAIN COMPONENT --- */
+// --- MAIN COMPONENT ---
+export default function AnimatedPricingLayout() {
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
-export default function SafeerLanding() {
-  const [isBriefOpen, setIsBriefOpen] = useState(false);
-  const [briefFocus, setBriefFocus] = useState(null); // 'logo-selection' or null
-
-  // Handler utama
-  const handleOrderClick = () => {
-    setBriefFocus('logo-selection'); // Set target scroll
-    setIsBriefOpen(true);            // Buka popup
+  const handleOrder = () => {
+    setIsModalOpen(true);
   };
 
-  const handleCloseBrief = () => {
-    setIsBriefOpen(false);
-    setBriefFocus(null); // Reset target
+  // Props untuk inisialisasi modal ke Logo
+  const modalData = {
+    category: 'logo',
+    package: { name: 'Premium Logo All-in', price: '500K' }
   };
 
   return (
-    <div className="min-h-screen bg-black text-white font-sans selection:bg-amber-500/30">
-      
-      <Navbar onOrderClick={handleOrderClick} />
-      
-      <main>
-        <Hero onOrderClick={handleOrderClick} />
+    <>
+      {/* CSS Animations */}
+      <style>{`
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(40px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes float { 0% { transform: translateY(0px); } 50% { transform: translateY(-6px); } 100% { transform: translateY(0px); } }
+        @keyframes shimmer { 0% { background-position: -200% center; } 100% { background-position: 200% center; } }
+        .animate-entrance { animation: fadeInUp 0.6s cubic-bezier(0.2, 0.8, 0.2, 1) forwards; }
+        .animate-float { animation: float 4s ease-in-out infinite; }
+        .bg-shimmer { background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent); background-size: 200% 100%; animation: shimmer 3s infinite; }
+        .stagger-1 { animation-delay: 0.1s; }
+      `}</style>
+
+      {/* Wrapper Utama (Red Theme) */}
+      <div 
+        className="min-h-screen w-full bg-[#8A0202] text-white relative flex flex-col justify-center items-center py-8 px-4 overflow-hidden font-sans"
+      >
+        {/* Background FX */}
+        <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-b from-black/20 via-[#8A0202] to-black/50 pointer-events-none" />
+        <div className="absolute top-[-20%] left-[-10%] w-[500px] h-[500px] bg-white/5 rounded-full blur-[80px] pointer-events-none animate-pulse" />
         
-        {/* Features / Why Us Section (Simple Version) */}
-        <section className="py-12 md:py-20 border-t border-white/5">
-          <div className="container mx-auto px-4 md:px-6">
-             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
-                {[
-                  { title: "Psychology Driven", desc: "Desain yang dibuat untuk mempengaruhi persepsi audiens." },
-                  { title: "Modular System", desc: "Logo yang fleksibel untuk avatar sosmed hingga billboard." },
-                  { title: "Fast Delivery", desc: "Selesai dalam 3-5 hari kerja tanpa mengurangi kualitas." }
-                ].map((item, i) => (
-                  <div key={i} className="p-6 rounded-2xl bg-white/5 border border-white/5 hover:border-amber-500/30 transition-all">
-                    <CheckCircle className="w-8 h-8 text-amber-400 mb-4" />
-                    <h3 className="text-xl font-bold mb-2">{item.title}</h3>
-                    <p className="text-gray-400 text-sm">{item.desc}</p>
-                  </div>
-                ))}
-             </div>
+        {/* Container - Compact Max Width */}
+        <div className="relative z-10 w-full max-w-4xl flex flex-col items-center">
+          
+          {/* Header Compact */}
+          <div className="text-center mb-8 animate-entrance">
+            <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-white drop-shadow-lg mb-2">
+              Premium Logo
+            </h2>
+            <p className="text-xs md:text-sm text-white/80 font-light max-w-lg mx-auto">
+              Satu harga, kualitas dunia. Solusi branding tanpa drama.
+            </p>
           </div>
-        </section>
-      </main>
 
-      <footer className="py-8 text-center text-gray-600 text-sm border-t border-white/5">
-        <p>&copy; 2025 SAFEER by SYMP Studio. All rights reserved.</p>
-      </footer>
+          {/* MAIN CARD SECTION */}
+          <div className="relative w-full flex flex-col items-center">
+            
+            {/* FLOATING BADGE (Lebih Kecil & Rapat) */}
+            <div className="z-30 mb-[-1.5rem] animate-entrance animate-float">
+              <div className="relative overflow-hidden bg-white text-[#8A0202] text-xs font-extrabold px-6 py-2 rounded-full shadow-xl tracking-widest uppercase border-[3px] border-[#8A0202] ring-2 ring-white/50">
+                <div className="absolute inset-0 bg-shimmer pointer-events-none"></div>
+                All-In Package
+              </div>
+            </div>
 
-      {/* Popup Component */}
-      <BriefPopup 
-        isOpen={isBriefOpen} 
-        onClose={handleCloseBrief} 
-        focusSection={briefFocus}
+            {/* CARD (Compact Layout) */}
+            <div className="w-full bg-black/20 backdrop-blur-xl border border-white/60 rounded-3xl flex flex-col md:flex-row relative shadow-2xl overflow-hidden animate-entrance stagger-1 pt-8 md:pt-0">
+              
+              {/* LEFT: Pricing (Compact) */}
+              <div className="w-full md:w-5/12 p-6 flex flex-col justify-center items-center text-center border-b md:border-b-0 md:border-r border-white/10 bg-black/10">
+                <div className="scale-100 hover:scale-105 transition-transform duration-300">
+                  <span className="text-5xl md:text-6xl font-bold text-white tracking-tight">500K</span>
+                </div>
+                <span className="text-white/60 text-[10px] font-medium mb-4 uppercase tracking-widest">Fixed Price</span>
+                
+                <p className="text-white/90 text-xs leading-relaxed mb-6 max-w-[180px]">
+                  Investasi sekali bayar untuk identitas visual jangka panjang.
+                </p>
+
+                <button 
+                  onClick={handleOrder}
+                  className="w-full py-3 px-6 rounded-xl bg-white hover:bg-gray-100 text-[#8A0202] font-extrabold text-sm transition-all hover:shadow-[0_0_15px_rgba(255,255,255,0.4)] hover:-translate-y-0.5 active:scale-95 shadow-lg"
+                >
+                  Order Sekarang
+                </button>
+                
+                <p className="text-white/30 text-[9px] mt-3 flex items-center gap-1">
+                  <Zap className="w-3 h-3" /> Secure payment & Fast delivery
+                </p>
+              </div>
+
+              {/* RIGHT: Features (Compact Grid) */}
+              <div className="w-full md:w-7/12 p-6 md:pl-8 flex flex-col justify-center bg-white/5">
+                <h3 className="text-sm font-semibold text-white mb-4 flex items-center gap-2">
+                  <span className="w-4 h-[2px] bg-white/50 inline-block"></span>
+                  What You Get
+                </h3>
+                
+                <ul className="grid grid-cols-1 gap-2 text-xs text-white text-left">
+                  <li className="flex items-start gap-3">
+                    <div className="bg-white p-0.5 rounded-full mt-0.5"><Check className="w-2.5 h-2.5 text-[#8A0202] stroke-[4]" /></div>
+                    <span className="font-bold text-yellow-300">2 Opsi Desain Eksklusif</span>
+                  </li>
+                  
+                  <li className="flex items-start gap-3">
+                    <div className="bg-white/20 p-0.5 rounded-full mt-0.5"><Check className="w-2.5 h-2.5 text-white" /></div>
+                    <span className="text-white/90">Brand Guideline Lengkap (PDF)</span>
+                  </li>
+                  
+                  <li className="flex items-start gap-3">
+                    <div className="bg-white/20 p-0.5 rounded-full mt-0.5"><Check className="w-2.5 h-2.5 text-white" /></div>
+                    <span className="text-white/90">3 View Mockup Profesional</span>
+                  </li>
+                  
+                  {/* Bonus Item Compact */}
+                  <li className="flex items-center gap-3 p-2 rounded-lg bg-white/10 border border-white/10 my-1">
+                    <div className="bg-yellow-400 p-0.5 rounded-full"><Star className="w-2.5 h-2.5 text-[#8A0202] fill-[#8A0202]" /></div>
+                    <span className="font-bold text-yellow-300">Bonus: Poster Grand Opening</span>
+                  </li>
+                  
+                  <li className="flex items-start gap-3">
+                    <div className="bg-white/20 p-0.5 rounded-full mt-0.5"><Check className="w-2.5 h-2.5 text-white" /></div>
+                    <span className="text-white/90">Master File (AI, EPS, PNG, PDF)</span>
+                  </li>
+                  
+                  <li className="flex items-start gap-3">
+                    <div className="bg-white/20 p-0.5 rounded-full mt-0.5"><Zap className="w-2.5 h-2.5 text-white" /></div>
+                    <span className="text-white/90">Pengerjaan Cepat (2-3 Hari)</span>
+                  </li>
+                </ul>
+              </div>
+
+            </div>
+          </div>
+
+          <p className="text-center text-white/30 text-[10px] mt-6 font-light animate-entrance stagger-2">
+            © 2025 SYMP Studio. Quality Guaranteed.
+          </p>
+
+        </div>
+      </div>
+
+      {/* Render Modal (Otomatis ke Logo) */}
+      <ProjectModal 
+        isOpen={isModalOpen} 
+        onClose={() => setIsModalOpen(false)} 
+        initialData={modalData}
       />
-    </div>
+    </>
   );
 }
