@@ -1,24 +1,24 @@
 import React from 'react';
 import designerImage from '../assets/Designer.png'; 
- 
+
 
 export default function MeetTheDesigner() {
   return (
-    // --- BASE LAYER: Gradient Background ---
-    // UPDATED: Menggunakan gradient dari Merah Brand (#8a0202) ke Merah yang lebih terang (Red-700/vibrant)
-    <section className="py-12 md:py-24 bg-gradient-to-b from-[#8a0202] via-[#b91c1c] to-[#8a0202] text-white overflow-hidden relative font-sans min-h-[90vh] flex items-center">
+    // --- BASE LAYER: Solid Brand Red Background ---
+    // UPDATED: Mengikuti style referensi (Solid #8A0202 + Dark Overlays)
+    <section className="py-12 md:py-24 bg-[#8A0202] text-white overflow-hidden relative font-sans min-h-[90vh] flex items-center">
       
-      {/* --- LAYER 2: Texture Overlay (Noise) --- */}
-      {/* Memberikan tekstur film grain supaya tidak terlalu flat 'digital' */}
-      <div className="absolute inset-0 z-0 opacity-10 mix-blend-overlay pointer-events-none bg-[url('https://grainy-gradients.vercel.app/noise.svg')]"></div>
+      {/* --- DECOR LAYERS (Sesuai Referensi) --- */}
+      
+      {/* Decor 1: Dark Gradient Overlay (Memberikan dimensi gelap di atas dan bawah) */}
+      <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-b from-black/20 via-[#8A0202] to-black/50 pointer-events-none" />
+      
+      {/* Decor 2: White Glow (Top Left-ish) - Highlight halus */}
+      <div className="absolute top-[-10%] left-[20%] w-[600px] h-[600px] bg-white/5 rounded-full blur-[120px] pointer-events-none" />
+      
+      {/* Decor 3: Black/Dark Glow (Bottom Right-ish) - Shadow kedalaman */}
+      <div className="absolute bottom-[-10%] right-[10%] w-[500px] h-[500px] bg-black/30 rounded-full blur-[100px] pointer-events-none" />
 
-      {/* --- LAYER 3: Ambient Glow (Top Light) --- */}
-      {/* Cahaya merah dari atas tengah untuk highlight */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-3xl h-[500px] bg-[#ff0000] blur-[180px] opacity-25 mix-blend-screen pointer-events-none z-0"></div>
-
-      {/* --- LAYER 4: Secondary Subtle Glow (Original White Glow) --- */}
-      {/* Saya pertahankan ini biar ada dimensi asimetris di kanan */}
-      <div className="absolute top-[10%] right-[20%] w-[500px] h-[500px] bg-white/5 rounded-full blur-[120px] pointer-events-none -z-10"></div>
 
       <div className="max-w-7xl mx-auto px-6 relative z-10 w-full">
         <div className="grid grid-cols-1 md:grid-cols-12 gap-12 items-center">
