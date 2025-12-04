@@ -212,10 +212,10 @@ export default function HowToOrderPremium() {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const steps = [
-    { id: '01', title: 'Select Package', desc: 'Pilih layanan Branding, Social Media, atau Website sesuai kebutuhanmu.', icon: <Package size={28} /> },
-    { id: '02', title: 'Fill Brief', desc: 'Isi formulir spesifikasi project dan pilih paket harga yang cocok.', icon: <FileText size={28} /> },
-    { id: '03', title: 'Discussion', desc: 'Terhubung ke WhatsApp untuk konfirmasi detail dan deal harga.', icon: <MessageCircle size={28} /> },
-    { id: '04', title: 'Execution', desc: 'Pembayaran beres, project langsung masuk antrian produksi.', icon: <CreditCard size={28} /> }
+    { id: '01', title: 'Pilih Paket', desc: 'Pilih layanan Branding, Social Media, atau Website sesuai kebutuhanmu.', icon: <Package size={28} /> },
+    { id: '02', title: 'Isi Brief', desc: 'Isi formulir spesifikasi project dan pilih paket harga yang cocok.', icon: <FileText size={28} /> },
+    { id: '03', title: 'Diskusi di WA', desc: 'Terhubung ke WhatsApp untuk konfirmasi detail dan deal harga.', icon: <MessageCircle size={28} /> },
+    { id: '04', title: 'Eksekusi', desc: 'Pembayaran beres, project langsung masuk antrian produksi.', icon: <CreditCard size={28} /> }
   ];
 
   return (
@@ -231,7 +231,7 @@ export default function HowToOrderPremium() {
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-20 gap-8">
           <div className="max-w-2xl">
             <h2 className="text-5xl md:text-6xl font-black tracking-tight mb-6 leading-[1.1]">
-              Simple Steps to <br/> <span className="text-[#8A0202]">Elevate Your Brand.</span>
+              Cara Mudah untuk <br/> <span className="text-[#8A0202]">Mulai Bisnismu!.</span>
             </h2>
             <p className="text-gray-500 text-lg font-light max-w-lg">
               Proses order yang dirancang efisien. Tanpa ribet, langsung ke inti solusi visual brand Anda.
@@ -240,7 +240,7 @@ export default function HowToOrderPremium() {
           <div className="hidden md:block pb-2">
             <div className="flex items-center gap-2 text-xs font-bold tracking-[0.3em] uppercase text-gray-300">
               <div className="w-12 h-[2px] bg-[#8A0202]"></div>
-              SYMP_GUIDE_2025
+              SYMP GUIDE 2025
             </div>
           </div>
         </div>
@@ -297,3 +297,4 @@ export default function HowToOrderPremium() {
     </section>
   );
 }
+
