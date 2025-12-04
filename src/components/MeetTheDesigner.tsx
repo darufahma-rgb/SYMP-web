@@ -1,5 +1,5 @@
 import React from 'react';
-import designerImage from '../assets/Designer.png'; 
+import designerImage from '../assets/Designer.png';
 
 
 export default function MeetTheDesigner() {
@@ -54,14 +54,15 @@ export default function MeetTheDesigner() {
 
 
           {/* --- KOLOM TENGAH: Foto Designer --- */}
-          {/* UPDATED: Order 2 di mobile. Ukuran gambar dibatasi max-w-[280px] di mobile biar compact */}
+          {/* UPDATED: Order 2 di mobile. Ukuran gambar dibatasi max-w-[280px] di mobile biar compact. 
+              DESKTOP: Ditambah scale-125 biar lebih besar */}
           <div className="md:col-span-4 order-2 md:order-2 flex justify-center relative my-2 md:my-0">
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[250px] md:w-[350px] h-[250px] md:h-[350px] bg-white/10 blur-[60px] md:blur-[80px] rounded-full -z-10 mix-blend-overlay"></div>
 
             <img 
               src={designerImage} 
               alt="Daru Fahmaa Muliawan" 
-              className="w-3/4 max-w-[280px] md:max-w-full h-auto object-cover z-10 drop-shadow-2xl relative grayscale-[20%] hover:grayscale-0 transition duration-500 ease-out rounded-2xl md:rounded-none"
+              className="w-3/4 max-w-[280px] md:max-w-full h-auto object-cover z-10 drop-shadow-2xl relative grayscale-[20%] hover:grayscale-0 transition duration-500 ease-out rounded-2xl md:rounded-none md:scale-125 md:translate-y-6 transform"
               style={{ maskImage: 'linear-gradient(to bottom, black 85%, transparent 100%)' }} 
             />
           </div>
@@ -71,7 +72,7 @@ export default function MeetTheDesigner() {
           {/* Bagian ini hanya muncul di mobile setelah gambar, menggantikan intro desktop */}
           <div className="order-3 md:hidden text-center space-y-6">
              <p className="text-white/80 text-sm leading-relaxed max-w-xs mx-auto font-light">
-                Founder & Creative Director SYMP Studio sejak 2021. Telah mengerjakan 200+ proyek visual meliputi logo, identitas visual, dan creative direction.
+                Founder & Creative Director SYMP Studio sejak 2021. Telah mengerjakan 300+ proyek visual meliputi logo, identitas visual, dan creative direction.
               </p>
               
               <div className="flex justify-center">
