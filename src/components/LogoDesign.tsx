@@ -19,7 +19,7 @@ export default function AnimatedPricingLayout() {
   const handleSendToWA = (e) => {
     e.preventDefault();
     // GANTI NOMOR WA LO DISINI (Format: 628xxx)
-    const phoneNumber = "628123456789"; 
+    const phoneNumber = "6281311506025"; 
     
     const message = `Halo SYMP Studio, saya mau order paket logo 500K.%0A%0AData Brief:%0A- Nama: ${formData.name}%0A- Nama Brand: ${formData.brandName}%0A- Jenis Usaha: ${formData.category}%0A- Deskripsi/Request: ${formData.description}`;
     
