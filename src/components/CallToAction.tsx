@@ -5,11 +5,13 @@ import DreamTeamImg from '../assets/DREAM TEAM SYMP.png';
 
 export default function CallToAction() {
   return (
-    <section id="contact" className="relative w-full min-h-screen flex flex-col overflow-hidden bg-[#0F0202]">
+    // Mengubah background base menjadi merah SYMP yang lebih terang
+    <section id="contact" className="relative w-full min-h-screen flex flex-col overflow-hidden bg-[#320000]">
 
-      {/* --- BACKGROUND ELEMENTS (Tuned for Deep Maroon Vibe) --- */}
-      <div className="absolute inset-0 bg-gradient-to-b from-[#0F0202] via-[#2a0505] to-[#450a0a] opacity-100 z-0"></div>
-      <div className="absolute top-[-10%] left-1/2 -translate-x-1/2 w-[800px] h-[500px] bg-[#ff0000] rounded-full blur-[150px] opacity-10 mix-blend-screen pointer-events-none"></div>
+      {/* --- BACKGROUND ELEMENTS (Tuned for SYMP Red Vibe) --- */}
+      {/* Mengubah gradien menjadi palet merah yang lebih kaya */}
+      <div className="absolute inset-0 bg-gradient-to-b from-[#320000] via-[#600000] to-[#900000] opacity-100 z-0"></div>
+      <div className="absolute top-[-10%] left-1/2 -translate-x-1/2 w-[800px] h-[500px] bg-[#ff0000] rounded-full blur-[150px] opacity-20 mix-blend-screen pointer-events-none"></div>
       <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-10 z-0 mix-blend-overlay"></div>
 
       {/* --- CONTENT SECTION --- */}
@@ -29,7 +31,7 @@ export default function CallToAction() {
       </div>
 
       {/* --- MAIN SECTION: IMAGE & CARDS --- */}
-      <div className="relative z-20 flex flex-col md:flex-row justify-center items-center w-full max-w-7xl mx-auto px-4 mt-auto min-h-[500px]">
+      <div className="relative z-20 flex flex-col md:flex-row justify-center items-center w-full max-w-7xl mx-auto px-4 mt-auto min-h-[600px]">
 
         {/* --- LEFT SIDE CARD --- */}
         <div className="hidden md:block absolute left-4 lg:left-10 top-1/2 -translate-y-1/2 z-30">
@@ -38,7 +40,7 @@ export default function CallToAction() {
             href="https://wa.me/6281311506025" 
             target="_blank"
             rel="noopener noreferrer"
-            className="group relative bg-[#1F0505] border border-white/5 rounded-2xl p-6 w-64 block hover:bg-[#2F0808] hover:border-white/10 transition-all duration-300 shadow-xl"
+            className="group relative bg-[#4A0000] border border-white/10 rounded-2xl p-6 w-64 block hover:bg-[#5A0000] hover:border-white/20 transition-all duration-300 shadow-xl"
           >
             <div className="flex flex-col items-center justify-center space-y-2">
               <span className="text-[10px] md:text-xs tracking-[0.25em] uppercase text-white/50 font-bold">WhatsApp</span>
@@ -48,14 +50,15 @@ export default function CallToAction() {
         </div>
 
         {/* --- CENTER DREAM TEAM IMAGE --- */}
-        <div className="relative z-10 w-full max-w-4xl flex justify-center items-end pb-0 h-full mt-auto">
-          {/* Gradient Fade for Image Bottom */}
-          <div className="absolute bottom-0 w-full h-32 bg-gradient-to-t from-[#0F0202] to-transparent z-20"></div>
+        {/* Container diperbesar ke max-w-7xl */}
+        <div className="relative z-10 w-full max-w-7xl flex justify-center items-end pb-0 h-full mt-auto">
+          {/* Gradient Fade hitam di bawah dihapus */}
           
           <img 
             src={DreamTeamImg} 
             alt="Dream Team SYMP Studio" 
-            className="w-full h-auto max-h-[60vh] object-contain object-bottom drop-shadow-[0_10px_30px_rgba(0,0,0,0.8)]"
+            // Max height diperbesar ke 80vh agar gambar lebih besar
+            className="w-full h-auto max-h-[80vh] object-contain object-bottom drop-shadow-[0_10px_30px_rgba(0,0,0,0.8)]"
           />
         </div>
 
@@ -64,7 +67,7 @@ export default function CallToAction() {
           {/* Email Card */}
           <a 
             href="mailto:sympp.uss@gmail.com" 
-            className="group relative bg-[#1F0505] border border-white/5 rounded-2xl p-6 w-72 block hover:bg-[#2F0808] hover:border-white/10 transition-all duration-300 shadow-xl"
+            className="group relative bg-[#4A0000] border border-white/10 rounded-2xl p-6 w-72 block hover:bg-[#5A0000] hover:border-white/20 transition-all duration-300 shadow-xl"
           >
             <div className="flex flex-col items-center justify-center space-y-2">
               <span className="text-[10px] md:text-xs tracking-[0.25em] uppercase text-white/50 font-bold">Email Inquiries</span>
@@ -74,7 +77,7 @@ export default function CallToAction() {
 
           {/* Location Card */}
           <div 
-            className="group relative bg-[#1F0505] border border-white/5 rounded-2xl p-6 w-64 block shadow-xl ml-auto"
+            className="group relative bg-[#4A0000] border border-white/10 rounded-2xl p-6 w-64 block shadow-xl ml-auto"
           >
             <div className="flex flex-col items-center justify-center space-y-2">
               <span className="text-[10px] md:text-xs tracking-[0.25em] uppercase text-white/50 font-bold">Headquarters</span>
@@ -86,16 +89,17 @@ export default function CallToAction() {
         </div>
         
         {/* --- MOBILE CONTACTS (Stacked below image on mobile) --- */}
-        <div className="flex md:hidden flex-col gap-4 w-full max-w-md mt-4 z-30 px-4 pb-12 bg-[#0F0202]">
-          <a href="https://wa.me/6281311506025" target="_blank" rel="noopener noreferrer" className="bg-[#1F0505] border border-white/5 rounded-xl p-4 flex flex-col items-center shadow-lg">
+        {/* Background mobile disesuaikan dengan warna merah baru */}
+        <div className="flex md:hidden flex-col gap-4 w-full max-w-md mt-4 z-30 px-4 pb-12 bg-[#320000]">
+          <a href="https://wa.me/6281311506025" target="_blank" rel="noopener noreferrer" className="bg-[#4A0000] border border-white/10 rounded-xl p-4 flex flex-col items-center shadow-lg">
             <span className="text-[10px] tracking-widest uppercase text-white/50 font-bold mb-1">WhatsApp</span>
             <span className="text-base font-bold text-white">+62 813-1150-6025</span>
           </a>
-          <a href="mailto:sympp.uss@gmail.com" className="bg-[#1F0505] border border-white/5 rounded-xl p-4 flex flex-col items-center shadow-lg">
+          <a href="mailto:sympp.uss@gmail.com" className="bg-[#4A0000] border border-white/10 rounded-xl p-4 flex flex-col items-center shadow-lg">
             <span className="text-[10px] tracking-widest uppercase text-white/50 font-bold mb-1">Email</span>
             <span className="text-base font-bold text-white">sympp.uss@gmail.com</span>
           </a>
-           <div className="bg-[#1F0505] border border-white/5 rounded-xl p-4 flex flex-col items-center shadow-lg">
+           <div className="bg-[#4A0000] border border-white/10 rounded-xl p-4 flex flex-col items-center shadow-lg">
             <span className="text-[10px] tracking-widest uppercase text-white/50 font-bold mb-1">Location</span>
             <span className="text-base font-medium text-white text-center">Districh 7, Cairo – Egypt</span>
           </div>
