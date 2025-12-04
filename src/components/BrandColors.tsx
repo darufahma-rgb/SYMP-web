@@ -1,40 +1,38 @@
-'use client'; // <--- WAJIB ADA KALAU PAKAI NEXT.JS
-
 import React, { useState } from 'react';
 import { 
   Package, FileText, MessageCircle, CreditCard, ArrowRight, 
   X, ChevronLeft, PenTool, Globe, Instagram, Briefcase, Check, Star 
 } from 'lucide-react';
 
-// --- DATA HARGA ---
+// --- DATA HARGA (Sama seperti sebelumnya) ---
 const PRICING_DATA = {
   logo: [
-    { name: 'Premium Logo All-in', price: '500K', desc: 'Harga Tetap. 2 Opsi Desain Eksklusif, File Master Lengkap, Panduan Brand, Bonus Poster.' }
+    { name: 'Premium Logo All-in', price: '500K', desc: 'Fixed Price. 2 Opsi Desain, Full Files, Brand Guide, Bonus Poster.' }
   ],
   identity: [
-    { name: 'Basic Brand Kit', price: '300K', desc: 'Palet Warna, Sistem Tipografi, Logo Alternatif.' },
-    { name: 'Standard Kit', price: '500K', desc: 'Panduan Brand Mini (Guideline), Sistem Ikon Grafis.' },
-    { name: 'Premium Identity', price: '800K', desc: 'Fondasi Visual Utuh, Mockup Realistis, Template Media Sosial.' }
+    { name: 'Basic Brand Kit', price: '300K', desc: 'Color palette, Typo, Logo Alt.' },
+    { name: 'Standard Kit', price: '500K', desc: 'Mini Brand Guide, Icon System.' },
+    { name: 'Premium Identity', price: '800K', desc: 'Full Foundation, Mockups, Social Templates.' }
   ],
   carousel: [
-    { name: 'Basic Carousel', price: '70K/post', desc: '3-5 Slide, Caption Standar.' },
-    { name: 'Standard Story', price: '100K/post', desc: '6-8 Slide, Copywriting Fokus Audiens.' },
-    { name: 'Premium Educate', price: '125K/post', desc: '9-10 Slide, Microblog Mendalam, File Sumber (Source File).' }
+    { name: 'Basic Carousel', price: '70K/post', desc: '3-5 Slide, Caption Basic.' },
+    { name: 'Standard Story', price: '100K/post', desc: '6-8 Slide, Copywriting Audien-Centric.' },
+    { name: 'Premium Educate', price: '125K/post', desc: '9-10 Slide, Microblog, Source File.' }
   ],
   poster: [
-    { name: 'Basic Poster', price: '100K', desc: 'Informasi acara mendesak, 1 Konsep Visual.' },
-    { name: 'Standard', price: '200K', desc: 'Tampilan Profesional, Siap Cetak (HD Print Ready).' },
-    { name: 'Premium Art', price: '300K', desc: 'Manipulasi/Ilustrasi Kompleks, Termasuk File Master.' }
+    { name: 'Basic Poster', price: '100K', desc: 'Info event dadakan, 1 Konsep.' },
+    { name: 'Standard', price: '200K', desc: 'Tampilan profesional, HD Ready Print.' },
+    { name: 'Premium Art', price: '300K', desc: 'Manipulasi/Ilustrasi kompleks, Source File.' }
   ],
   website: [
-    { name: 'Basic Page', price: '800K', desc: '1 Halaman, React/HTML, Responsif Mobile.' },
-    { name: 'Pro Business', price: '1.3 Juta', desc: 'SEO Dasar, Animasi Interaktif, Formulir WA, Gratis Deploy.' },
-    { name: 'Premium Web', price: '2 Juta', desc: 'Interaksi Mikro, Copywriting Penjualan (Sales Copy), Prioritas Pengerjaan.' }
+    { name: 'Basic Page', price: '800K', desc: '1 Page, React/HTML, Responsive.' },
+    { name: 'Pro Business', price: '1.3 Juta', desc: 'SEO Basic, Animasi, WA Form, Free Deploy.' },
+    { name: 'Premium Web', price: '2 Juta', desc: 'Micro Interaction, Sales Copy, Priority.' }
   ],
   hosting: [
-    { id: 'starter', name: 'Starter Host', price: '300K/thn', desc: 'Cloud Hosting Kecepatan Tinggi, SSL Dasar.' },
+    { id: 'starter', name: 'Starter Host', price: '300K/thn', desc: 'Cloud High Speed, Basic SSL.' },
     { id: 'business', name: 'Business Kit', price: '500K/thn', desc: 'Hosting Premium + Domain .COM.' },
-    { id: 'pro', name: 'Pro Managed', price: '1 Juta/thn', desc: 'Sumber Daya Tinggi, Pemeliharaan Penuh (Full Maintenance).' }
+    { id: 'pro', name: 'Pro Managed', price: '1 Juta/thn', desc: 'Resource Tinggi, Full Maintenance.' }
   ]
 };
 
@@ -46,68 +44,53 @@ const ProjectModal = ({ isOpen, onClose }) => {
   const [selectedPackage, setSelectedPackage] = useState(null);
   const [selectedHosting, setSelectedHosting] = useState(null);
 
-  // Jangan render apa-apa kalau modal tertutup
   if (!isOpen) return null;
 
   const services = [
-    { id: 'logo', label: 'Desain Logo', icon: <PenTool size={20} /> },
-    { id: 'identity', label: 'Identitas Brand', icon: <Briefcase size={20} /> },
-    { id: 'poster', label: 'Poster & Flyer', icon: <Star size={20} /> },
-    { id: 'carousel', label: 'Konten Instagram', icon: <Instagram size={20} /> },
-    { id: 'website', label: 'Pembuatan Website', icon: <Globe size={20} /> },
+    { id: 'logo', label: 'Logo Design', icon: <PenTool size={20} /> },
+    { id: 'identity', label: 'Brand Identity', icon: <Briefcase size={20} /> },
+    { id: 'poster', label: 'Poster/Flyer', icon: <Star size={20} /> },
+    { id: 'carousel', label: 'IG Carousel', icon: <Instagram size={20} /> },
+    { id: 'website', label: 'Web Development', icon: <Globe size={20} /> },
   ];
 
   const handleChange = (e) => setFormData({ ...formData, [e.target.name]: e.target.value });
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    let message = `Halo Tim SYMP Studio. 👋%0A%0ASaya tertarik untuk memulai proyek pada layanan *${selectedCategory.toUpperCase()}*. Berikut detail kebutuhan saya:%0A`;
-    message += `__________________________%0A%0A`;
-    message += `👤 *PROFIL KLIEN*%0A• Nama: ${formData.name}%0A• Brand/Instansi: ${formData.brandName} (${formData.industry})%0A%0A`;
-    message += `📦 *PAKET PILIHAN*%0A`;
-    if (selectedPackage) {
-      message += `• Paket: ${selectedPackage.name}%0A• Estimasi Harga: ${selectedPackage.price}%0A`;
-    }
-    if (selectedCategory === 'website') {
-       message += selectedHosting ? `• Layanan Hosting: ${selectedHosting.name} (${selectedHosting.price})%0A` : `• Layanan Hosting: Menggunakan Hosting Sendiri (Mandiri)%0A`;
-    }
-    if (formData.detail) {
-      message += `%0A📝 *CATATAN TAMBAHAN*%0A${formData.detail}%0A`;
-    }
-    message += `__________________________%0A%0AMohon informasi mengenai ketersediaan slot dan langkah selanjutnya. Terima kasih.`;
+    let message = `Halo SYMP Studio! 👋%0A%0ASaya tertarik dengan layanan *${selectedCategory.toUpperCase()}*.%0A__________________________%0A%0A👤 *CLIENT PROFILE*%0A• Nama: ${formData.name}%0A• Brand: ${formData.brandName} (${formData.industry})%0A%0A📦 *SELECTED PACKAGE*%0A`;
+    if (selectedPackage) message += `• Paket: ${selectedPackage.name}%0A• Harga: ${selectedPackage.price}%0A`;
+    if (selectedCategory === 'website') message += selectedHosting ? `• Hosting: ${selectedHosting.name} (${selectedHosting.price})%0A` : `• Hosting: No/Own Hosting%0A`;
+    if (formData.detail) message += `%0A📝 *NOTES*%0A${formData.detail}%0A`;
+    message += `__________________________%0A%0AMohon info ketersediaan slot. Thank you!`;
     window.open(`https://wa.me/6281311506025?text=${message}`, '_blank');
     onClose();
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-      {/* Backdrop */}
-      <div 
-        className="absolute inset-0 bg-black/60 backdrop-blur-sm transition-opacity duration-300"
-        onClick={onClose}
-      ></div>
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 isolate">
+      {/* Backdrop with Blur */}
+      <div className="absolute inset-0 bg-black/60 backdrop-blur-sm transition-opacity" onClick={onClose}></div>
 
       {/* Main Card */}
-      <div className="relative bg-white w-full max-w-2xl rounded-[2rem] shadow-2xl overflow-hidden flex flex-col max-h-[90vh] transition-all transform duration-300 scale-100 opacity-100">
+      <div className="relative bg-white w-full max-w-2xl rounded-[2rem] shadow-2xl overflow-hidden flex flex-col max-h-[90vh] animate-in zoom-in-95 duration-300">
         
         {/* Header Visual */}
         <div className="bg-[#111] text-white px-8 py-6 flex justify-between items-center shrink-0 relative overflow-hidden">
-          {/* Decorative Blob */}
           <div className="absolute top-0 right-0 w-32 h-32 bg-[#8A0202] rounded-full blur-[60px] opacity-40 translate-x-10 -translate-y-10"></div>
-          
           <div className="relative z-10">
-            <h3 className="text-2xl font-bold font-sans tracking-tight">Mulai Proyek</h3>
-            <p className="text-white/70 text-sm mt-1">Lengkapi formulir singkat untuk konsultasi awal.</p>
+            <h3 className="text-2xl font-bold font-['Poppins'] tracking-tight">Start Project</h3>
+            <p className="text-white/60 text-sm mt-1">Lengkapi brief singkat untuk memulai.</p>
           </div>
           <button onClick={onClose} className="relative z-10 p-2 bg-white/10 hover:bg-white/20 rounded-full transition-colors"><X size={20}/></button>
         </div>
 
-        <div className="p-8 overflow-y-auto h-full bg-gray-50/50">
+        <div className="p-8 overflow-y-auto custom-scrollbar bg-gray-50/50 h-full">
           
           {/* STEP 1: SERVICE SELECTION */}
           {step === 1 && (
-            <div className="transition-opacity duration-500 opacity-100">
-              <h4 className="text-gray-900 font-bold mb-6 text-lg">Pilih Kategori Layanan</h4>
+            <div className="animate-in slide-in-from-right-4 duration-500 fade-in">
+              <h4 className="text-gray-900 font-bold mb-6 text-lg">Pilih Kategori Project</h4>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 {services.map((srv) => (
                   <button
@@ -130,19 +113,19 @@ const ProjectModal = ({ isOpen, onClose }) => {
 
           {/* STEP 2: DETAILS & PRICING */}
           {step === 2 && (
-            <form onSubmit={handleSubmit} className="space-y-8 transition-opacity duration-500 opacity-100">
+            <form onSubmit={handleSubmit} className="animate-in slide-in-from-right-8 duration-500 fade-in space-y-8">
                <button type="button" onClick={() => setStep(1)} className="flex items-center text-xs font-bold text-gray-400 hover:text-[#8A0202] transition-colors uppercase tracking-wider group">
-                <ChevronLeft size={14} className="mr-1 group-hover:-translate-x-1 transition-transform" /> Kembali ke Kategori
+                <ChevronLeft size={14} className="mr-1 group-hover:-translate-x-1 transition-transform" /> Back to Categories
               </button>
 
               {/* Data Client Inputs */}
               <div className="space-y-4">
-                <h5 className="text-sm font-bold text-gray-900 flex items-center gap-2"><div className="w-2 h-2 rounded-full bg-[#8A0202]"></div> Profil Klien</h5>
+                <h5 className="text-sm font-bold text-gray-900 flex items-center gap-2"><div className="w-2 h-2 rounded-full bg-[#8A0202]"></div> Data Profil</h5>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <input required name="name" onChange={handleChange} className="w-full p-4 bg-white border border-gray-200 rounded-xl text-sm focus:border-[#8A0202] focus:ring-4 focus:ring-[#8A0202]/10 outline-none transition-all" placeholder="Nama Lengkap Anda" />
-                  <input required name="industry" onChange={handleChange} className="w-full p-4 bg-white border border-gray-200 rounded-xl text-sm focus:border-[#8A0202] focus:ring-4 focus:ring-[#8A0202]/10 outline-none transition-all" placeholder="Bidang Usaha (cth: F&B)" />
+                  <input required name="name" onChange={handleChange} className="w-full p-4 bg-white border border-gray-200 rounded-xl text-sm focus:border-[#8A0202] focus:ring-4 focus:ring-[#8A0202]/10 outline-none transition-all" placeholder="Nama Lengkap" />
+                  <input required name="industry" onChange={handleChange} className="w-full p-4 bg-white border border-gray-200 rounded-xl text-sm focus:border-[#8A0202] focus:ring-4 focus:ring-[#8A0202]/10 outline-none transition-all" placeholder="Bidang Bisnis (e.g. F&B)" />
                 </div>
-                <input required name="brandName" onChange={handleChange} className="w-full p-4 bg-white border border-gray-200 rounded-xl text-sm focus:border-[#8A0202] focus:ring-4 focus:ring-[#8A0202]/10 outline-none transition-all" placeholder="Nama Brand / Instansi" />
+                <input required name="brandName" onChange={handleChange} className="w-full p-4 bg-white border border-gray-200 rounded-xl text-sm focus:border-[#8A0202] focus:ring-4 focus:ring-[#8A0202]/10 outline-none transition-all" placeholder="Nama Brand / Usaha" />
               </div>
 
               {/* Pricing Grid Selection */}
@@ -179,7 +162,7 @@ const ProjectModal = ({ isOpen, onClose }) => {
               {/* Hosting Add-on (Conditional) */}
               {selectedCategory === 'website' && (
                 <div className="space-y-4 pt-4 border-t border-dashed border-gray-200">
-                  <h5 className="text-sm font-bold text-gray-900 flex items-center gap-2"><Globe size={14} /> Opsi Hosting & Domain (Opsional)</h5>
+                  <h5 className="text-sm font-bold text-gray-900 flex items-center gap-2"><Globe size={14} /> Add-on Hosting (Optional)</h5>
                   <div className="grid grid-cols-1 gap-3">
                     {PRICING_DATA.hosting.map((host) => {
                       const isActive = selectedHosting?.id === host.id;
@@ -203,7 +186,7 @@ const ProjectModal = ({ isOpen, onClose }) => {
               {/* Notes */}
               <div className="space-y-2">
                  <h5 className="text-sm font-bold text-gray-900">Catatan Tambahan</h5>
-                 <textarea name="detail" onChange={handleChange} rows="3" className="w-full p-4 bg-white border border-gray-200 rounded-xl text-sm focus:border-[#8A0202] focus:ring-4 focus:ring-[#8A0202]/10 outline-none resize-none" placeholder="Tuliskan referensi desain atau kebutuhan khusus lainnya..."></textarea>
+                 <textarea name="detail" onChange={handleChange} rows="3" className="w-full p-4 bg-white border border-gray-200 rounded-xl text-sm focus:border-[#8A0202] focus:ring-4 focus:ring-[#8A0202]/10 outline-none resize-none" placeholder="Ceritakan sedikit tentang style yang kamu suka..."></textarea>
               </div>
 
               {/* Submit Button */}
@@ -212,7 +195,7 @@ const ProjectModal = ({ isOpen, onClose }) => {
                   ${selectedPackage ? 'bg-[#8A0202] text-white hover:bg-[#600000] hover:shadow-[#8A0202]/30' : 'bg-gray-200 text-gray-400 cursor-not-allowed'}
                 `}
               >
-                <span>Konfirmasi & Chat WhatsApp</span>
+                <span>Finalize & Chat on WhatsApp</span>
                 <MessageCircle size={20} />
               </button>
             </form>
@@ -225,18 +208,18 @@ const ProjectModal = ({ isOpen, onClose }) => {
 };
 
 // --- MAIN PAGE ---
-export default function HowToOrderProfessional() {
+export default function HowToOrderPremium() {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const steps = [
-    { id: '01', title: 'Pilih Layanan', desc: 'Tentukan jenis layanan Branding, Media Sosial, atau Website sesuai kebutuhan Anda.', icon: <Package size={28} /> },
-    { id: '02', title: 'Isi Spesifikasi', desc: 'Lengkapi formulir detail proyek dan pilih paket harga yang sesuai anggaran.', icon: <FileText size={28} /> },
-    { id: '03', title: 'Diskusi & Deal', desc: 'Terhubung langsung ke WhatsApp untuk konfirmasi detail dan kesepakatan kerjasama.', icon: <MessageCircle size={28} /> },
-    { id: '04', title: 'Eksekusi', desc: 'Setelah administrasi selesai, proyek Anda akan segera masuk ke tahap produksi.', icon: <CreditCard size={28} /> }
+    { id: '01', title: 'Select Package', desc: 'Pilih layanan Branding, Social Media, atau Website sesuai kebutuhanmu.', icon: <Package size={28} /> },
+    { id: '02', title: 'Fill Brief', desc: 'Isi formulir spesifikasi project dan pilih paket harga yang cocok.', icon: <FileText size={28} /> },
+    { id: '03', title: 'Discussion', desc: 'Terhubung ke WhatsApp untuk konfirmasi detail dan deal harga.', icon: <MessageCircle size={28} /> },
+    { id: '04', title: 'Execution', desc: 'Pembayaran beres, project langsung masuk antrian produksi.', icon: <CreditCard size={28} /> }
   ];
 
   return (
-    <section className="py-32 bg-white font-sans text-gray-900 selection:bg-[#8A0202] selection:text-white relative overflow-hidden">
+    <section className="py-32 bg-white font-['Poppins'] text-gray-900 selection:bg-[#8A0202] selection:text-white relative overflow-hidden">
       
       {/* Background Decor */}
       <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-gray-50 rounded-full blur-3xl opacity-60 -z-10 translate-x-1/2 -translate-y-1/2"></div>
@@ -248,10 +231,10 @@ export default function HowToOrderProfessional() {
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-20 gap-8">
           <div className="max-w-2xl">
             <h2 className="text-5xl md:text-6xl font-black tracking-tight mb-6 leading-[1.1]">
-              Alur <br/> <span className="text-[#8A0202]">Pemesanan Proyek.</span>
+              Simple Steps to <br/> <span className="text-[#8A0202]">Elevate Your Brand.</span>
             </h2>
             <p className="text-gray-500 text-lg font-light max-w-lg">
-              Proses kerja yang dirancang efisien dan transparan. Fokus kami adalah memberikan solusi visual terbaik untuk brand Anda.
+              Proses order yang dirancang efisien. Tanpa ribet, langsung ke inti solusi visual brand Anda.
             </p>
           </div>
           <div className="hidden md:block pb-2">
@@ -296,14 +279,14 @@ export default function HowToOrderProfessional() {
             className="group relative px-10 py-5 bg-[#111] text-white rounded-full font-bold text-lg tracking-wide hover:bg-[#8A0202] transition-all duration-500 shadow-2xl hover:shadow-red-900/20 overflow-hidden"
           >
             <span className="relative z-10 flex items-center gap-3">
-              Mulai Proyek Anda Sekarang 
+              Buat Project Kamu Sekarang 
               <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
             </span>
             {/* Hover Glow Effect */}
             <div className="absolute inset-0 bg-gradient-to-r from-red-600 to-[#8A0202] opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
           </button>
           <p className="mt-6 text-sm text-gray-400 font-medium">
-            *Konsultasi awal gratis dan tidak mengikat.
+            *Konsultasi gratis, tidak dipungut biaya di awal.
           </p>
         </div>
 
