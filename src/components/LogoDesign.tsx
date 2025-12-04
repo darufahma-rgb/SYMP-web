@@ -1,195 +1,174 @@
-import React, { useState, useEffect } from 'react';
-import { Check, Star, Zap, X, ArrowRight, PenTool, Briefcase, Globe, Instagram, MessageCircle } from 'lucide-react';
+import React, { useState } from 'react';
+import { Check, Star, Zap, X, Send } from 'lucide-react';
 
-// --- DATA DUMMY UNTUK MODAL (Biar Jalan) ---
-const PRICING_DATA = {
-  logo: [{ name: 'Premium Logo All-in', price: '500K' }],
-  hosting: []
-};
-
-// --- MODAL COMPONENT (Compact Version) ---
-const ProjectModal = ({ isOpen, onClose, initialData }) => {
-  const [step, setStep] = useState(1);
-  const [selectedCategory, setSelectedCategory] = useState('');
-  const [formData, setFormData] = useState({ name: '', brandName: '', industry: '', detail: '' });
-
-  useEffect(() => {
-    if (isOpen) {
-      if (initialData?.category) {
-        setSelectedCategory(initialData.category);
-        setStep(2);
-      } else {
-        setStep(1);
-      }
-    }
-  }, [isOpen, initialData]);
-
-  if (!isOpen) return null;
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    const msg = `Halo, saya mau order paket ${selectedCategory.toUpperCase()} seharga ${initialData?.package?.price || 'Best Price'}.%0A%0ANama: ${formData.name}%0ABrand: ${formData.brandName}%0ADetail: ${formData.detail}`;
-    window.open(`https://wa.me/6281311506025?text=${msg}`, '_blank');
-    onClose();
-  };
-
-  return (
-    <div className="fixed inset-0 z-[200] flex items-center justify-center p-4 text-left font-sans text-gray-900">
-      <div className="absolute inset-0 bg-black/60 backdrop-blur-sm transition-opacity" onClick={onClose}></div>
-      <div className="relative bg-white w-full max-w-lg rounded-2xl shadow-2xl overflow-hidden flex flex-col animate-entrance">
-        <div className="bg-[#111] text-white px-6 py-4 flex justify-between items-center">
-          <h3 className="text-lg font-bold">Project Brief</h3>
-          <button onClick={onClose}><X size={20}/></button>
-        </div>
-        <div className="p-6 bg-gray-50">
-          <form onSubmit={handleSubmit} className="space-y-4">
-             <div className="bg-red-50 border border-red-100 p-3 rounded-lg text-sm text-[#8A0202] font-semibold">
-                Paket Terpilih: {initialData?.package?.name || selectedCategory}
-             </div>
-             <div>
-                <label className="text-xs font-bold text-gray-500 uppercase">Nama</label>
-                <input required onChange={(e) => setFormData({...formData, name: e.target.value})} className="w-full p-2 rounded border" placeholder="Nama Kamu" />
-             </div>
-             <div>
-                <label className="text-xs font-bold text-gray-500 uppercase">Brand</label>
-                <input required onChange={(e) => setFormData({...formData, brandName: e.target.value})} className="w-full p-2 rounded border" placeholder="Nama Brand" />
-             </div>
-             <div>
-                <label className="text-xs font-bold text-gray-500 uppercase">Detail</label>
-                <textarea onChange={(e) => setFormData({...formData, detail: e.target.value})} className="w-full p-2 rounded border" rows="2" placeholder="Keterangan singkat..."></textarea>
-             </div>
-             <button type="submit" className="w-full py-3 bg-[#8A0202] text-white rounded-lg font-bold hover:bg-[#600000] transition-colors">
-                Lanjut ke WhatsApp
-             </button>
-          </form>
-        </div>
-      </div>
-    </div>
-  );
-};
-
-// --- MAIN COMPONENT ---
 export default function AnimatedPricingLayout() {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const handleOrder = () => {
-    setIsModalOpen(true);
+  // State untuk form brief
+  const [formData, setFormData] = useState({
+    name: '',
+    brandName: '',
+    category: '',
+    description: '',
+  });
+
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  // Props untuk inisialisasi modal ke Logo
-  const modalData = {
-    category: 'logo',
-    package: { name: 'Premium Logo All-in', price: '500K' }
+  const handleSendToWA = (e) => {
+    e.preventDefault();
+    // GANTI NOMOR WA LO DISINI (Format: 628xxx)
+    const phoneNumber = "628123456789"; 
+    
+    const message = `Halo SYMP Studio, saya mau order paket logo 500K.%0A%0AData Brief:%0A- Nama: ${formData.name}%0A- Nama Brand: ${formData.brandName}%0A- Jenis Usaha: ${formData.category}%0A- Deskripsi/Request: ${formData.description}`;
+    
+    window.open(`https://wa.me/${phoneNumber}?text=${message}`, '_blank');
   };
 
   return (
     <>
-      {/* CSS Animations */}
+      {/* Inject Custom CSS for Animations */}
       <style>{`
-        @keyframes fadeInUp { from { opacity: 0; transform: translateY(40px); } to { opacity: 1; transform: translateY(0); } }
-        @keyframes float { 0% { transform: translateY(0px); } 50% { transform: translateY(-6px); } 100% { transform: translateY(0px); } }
-        @keyframes shimmer { 0% { background-position: -200% center; } 100% { background-position: 200% center; } }
-        .animate-entrance { animation: fadeInUp 0.6s cubic-bezier(0.2, 0.8, 0.2, 1) forwards; }
-        .animate-float { animation: float 4s ease-in-out infinite; }
-        .bg-shimmer { background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent); background-size: 200% 100%; animation: shimmer 3s infinite; }
+        @keyframes fadeInUp {
+          from { opacity: 0; transform: translateY(40px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes float {
+          0% { transform: translateY(0px); }
+          50% { transform: translateY(-10px); }
+          100% { transform: translateY(0px); }
+        }
+        @keyframes shimmer {
+          0% { background-position: -200% center; }
+          100% { background-position: 200% center; }
+        }
+        @keyframes modalPop {
+          0% { opacity: 0; transform: scale(0.9); }
+          100% { opacity: 1; transform: scale(1); }
+        }
+        .animate-entrance {
+          animation: fadeInUp 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+        }
+        .animate-float {
+          animation: float 3s ease-in-out infinite;
+        }
+        .animate-modal {
+          animation: modalPop 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+        .bg-shimmer {
+          background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+          background-size: 200% 100%;
+          animation: shimmer 3s infinite;
+        }
         .stagger-1 { animation-delay: 0.1s; }
+        .stagger-2 { animation-delay: 0.2s; }
+        .stagger-3 { animation-delay: 0.3s; }
       `}</style>
 
-      {/* Wrapper Utama (Red Theme) */}
+      {/* Wrapper Utama */}
       <div 
-        className="min-h-screen w-full bg-[#8A0202] text-white relative flex flex-col justify-center items-center py-8 px-4 overflow-hidden font-sans"
+        className="min-h-[100dvh] w-full bg-[#8A0202] text-white selection:bg-white selection:text-[#8A0202] relative flex flex-col justify-center items-center py-12 px-4 overflow-hidden"
+        style={{ fontFamily: "'Poppins', sans-serif" }}
       >
-        {/* Background FX */}
-        <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-b from-black/20 via-[#8A0202] to-black/50 pointer-events-none" />
-        <div className="absolute top-[-20%] left-[-10%] w-[500px] h-[500px] bg-white/5 rounded-full blur-[80px] pointer-events-none animate-pulse" />
         
-        {/* Container - Compact Max Width */}
-        <div className="relative z-10 w-full max-w-4xl flex flex-col items-center">
+        {/* Background Gradient & Effects */}
+        <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-b from-black/20 via-[#8A0202] to-black/50 pointer-events-none" />
+        <div className="absolute top-[-10%] left-[20%] w-[600px] h-[600px] bg-white/5 rounded-full blur-[100px] pointer-events-none animate-pulse" style={{ animationDuration: '5s' }} />
+        <div className="absolute bottom-[-10%] right-[10%] w-[500px] h-[500px] bg-black/30 rounded-full blur-[100px] pointer-events-none" />
+        
+        <div className="relative z-10 w-full max-w-5xl flex flex-col items-center">
           
-          {/* Header Compact */}
-          <div className="text-center mb-8 animate-entrance">
-            <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-white drop-shadow-lg mb-2">
+          {/* Header Section */}
+          <div className="text-center mb-12 animate-entrance">
+            <h2 className="text-3xl md:text-5xl font-bold tracking-tight text-white drop-shadow-lg mb-3">
               Premium Logo
             </h2>
-            <p className="text-xs md:text-sm text-white/80 font-light max-w-lg mx-auto">
+            <p className="text-sm md:text-base text-white/80 font-light max-w-2xl mx-auto">
               Satu harga, kualitas dunia. Solusi branding tanpa drama.
             </p>
           </div>
 
-          {/* MAIN CARD SECTION */}
-          <div className="relative w-full flex flex-col items-center">
+          {/* MAIN CONTAINER (Badge + Card) */}
+          <div className="relative w-full flex flex-col items-center group">
             
-            {/* FLOATING BADGE (Lebih Kecil & Rapat) */}
-            <div className="z-30 mb-[-1.5rem] animate-entrance animate-float">
-              <div className="relative overflow-hidden bg-white text-[#8A0202] text-xs font-extrabold px-6 py-2 rounded-full shadow-xl tracking-widest uppercase border-[3px] border-[#8A0202] ring-2 ring-white/50">
+            {/* FLOATING BADGE */}
+            <div className="z-20 mb-6 animate-entrance animate-float">
+              <div className="relative overflow-hidden bg-white text-[#8A0202] text-sm md:text-base font-extrabold px-10 py-3 rounded-full shadow-[0_0_30px_rgba(255,255,255,0.3)] tracking-widest uppercase border-[4px] border-[#8A0202] ring-2 ring-white/50">
                 <div className="absolute inset-0 bg-shimmer pointer-events-none"></div>
                 All-In Package
               </div>
             </div>
 
-            {/* CARD (Compact Layout) */}
-            <div className="w-full bg-black/20 backdrop-blur-xl border border-white/60 rounded-3xl flex flex-col md:flex-row relative shadow-2xl overflow-hidden animate-entrance stagger-1 pt-8 md:pt-0">
+            {/* HORIZONTAL HERO CARD */}
+            <div className="w-full bg-black/20 backdrop-blur-xl border-2 border-white/80 rounded-[2.5rem] flex flex-col md:flex-row relative shadow-2xl overflow-hidden animate-entrance stagger-1 hover:border-white transition-colors duration-500">
               
-              {/* LEFT: Pricing (Compact) */}
-              <div className="w-full md:w-5/12 p-6 flex flex-col justify-center items-center text-center border-b md:border-b-0 md:border-r border-white/10 bg-black/10">
-                <div className="scale-100 hover:scale-105 transition-transform duration-300">
-                  <span className="text-5xl md:text-6xl font-bold text-white tracking-tight">500K</span>
-                </div>
-                <span className="text-white/60 text-[10px] font-medium mb-4 uppercase tracking-widest">Fixed Price</span>
+              {/* LEFT SIDE: Pricing & CTA */}
+              <div className="w-full md:w-5/12 p-8 md:p-12 flex flex-col justify-center items-center text-center border-b md:border-b-0 md:border-r border-white/20 bg-black/10 relative">
                 
-                <p className="text-white/90 text-xs leading-relaxed mb-6 max-w-[180px]">
+                <div className="mt-2 scale-100 hover:scale-105 transition-transform duration-300">
+                  <span className="text-6xl md:text-7xl font-bold text-white drop-shadow-md tracking-tight">500K</span>
+                </div>
+                <span className="text-white/60 text-sm font-medium mb-8 uppercase tracking-widest">Fixed Price</span>
+                
+                <p className="text-white/90 text-sm leading-relaxed mb-8 max-w-[200px]">
                   Investasi sekali bayar untuk identitas visual jangka panjang.
                 </p>
 
+                {/* BUTTON TRIGGER MODAL */}
                 <button 
-                  onClick={handleOrder}
-                  className="w-full py-3 px-6 rounded-xl bg-white hover:bg-gray-100 text-[#8A0202] font-extrabold text-sm transition-all hover:shadow-[0_0_15px_rgba(255,255,255,0.4)] hover:-translate-y-0.5 active:scale-95 shadow-lg"
+                  onClick={() => setIsModalOpen(true)}
+                  className="w-full py-4 px-6 rounded-full bg-white hover:bg-gray-100 text-[#8A0202] font-extrabold text-base md:text-lg transition-all hover:shadow-[0_0_20px_rgba(255,255,255,0.5)] hover:-translate-y-1 active:scale-95 shadow-lg"
                 >
                   Order Sekarang
                 </button>
                 
-                <p className="text-white/30 text-[9px] mt-3 flex items-center gap-1">
+                <p className="text-white/30 text-[10px] mt-4 flex items-center gap-1">
                   <Zap className="w-3 h-3" /> Secure payment & Fast delivery
                 </p>
               </div>
 
-              {/* RIGHT: Features (Compact Grid) */}
-              <div className="w-full md:w-7/12 p-6 md:pl-8 flex flex-col justify-center bg-white/5">
-                <h3 className="text-sm font-semibold text-white mb-4 flex items-center gap-2">
-                  <span className="w-4 h-[2px] bg-white/50 inline-block"></span>
+              {/* RIGHT SIDE: Features List */}
+              <div className="w-full md:w-7/12 p-8 md:p-12 flex flex-col justify-center bg-white/5">
+                <h3 className="text-xl font-semibold text-white mb-6 flex items-center gap-2">
+                  <span className="w-8 h-[2px] bg-white/50 inline-block"></span>
                   What You Get
                 </h3>
                 
-                <ul className="grid grid-cols-1 gap-2 text-xs text-white text-left">
-                  <li className="flex items-start gap-3">
-                    <div className="bg-white p-0.5 rounded-full mt-0.5"><Check className="w-2.5 h-2.5 text-[#8A0202] stroke-[4]" /></div>
-                    <span className="font-bold text-yellow-300">2 Opsi Desain Eksklusif</span>
+                <ul className="grid grid-cols-1 gap-y-4 md:gap-y-5 text-sm md:text-base text-white text-left">
+                  <li className="flex items-start gap-4 group/item hover:translate-x-1 transition-transform duration-200">
+                    <div className="bg-white p-1 rounded-full shrink-0 mt-0.5 shadow-lg group-hover/item:bg-[#8A0202] group-hover/item:text-white transition-colors"><Check className="w-3 h-3 text-[#8A0202] stroke-[4] group-hover/item:text-white" /></div>
+                    <div>
+                      <span className="font-bold block text-lg group-hover/item:text-yellow-300 transition-colors">2 Opsi Desain Eksklusif</span>
+                      <span className="text-white/60 text-xs md:text-sm">Pilih 1 terbaik untuk dikembangkan</span>
+                    </div>
                   </li>
                   
-                  <li className="flex items-start gap-3">
-                    <div className="bg-white/20 p-0.5 rounded-full mt-0.5"><Check className="w-2.5 h-2.5 text-white" /></div>
-                    <span className="text-white/90">Brand Guideline Lengkap (PDF)</span>
+                  <li className="flex items-start gap-4 group/item hover:translate-x-1 transition-transform duration-200">
+                    <div className="bg-white/20 p-1 rounded-full shrink-0 mt-0.5"><Check className="w-3 h-3 text-white" /></div>
+                    <span className="text-white/90 self-center">Brand Guideline Lengkap (PDF)</span>
                   </li>
                   
-                  <li className="flex items-start gap-3">
-                    <div className="bg-white/20 p-0.5 rounded-full mt-0.5"><Check className="w-2.5 h-2.5 text-white" /></div>
-                    <span className="text-white/90">3 View Mockup Profesional</span>
+                  <li className="flex items-start gap-4 group/item hover:translate-x-1 transition-transform duration-200">
+                    <div className="bg-white/20 p-1 rounded-full shrink-0 mt-0.5"><Check className="w-3 h-3 text-white" /></div>
+                    <span className="text-white/90 self-center">3 View Mockup Profesional</span>
                   </li>
                   
-                  {/* Bonus Item Compact */}
-                  <li className="flex items-center gap-3 p-2 rounded-lg bg-white/10 border border-white/10 my-1">
-                    <div className="bg-yellow-400 p-0.5 rounded-full"><Star className="w-2.5 h-2.5 text-[#8A0202] fill-[#8A0202]" /></div>
-                    <span className="font-bold text-yellow-300">Bonus: Poster Grand Opening</span>
+                  <li className="flex items-start gap-4 p-3 rounded-xl bg-white/10 border border-white/10 -ml-3 hover:bg-white/20 transition-colors cursor-default transform hover:scale-[1.02] duration-300">
+                    <div className="bg-yellow-400 p-1 rounded-full shrink-0 mt-0.5 animate-pulse"><Star className="w-3 h-3 text-[#8A0202] fill-[#8A0202]" /></div>
+                    <div className="self-center">
+                      <span className="font-bold text-yellow-300 block">Bonus: Poster Grand Opening</span>
+                    </div>
                   </li>
                   
-                  <li className="flex items-start gap-3">
-                    <div className="bg-white/20 p-0.5 rounded-full mt-0.5"><Check className="w-2.5 h-2.5 text-white" /></div>
-                    <span className="text-white/90">Master File (AI, EPS, PNG, PDF)</span>
+                  <li className="flex items-start gap-4 group/item hover:translate-x-1 transition-transform duration-200">
+                    <div className="bg-white/20 p-1 rounded-full shrink-0 mt-0.5"><Check className="w-3 h-3 text-white" /></div>
+                    <span className="text-white/90 self-center">Master File (AI, EPS, PNG, PDF)</span>
                   </li>
                   
-                  <li className="flex items-start gap-3">
-                    <div className="bg-white/20 p-0.5 rounded-full mt-0.5"><Zap className="w-2.5 h-2.5 text-white" /></div>
-                    <span className="text-white/90">Pengerjaan Cepat (2-3 Hari)</span>
+                  <li className="flex items-start gap-4 group/item hover:translate-x-1 transition-transform duration-200">
+                    <div className="bg-white/20 p-1 rounded-full shrink-0 mt-0.5"><Zap className="w-3 h-3 text-white" /></div>
+                    <span className="text-white/90 self-center">Pengerjaan Cepat (2-3 Hari)</span>
                   </li>
                 </ul>
               </div>
@@ -197,19 +176,102 @@ export default function AnimatedPricingLayout() {
             </div>
           </div>
 
-          <p className="text-center text-white/30 text-[10px] mt-6 font-light animate-entrance stagger-2">
+          <p className="text-center text-white/30 text-[10px] mt-8 font-light animate-entrance stagger-3">
             © 2025 SYMP Studio. Quality Guaranteed.
           </p>
 
         </div>
-      </div>
 
-      {/* Render Modal (Otomatis ke Logo) */}
-      <ProjectModal 
-        isOpen={isModalOpen} 
-        onClose={() => setIsModalOpen(false)} 
-        initialData={modalData}
-      />
+        {/* ================= MODAL POPUP BRIEF ================= */}
+        {isModalOpen && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+            {/* Backdrop Blur */}
+            <div 
+              className="absolute inset-0 bg-black/60 backdrop-blur-sm transition-opacity"
+              onClick={() => setIsModalOpen(false)}
+            />
+            
+            {/* Modal Content */}
+            <div className="relative w-full max-w-md bg-white rounded-3xl shadow-2xl p-6 md:p-8 animate-modal text-gray-800 border-4 border-white ring-4 ring-black/10">
+              
+              {/* Close Button */}
+              <button 
+                onClick={() => setIsModalOpen(false)}
+                className="absolute top-4 right-4 p-2 rounded-full hover:bg-gray-100 transition-colors"
+              >
+                <X className="w-5 h-5 text-gray-500" />
+              </button>
+
+              <div className="mb-6">
+                <h3 className="text-2xl font-bold text-[#8A0202]">Isi Brief Singkat</h3>
+                <p className="text-sm text-gray-500">Bantu kami memahami visi brand Anda.</p>
+              </div>
+
+              <form onSubmit={handleSendToWA} className="space-y-4">
+                <div>
+                  <label className="block text-xs font-bold uppercase tracking-wider text-gray-400 mb-1">Nama Pemesan</label>
+                  <input 
+                    type="text" 
+                    name="name"
+                    required
+                    onChange={handleChange}
+                    className="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-[#8A0202] focus:ring-1 focus:ring-[#8A0202] transition-all"
+                    placeholder="Contoh: Daru"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-xs font-bold uppercase tracking-wider text-gray-400 mb-1">Nama Brand</label>
+                  <input 
+                    type="text" 
+                    name="brandName"
+                    required
+                    onChange={handleChange}
+                    className="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-[#8A0202] focus:ring-1 focus:ring-[#8A0202] transition-all"
+                    placeholder="Contoh: Kopi Senja"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-xs font-bold uppercase tracking-wider text-gray-400 mb-1">Jenis Usaha</label>
+                  <select 
+                    name="category"
+                    onChange={handleChange}
+                    className="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-[#8A0202] focus:ring-1 focus:ring-[#8A0202] transition-all"
+                  >
+                    <option value="">Pilih Kategori...</option>
+                    <option value="F&B (Makanan/Minuman)">F&B (Makanan/Minuman)</option>
+                    <option value="Fashion">Fashion</option>
+                    <option value="Teknologi/Startup">Teknologi/Startup</option>
+                    <option value="Jasa Professional">Jasa Professional</option>
+                    <option value="Lainnya">Lainnya</option>
+                  </select>
+                </div>
+
+                <div>
+                  <label className="block text-xs font-bold uppercase tracking-wider text-gray-400 mb-1">Deskripsi / Request</label>
+                  <textarea 
+                    rows="3"
+                    name="description"
+                    onChange={handleChange}
+                    className="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-[#8A0202] focus:ring-1 focus:ring-[#8A0202] transition-all resize-none"
+                    placeholder="Warna dominan merah, gaya minimalis, target pasar anak muda..."
+                  ></textarea>
+                </div>
+
+                <button 
+                  type="submit"
+                  className="w-full mt-2 bg-[#8A0202] text-white font-bold py-4 rounded-xl hover:bg-[#6e0202] transition-transform active:scale-95 shadow-lg flex items-center justify-center gap-2"
+                >
+                  <Send className="w-4 h-4" />
+                  Kirim ke WhatsApp
+                </button>
+              </form>
+
+            </div>
+          </div>
+        )}
+      </div>
     </>
   );
 }
