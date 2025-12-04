@@ -11,6 +11,28 @@ export default function Portfolio() {
     'Landing Page'
   ];
 
+  // Logic buat generate vCard (Kartu Nama Digital) otomatis
+  const handleSaveContact = () => {
+    // Format vCard standar
+    const vCardData = `BEGIN:VCARD
+VERSION:3.0
+FN:SYMP Studio
+TEL;TYPE=CELL:+6281311506025
+END:VCARD`;
+
+    // Bikin file blob virtual
+    const blob = new Blob([vCardData], { type: 'text/vcard;charset=utf-8' });
+    const url = URL.createObjectURL(blob);
+    
+    // Bikin link download hidden lalu di-klik otomatis
+    const link = document.createElement('a');
+    link.href = url;
+    link.setAttribute('download', 'SYMP_Studio.vcf');
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
   return (
     <div className="min-h-screen bg-[#F3F0EA] text-black font-sans selection:bg-[#8A0202] selection:text-white flex flex-col relative overflow-hidden">
       
@@ -33,8 +55,6 @@ export default function Portfolio() {
 
         {/* HEADLINE & DESCRIPTION */}
         <div className="text-center mb-10">
-          {/* UBAH DISINI: Font Poppins + Warna Hitam Pekat */}
-          {/* class font-['Poppins'] butuh config tailwind atau import font manual */}
           <h1 className="text-[15vw] md:text-[9rem] leading-[0.8] font-black tracking-tighter text-black mb-6 font-['Poppins']">
             PORTFOLIO
           </h1>
@@ -45,8 +65,14 @@ export default function Portfolio() {
           </p>
         </div>
 
-        {/* THE RED BUTTON (Tetep Merah biar kontras sama teks hitam) */}
-        <div className="relative group cursor-pointer mt-2">
+        {/* THE RED BUTTON LINK */}
+        {/* Dibungkus tag <a> biar langsung direct link */}
+        <a 
+          href="https://tinyurl.com/SYMP2025" 
+          target="_blank" 
+          rel="noopener noreferrer"
+          className="relative group cursor-pointer mt-2 no-underline"
+        >
           
           {/* Editor Lines (Red Theme) */}
           <div className="absolute -inset-4 border-[1px] border-[#8A0202]/30 pointer-events-none opacity-60 group-hover:opacity-100 transition-opacity">
@@ -69,7 +95,7 @@ export default function Portfolio() {
             <ArrowRight className="text-white w-8 h-8 md:w-10 md:h-10 group-hover:translate-x-2 transition-transform" />
           </div>
 
-        </div>
+        </a>
       </main>
 
       {/* --- FOOTER --- */}
@@ -93,7 +119,11 @@ export default function Portfolio() {
           </div>
         </div>
 
-        <button className="bg-white border border-gray-300 px-5 py-2 rounded-full shadow-sm flex items-center gap-2 hover:bg-gray-50 hover:text-black transition-colors font-bold text-sm">
+        {/* SAVE CONTACT BUTTON */}
+        <button 
+          onClick={handleSaveContact}
+          className="bg-white border border-gray-300 px-5 py-2 rounded-full shadow-sm flex items-center gap-2 hover:bg-gray-50 hover:text-black transition-colors font-bold text-sm"
+        >
           Save Contact <Bookmark size={16} />
         </button>
       </footer>
