@@ -33,7 +33,7 @@ export default function CallToAction() {
       </div>
 
       {/* --- MAIN SECTION: IMAGE & CARDS --- */}
-      <div className="relative z-20 flex flex-col md:flex-row justify-center items-center w-full max-w-[90rem] mx-auto px-4 -mt-4 md:-mt-8">
+      <div className="relative z-20 flex flex-col md:flex-row justify-center items-center w-full max-w-[90rem] mx-auto px-4 mt-auto">
 
         {/* --- LEFT SIDE CARD (WhatsApp) --- */}
         <div className="hidden md:block absolute left-4 lg:left-12 top-[50%] -translate-y-1/2 z-30">
