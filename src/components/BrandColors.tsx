@@ -1,10 +1,12 @@
+'use client'; // <--- WAJIB ADA KALAU PAKAI NEXT.JS
+
 import React, { useState } from 'react';
 import { 
   Package, FileText, MessageCircle, CreditCard, ArrowRight, 
   X, ChevronLeft, PenTool, Globe, Instagram, Briefcase, Check, Star 
 } from 'lucide-react';
 
-// --- DATA HARGA (Bahasa Profesional) ---
+// --- DATA HARGA ---
 const PRICING_DATA = {
   logo: [
     { name: 'Premium Logo All-in', price: '500K', desc: 'Harga Tetap. 2 Opsi Desain Eksklusif, File Master Lengkap, Panduan Brand, Bonus Poster.' }
@@ -44,6 +46,7 @@ const ProjectModal = ({ isOpen, onClose }) => {
   const [selectedPackage, setSelectedPackage] = useState(null);
   const [selectedHosting, setSelectedHosting] = useState(null);
 
+  // Jangan render apa-apa kalau modal tertutup
   if (!isOpen) return null;
 
   const services = [
@@ -58,61 +61,52 @@ const ProjectModal = ({ isOpen, onClose }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Format Pesan WhatsApp Profesional
     let message = `Halo Tim SYMP Studio. 👋%0A%0ASaya tertarik untuk memulai proyek pada layanan *${selectedCategory.toUpperCase()}*. Berikut detail kebutuhan saya:%0A`;
     message += `__________________________%0A%0A`;
-    
-    message += `👤 *PROFIL KLIEN*%0A`;
-    message += `• Nama: ${formData.name}%0A`;
-    message += `• Brand/Instansi: ${formData.brandName} (${formData.industry})%0A%0A`;
-
+    message += `👤 *PROFIL KLIEN*%0A• Nama: ${formData.name}%0A• Brand/Instansi: ${formData.brandName} (${formData.industry})%0A%0A`;
     message += `📦 *PAKET PILIHAN*%0A`;
     if (selectedPackage) {
-      message += `• Paket: ${selectedPackage.name}%0A`;
-      message += `• Estimasi Harga: ${selectedPackage.price}%0A`;
+      message += `• Paket: ${selectedPackage.name}%0A• Estimasi Harga: ${selectedPackage.price}%0A`;
     }
-
     if (selectedCategory === 'website') {
-       if (selectedHosting) {
-         message += `• Layanan Hosting: ${selectedHosting.name} (${selectedHosting.price})%0A`;
-       } else {
-         message += `• Layanan Hosting: Menggunakan Hosting Sendiri (Mandiri)%0A`;
-       }
+       message += selectedHosting ? `• Layanan Hosting: ${selectedHosting.name} (${selectedHosting.price})%0A` : `• Layanan Hosting: Menggunakan Hosting Sendiri (Mandiri)%0A`;
     }
-
     if (formData.detail) {
       message += `%0A📝 *CATATAN TAMBAHAN*%0A${formData.detail}%0A`;
     }
-
     message += `__________________________%0A%0AMohon informasi mengenai ketersediaan slot dan langkah selanjutnya. Terima kasih.`;
-
     window.open(`https://wa.me/6281311506025?text=${message}`, '_blank');
     onClose();
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 isolate">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
       {/* Backdrop */}
-      <div className="absolute inset-0 bg-black/60 backdrop-blur-sm transition-opacity" onClick={onClose}></div>
+      <div 
+        className="absolute inset-0 bg-black/60 backdrop-blur-sm transition-opacity duration-300"
+        onClick={onClose}
+      ></div>
 
       {/* Main Card */}
-      <div className="relative bg-white w-full max-w-2xl rounded-[2rem] shadow-2xl overflow-hidden flex flex-col max-h-[90vh] animate-in zoom-in-95 duration-300">
+      <div className="relative bg-white w-full max-w-2xl rounded-[2rem] shadow-2xl overflow-hidden flex flex-col max-h-[90vh] transition-all transform duration-300 scale-100 opacity-100">
         
         {/* Header Visual */}
         <div className="bg-[#111] text-white px-8 py-6 flex justify-between items-center shrink-0 relative overflow-hidden">
+          {/* Decorative Blob */}
           <div className="absolute top-0 right-0 w-32 h-32 bg-[#8A0202] rounded-full blur-[60px] opacity-40 translate-x-10 -translate-y-10"></div>
+          
           <div className="relative z-10">
-            <h3 className="text-2xl font-bold font-['Poppins'] tracking-tight">Mulai Proyek</h3>
+            <h3 className="text-2xl font-bold font-sans tracking-tight">Mulai Proyek</h3>
             <p className="text-white/70 text-sm mt-1">Lengkapi formulir singkat untuk konsultasi awal.</p>
           </div>
           <button onClick={onClose} className="relative z-10 p-2 bg-white/10 hover:bg-white/20 rounded-full transition-colors"><X size={20}/></button>
         </div>
 
-        <div className="p-8 overflow-y-auto custom-scrollbar bg-gray-50/50 h-full">
+        <div className="p-8 overflow-y-auto h-full bg-gray-50/50">
           
           {/* STEP 1: SERVICE SELECTION */}
           {step === 1 && (
-            <div className="animate-in slide-in-from-right-4 duration-500 fade-in">
+            <div className="transition-opacity duration-500 opacity-100">
               <h4 className="text-gray-900 font-bold mb-6 text-lg">Pilih Kategori Layanan</h4>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 {services.map((srv) => (
@@ -136,7 +130,7 @@ const ProjectModal = ({ isOpen, onClose }) => {
 
           {/* STEP 2: DETAILS & PRICING */}
           {step === 2 && (
-            <form onSubmit={handleSubmit} className="animate-in slide-in-from-right-8 duration-500 fade-in space-y-8">
+            <form onSubmit={handleSubmit} className="space-y-8 transition-opacity duration-500 opacity-100">
                <button type="button" onClick={() => setStep(1)} className="flex items-center text-xs font-bold text-gray-400 hover:text-[#8A0202] transition-colors uppercase tracking-wider group">
                 <ChevronLeft size={14} className="mr-1 group-hover:-translate-x-1 transition-transform" /> Kembali ke Kategori
               </button>
@@ -242,7 +236,7 @@ export default function HowToOrderProfessional() {
   ];
 
   return (
-    <section className="py-32 bg-white font-['Poppins'] text-gray-900 selection:bg-[#8A0202] selection:text-white relative overflow-hidden">
+    <section className="py-32 bg-white font-sans text-gray-900 selection:bg-[#8A0202] selection:text-white relative overflow-hidden">
       
       {/* Background Decor */}
       <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-gray-50 rounded-full blur-3xl opacity-60 -z-10 translate-x-1/2 -translate-y-1/2"></div>
