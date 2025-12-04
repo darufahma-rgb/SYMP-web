@@ -81,11 +81,18 @@ export default function CallToAction() {
 
         {/* Center Image (Dream Team) */}
         <div className="relative z-10 w-full max-w-7xl flex justify-center items-end">
+          
+          {/* --- GLOW ANIMATION BEHIND IMAGE --- */}
+          {/* Layer 1: Red Glow (Brand Color) - Pulsing */}
+          <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[70%] h-[50%] bg-[#ff0000]/30 blur-[80px] rounded-full animate-pulse -z-10"></div>
+          {/* Layer 2: White Core (Highlight) - Static */}
+          <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[40%] h-[30%] bg-white/10 blur-[60px] rounded-full mix-blend-overlay -z-10"></div>
+          
           <img 
             src={DreamTeamImg} 
             alt="Dream Team SYMP Studio" 
-            // UPDATED: max-h increased (55vh mobile, 75vh desktop) agar gambar lebih besar
-            className="w-full h-auto max-h-[55vh] md:max-h-[75vh] object-contain object-bottom drop-shadow-2xl"
+            // Styling image responsive & mentok bawah
+            className="w-full h-auto max-h-[45vh] md:max-h-[60vh] object-contain object-bottom drop-shadow-2xl relative z-10"
           />
         </div>
 
