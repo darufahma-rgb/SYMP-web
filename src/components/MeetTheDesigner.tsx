@@ -13,7 +13,6 @@ export default function MeetTheDesigner() {
 
   return (
     // --- BASE LAYER: Solid Brand Red Background ---
-    // UPDATED: Padding mobile dikurangi (py-10) biar gak terlalu deep scroll-nya
     <section className="py-10 md:py-24 bg-[#8A0202] text-white overflow-hidden relative font-sans min-h-screen flex items-center">
       
       {/* --- DECOR LAYERS --- */}
@@ -22,18 +21,15 @@ export default function MeetTheDesigner() {
       <div className="absolute bottom-[-10%] right-[10%] w-[500px] h-[500px] bg-black/30 rounded-full blur-[100px] pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-6 relative z-10 w-full">
-        {/* UPDATED: Gap dikurangi di mobile (gap-8) */}
         <div className="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-12 items-center">
 
           {/* --- KOLOM KIRI: Main Title & Intro --- */}
-          {/* UPDATED: Order diubah biar di mobile Title duluan, baru gambar, baru teks */}
           <div className="md:col-span-5 order-1 md:order-1 text-center md:text-left space-y-6 md:space-y-8">
             
             {/* Accent Line */}
             <div className="w-16 md:w-24 h-1 bg-white mb-4 md:mb-8 hidden md:block shadow-[0_0_10px_rgba(255,255,255,0.5)]"></div>
 
             <div>
-              {/* UPDATED: Font size mobile diperkecil (text-4xl) biar gak makan tempat */}
               <h2 className="text-4xl md:text-7xl font-extrabold leading-tight tracking-tight mb-2 md:mb-4 text-white drop-shadow-lg">
                 Daru Fahmaa <br />
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-white to-gray-400">Muliawan</span>
@@ -43,13 +39,12 @@ export default function MeetTheDesigner() {
               </h3>
             </div>
 
-            {/* UPDATED: Intro Paragraph - hidden di mobile sementara, dipindah ke bawah gambar biar flow visualnya enak */}
             <div className="hidden md:block">
               <p className="text-white/80 text-lg leading-relaxed max-w-lg mx-auto md:mx-0 font-light">
                 Founder & Creative Director SYMP Studio sejak 2021. Telah mengerjakan 300+ proyek visual meliputi logo, identitas visual, dan creative direction dengan pendekatan yang rapi dan fungsional.
               </p>
               
-              {/* Red Circle Button Arrow (Desktop) */}
+              {/* Scroll Down Button (Desktop) */}
               <div className="flex justify-start mt-8">
                   <button 
                     onClick={handleScrollDown}
@@ -65,8 +60,6 @@ export default function MeetTheDesigner() {
 
 
           {/* --- KOLOM TENGAH: Foto Designer --- */}
-          {/* UPDATED: Order 2 di mobile. Ukuran gambar dibatasi max-w-[280px] di mobile biar compact. 
-              DESKTOP: Ditambah scale-125 biar lebih besar */}
           <div className="md:col-span-4 order-2 md:order-2 flex justify-center relative my-2 md:my-0">
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[250px] md:w-[350px] h-[250px] md:h-[350px] bg-white/10 blur-[60px] md:blur-[80px] rounded-full -z-10 mix-blend-overlay"></div>
 
@@ -80,7 +73,6 @@ export default function MeetTheDesigner() {
 
 
           {/* --- MOBILE ONLY INTRO --- */}
-          {/* Bagian ini hanya muncul di mobile setelah gambar, menggantikan intro desktop */}
           <div className="order-3 md:hidden text-center space-y-6">
              <p className="text-white/80 text-sm leading-relaxed max-w-xs mx-auto font-light">
                 Founder & Creative Director SYMP Studio sejak 2021. Telah mengerjakan 300+ proyek visual meliputi logo, identitas visual, dan creative direction.
@@ -102,7 +94,6 @@ export default function MeetTheDesigner() {
           {/* --- KOLOM KANAN: Details & Social --- */}
           <div className="md:col-span-3 order-4 text-center md:text-left space-y-8 md:pl-8">
             
-            {/* UPDATED: Grid 2 kolom di mobile untuk Roles & Approach biar hemat tempat vertikal */}
             <div className="grid grid-cols-2 md:grid-cols-1 gap-4 md:gap-8 text-left md:text-left">
                 
                 {/* Block 1: Roles & Venture */}
@@ -114,14 +105,14 @@ export default function MeetTheDesigner() {
                       CEO Temantiket, AINA AI Dev. React & Tailwind Expert.
                     </p>
                     
-                    {/* Link Updated: ABOUT DARU -> Google Drive */}
+                    {/* Link Updated: FIND ME ON INSTAGRAM */}
                     <a 
-                      href="https://drive.google.com/file/d/1mxycJ1ZDNOF4CC7jdAPXD-b1byhWIEHn/view?usp=sharing" 
+                      href="https://instagram.com/darufm" 
                       target="_blank" 
                       rel="noopener noreferrer"
                       className="inline-flex items-center text-white text-[10px] md:text-sm font-bold hover:tracking-wider transition-all group mt-1"
                     >
-                        ABOUT DARU <span className="ml-1 md:ml-2 text-lg group-hover:translate-x-1 transition-transform">→</span>
+                        FIND ME ON INSTAGRAM <span className="ml-1 md:ml-2 text-lg group-hover:translate-x-1 transition-transform">→</span>
                     </a>
                 </div>
 
@@ -142,8 +133,7 @@ export default function MeetTheDesigner() {
                     Follow Me
                 </h4>
                 <div className="flex justify-center md:justify-start space-x-8 md:space-x-6 text-white/60">
-                    {/* LinkedIn dan GitHub dihapus, sisa Instagram */}
-                    <a href="#" className="hover:text-white hover:scale-110 transition duration-300"><svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.072 3.252.148 4.771 1.691 4.919 4.919.06 1.265.072 1.645.072 4.85s-.012 3.584-.072 4.85c-.148 3.252-1.667 4.771-4.919 4.919-1.266.06-1.646.072-4.85.072s-3.584-.012-4.85-.072c-3.252-.148-4.771-1.691-4.919-4.919-.06-1.265-.072-1.645-.072-4.85s.012-3.584.072-4.85c.148-3.252 1.667-4.771 4.919-4.919 1.266-.06 1.646-.072 4.85-.072zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg></a>
+                    <a href="https://instagram.com/darufm" target="_blank" rel="noopener noreferrer" className="hover:text-white hover:scale-110 transition duration-300"><svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.072 3.252.148 4.771 1.691 4.919 4.919.06 1.265.072 1.645.072 4.85s-.012 3.584-.072 4.85c-.148 3.252-1.667 4.771-4.919 4.919-1.266.06-1.646.072-4.85.072s-3.584-.012-4.85-.072c-3.252-.148-4.771-1.691-4.919-4.919-.06-1.265-.072-1.645-.072-4.85s.012-3.584.072-4.85c.148-3.252 1.667-4.771 4.919-4.919 1.266-.06 1.646-.072 4.85-.072zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg></a>
                 </div>
             </div>
 
