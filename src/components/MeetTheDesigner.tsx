@@ -27,18 +27,18 @@ export default function MeetTheDesigner() {
             <div>
               {/* UPDATED: Font size mobile diperkecil (text-4xl) biar gak makan tempat */}
               <h2 className="text-4xl md:text-7xl font-extrabold leading-tight tracking-tight mb-2 md:mb-4 text-white drop-shadow-lg">
-                Meet the <br />
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-white to-gray-400">Designer</span>
+                Daru Fahmaa <br />
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-white to-gray-400">Muliawan</span>
               </h2>
                <h3 className="text-xl md:text-3xl font-semibold text-white/90">
-                Daru Fahmaa Muliawan
+                The Designer
               </h3>
             </div>
 
             {/* UPDATED: Intro Paragraph - hidden di mobile sementara, dipindah ke bawah gambar biar flow visualnya enak */}
             <div className="hidden md:block">
               <p className="text-white/80 text-lg leading-relaxed max-w-lg mx-auto md:mx-0 font-light">
-                Founder & Creative Director SYMP Studio sejak 2017. Telah mengerjakan 200+ proyek visual meliputi logo, identitas visual, dan creative direction dengan pendekatan yang rapi dan fungsional.
+                Founder & Creative Director SYMP Studio sejak 2021. Telah mengerjakan 300+ proyek visual meliputi logo, identitas visual, dan creative direction dengan pendekatan yang rapi dan fungsional.
               </p>
               
               {/* Red Circle Button Arrow (Desktop) */}
@@ -71,7 +71,7 @@ export default function MeetTheDesigner() {
           {/* Bagian ini hanya muncul di mobile setelah gambar, menggantikan intro desktop */}
           <div className="order-3 md:hidden text-center space-y-6">
              <p className="text-white/80 text-sm leading-relaxed max-w-xs mx-auto font-light">
-                Founder & Creative Director SYMP Studio sejak 2017. Telah mengerjakan 200+ proyek visual meliputi logo, identitas visual, dan creative direction.
+                Founder & Creative Director SYMP Studio sejak 2021. Telah mengerjakan 200+ proyek visual meliputi logo, identitas visual, dan creative direction.
               </p>
               
               <div className="flex justify-center">
